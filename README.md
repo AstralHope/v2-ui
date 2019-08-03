@@ -16,4 +16,4 @@ python 重构 sprov-ui，一个船新的 v2ray 面板，给你一种船新的体
  
 # 常见问题
 ## 没有 mtproto 协议？
->就目前来说，mtproto 已经不再建议使用，所以我就没有加了，除非 v2ray 之后优化了 mtproto，做了一个新的 mtproto 来，我才会加上此协议。
+>就目前来说，mtproto 已经不再建议使用，所以我就没有加了，除非 v2ray 之后优化了 mtproto，做了一个新的 mtproto 来，我才会加上此协议。如果确实需要的话，请自行在面板设置中修改v2ray配置模板。
