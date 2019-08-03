@@ -5,6 +5,7 @@ python 重构 sprov-ui，一个船新的 v2ray 面板，给你一种船新的体
 ![1.png](1.png)
 
 # 功能介绍
+ - 系统状态监控
  - 支持多用户多协议，浏览器可视化操作，无需敲命令
  - 支持的协议：vmess、shadowsocks、dokodemo-door、socks、http
  - vmess 支持的传输配置：tcp、kcp、ws（tls）、http（tls）
