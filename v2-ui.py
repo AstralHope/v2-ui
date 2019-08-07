@@ -52,9 +52,20 @@ def main():
 
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1 and sys.argv[1] == 'reset':
-        config.reset_config()
-        print('所有配置重置完毕，现在请重启或启动面板')
+    if len(sys.argv) > 1:
+        if sys.argv[1] == 'resetconfig':
+            config.reset_config()
+            print('所有面板设置已重置为默认值，现在请重启面板')
+        elif sys.argv[1] == 'resetuser':
+            from base.models import User
+            from init import db
+            User.query.update({'username': 'admin', 'password': 'admin'})
+            db.session.commit()
+            print('用户名和密码已重置为admin，现在请重启面板')
+        else:
+            print('无效指令')
+            print('resetconfig：重置所有面板设置为默认值')
+            print('resetuser：重置用户名与密码为admin')
     else:
         logging_init()
         try:

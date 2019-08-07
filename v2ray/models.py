@@ -1,5 +1,7 @@
-from sqlalchemy import Column, Integer, String, BIGINT, Boolean
 import json
+
+from sqlalchemy import Column, Integer, String, BIGINT, Boolean
+
 from init import db
 
 

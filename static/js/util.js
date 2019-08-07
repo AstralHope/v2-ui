@@ -1,13 +1,7 @@
-/**
- * 判断一个对象或字符串是否为空
- */
 window.isEmpty = obj => {
     return obj === null || obj === undefined || obj === '';
 };
 
-/**
- * 判断数组是否为空
- */
 window.isArrEmpty = arr => {
     return !isEmpty(arr) && arr.length === 0;
 };
@@ -87,23 +81,14 @@ let seq = [
     'U', 'V', 'W', 'X', 'Y', 'Z'
 ];
 
-/**
- * 随机生成 min 至 max-1 之间的整数
- */
 window.randomIntRange = (min, max) => {
     return parseInt(Math.random() * (max - min) + min, 10);
 };
 
-/**
- * 随机生成 0 至 n-1 之间的整数
- */
 window.randomInt = n => {
     return randomIntRange(0, n);
 };
 
-/**
- * 随机生成 count 个字母和数字
- */
 window.randomSeq = count => {
     let str = '';
     for (let i = 0; i < count; ++i) {

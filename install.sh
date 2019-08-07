@@ -94,7 +94,7 @@ install_v2-ui() {
     fi
     last_version=$(curl --silent "https://api.github.com/repos/sprov065/v2-ui/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
     echo -e "检测到v2-ui最新版本：${last_version}，开始安装"
-    wget -N --no-check-certificate -O /usr/local/v2-ui.tar.gz https://github.com/sprov065/v2-ui/releases/download/${last_version}/v2-ui-linux.tar.gz
+    wget -N --no-check-certificate -O /usr/local/v2-ui-linux.tar.gz https://github.com/sprov065/v2-ui/releases/download/${last_version}/v2-ui-linux.tar.gz
     if [[ $? -ne 0 ]]; then
         echo -e "${red}下载v2-ui失败，请确保你的服务器能够下载Github的文件，如果多次安装失败，请参考手动安装教程${plain}"
         exit 1
