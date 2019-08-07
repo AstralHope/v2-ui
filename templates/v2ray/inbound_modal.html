@@ -1,0 +1,336 @@
+<a-modal id="inbound-modal" v-model="inModal.visible" :title="inModal.title" @ok="inModal.ok"
+         :confirm-loading="inModal.confirmLoading" :closable="true"
+         :ok-text="inModal.okText" cancel-text="关闭">
+
+    <!-- base -->
+    <a-form layout="inline">
+        <a-form-item label="备注">
+            <a-input v-model.trim="inModal.inbound.remark"></a-input>
+        </a-form-item>
+        <a-form-item label="启用">
+            <a-switch v-model="inModal.inbound.enable"></a-switch>
+        </a-form-item>
+        <a-form-item label="选择协议">
+            <a-select v-model="inModal.inbound.protocol" style="width: 160px;"
+                      @change="value => inModal.inbound.settings = Inbound.Settings.getSettings(value)">
+                <a-select-option v-for="p in Protocols" :key="p" :value="p">[[ p ]]</a-select-option>
+            </a-select>
+        </a-form-item>
+        <a-form-item label="监听IP">
+            <a-input v-model.trim="inModal.inbound.listen"></a-input>
+        </a-form-item>
+        <a-form-item label="端口">
+            <a-input type="number" v-model.number="inModal.inbound.port"></a-input>
+        </a-form-item>
+    </a-form>
+
+    <!-- vmess settings -->
+    <a-form v-if="inModal.inbound.protocol === Protocols.VMESS"
+            layout="inline">
+        <a-form-item label="id">
+            <a-input v-model.trim="inModal.inbound.settings.vmesses[0].id"></a-input>
+        </a-form-item>
+        <a-form-item label="alterId">
+            <a-input type="number" v-model.number="inModal.inbound.settings.vmesses[0].alterId"></a-input>
+        </a-form-item>
+    </a-form>
+
+    <!-- stream settings -->
+    <template v-if="inModal.inbound.protocol === Protocols.VMESS">
+
+        <!-- select stream network -->
+        <a-form layout="inline">
+            <a-form-item label="选择传输配置">
+                <a-select v-model="inModal.inbound.stream.network"
+                          @change="value => value === 'http' ? inModal.inbound.stream.security = 'tls' : ''">
+                    <a-select-option value="tcp">tcp</a-select-option>
+                    <a-select-option value="kcp">kcp</a-select-option>
+                    <a-select-option value="ws">ws</a-select-option>
+                    <a-select-option value="http">http</a-select-option>
+                </a-select>
+            </a-form-item>
+        </a-form>
+
+        <!-- vmess tcp -->
+        <template v-if="inModal.inbound.stream.network === 'tcp'">
+            <!-- vmess tcp type -->
+            <a-form layout="inline">
+                <a-form-item label="http 伪装">
+                    <a-switch
+                            :checked="inModal.inbound.stream.tcp.type === 'http'"
+                            @change="checked => inModal.inbound.stream.tcp.type = checked ? 'http' : 'none'">
+                    </a-switch>
+                </a-form-item>
+            </a-form>
+
+            <!-- vmess tcp request -->
+            <a-form v-if="inModal.inbound.stream.tcp.type === 'http'"
+                    layout="inline">
+                <a-form-item label="request version">
+                    <a-input v-model.trim="inModal.inbound.stream.tcp.request.version"></a-input>
+                </a-form-item>
+                <a-form-item label="request method">
+                    <a-input v-model.trim="inModal.inbound.stream.tcp.request.method"></a-input>
+                </a-form-item>
+                <a-form-item label="request path">
+                    <a-row v-for="(path, index) in inModal.inbound.stream.tcp.request.path">
+                        <a-input v-model.trim="inModal.inbound.stream.tcp.request.path[index]"></a-input>
+                    </a-row>
+                </a-form-item>
+            </a-form>
+
+            <!-- vmess tcp response -->
+            <a-form v-if="inModal.inbound.stream.tcp.type === 'http'"
+                    layout="inline">
+                <a-form-item label="response version">
+                    <a-input v-model.trim="inModal.inbound.stream.tcp.response.version"></a-input>
+                </a-form-item>
+                <a-form-item label="response status">
+                    <a-input v-model.trim="inModal.inbound.stream.tcp.response.status"></a-input>
+                </a-form-item>
+                <a-form-item label="response reason">
+                    <a-input v-model.trim="inModal.inbound.stream.tcp.response.reason"></a-input>
+                </a-form-item>
+            </a-form>
+        </template>
+
+        <!-- vmess kcp -->
+        <a-form v-if="inModal.inbound.stream.network === 'kcp'"
+                layout="inline">
+            <a-form-item label="伪装">
+                <a-select v-model="inModal.inbound.stream.kcp.type" style="width: 280px;">
+                    <a-select-option value="none">none（不伪装）</a-select-option>
+                    <a-select-option value="srtp">srtp（伪装视频通话数据）</a-select-option>
+                    <a-select-option value="utp">utp（伪装BT下载）</a-select-option>
+                    <a-select-option value="wechat-video">wechat-video（伪装微信视频）</a-select-option>
+                    <a-select-option value="dtls">dtls（伪装DTLS 1.2数据包）</a-select-option>
+                    <a-select-option value="wireguard">wireguard（伪装WireGuard数据包）</a-select-option>
+                </a-select>
+            </a-form-item>
+            <a-form-item label="mtu">
+                <a-input type="number" v-model.number="inModal.inbound.stream.kcp.mtu"></a-input>
+            </a-form-item>
+            <a-form-item label="tti">
+                <a-input type="number" v-model.number="inModal.inbound.stream.kcp.tti"></a-input>
+            </a-form-item>
+            <a-form-item label="uplinkCapacity">
+                <a-input type="number" v-model.number="inModal.inbound.stream.kcp.upCap"></a-input>
+            </a-form-item>
+            <a-form-item label="downlinkCapacity">
+                <a-input type="number" v-model.number="inModal.inbound.stream.kcp.downCap"></a-input>
+            </a-form-item>
+            <a-form-item label="congestion">
+                <a-switch v-model="inModal.inbound.stream.kcp.congestion"></a-switch>
+            </a-form-item>
+            <a-form-item label="readBufferSize">
+                <a-input type="number" v-model.number="inModal.inbound.stream.kcp.readBuffer"></a-input>
+            </a-form-item>
+            <a-form-item label="writeBufferSize">
+                <a-input type="number" v-model.number="inModal.inbound.stream.kcp.writeBuffer"></a-input>
+            </a-form-item>
+        </a-form>
+
+        <!-- vmess ws -->
+        <a-form v-if="inModal.inbound.stream.network === 'ws'"
+                layout="inline">
+            <a-form-item label="路径">
+                <a-input v-model.trim="inModal.inbound.stream.ws.path"></a-input>
+            </a-form-item>
+            <!-- TODO -->
+            <!--<a-form-item label="请求头">-->
+            <!--<a-input v-model.trim="inModal.inbound.stream.ws.headers" clearable></a-input>-->
+            <!--</a-form-item>-->
+        </a-form>
+
+        <!-- vmess http -->
+        <a-form v-if="inModal.inbound.stream.network === 'http'"
+                layout="inline">
+            <a-form-item label="路径">
+                <a-input v-model.trim="inModal.inbound.stream.http.path"></a-input>
+            </a-form-item>
+            <a-form-item label="Host">
+                <a-row v-for="(host, index) in inModal.inbound.stream.http.host">
+                    <a-input v-model.trim="inModal.inbound.stream.http.host[index]"></a-input>
+                </a-row>
+            </a-form-item>
+        </a-form>
+    </template>
+
+    <!-- shadowsocks -->
+    <a-form v-if="inModal.inbound.protocol === Protocols.SHADOWSOCKS"
+            layout="inline">
+        <a-form-item label="加密">
+            <a-select v-model="inModal.inbound.settings.method" style="width: 165px;">
+                <a-select-option v-for="method in SSMethods" :value="method">[[ method ]]</a-select-option>
+            </a-select>
+        </a-form-item>
+        <a-form-item label="密码">
+            <a-input v-model.trim="inModal.inbound.settings.password"></a-input>
+        </a-form-item>
+        <a-form-item label="网络">
+            <a-select v-model="inModal.inbound.settings.network" style="width: 100px;">
+                <a-select-option value="tcp,udp">tcp+udp</a-select-option>
+                <a-select-option value="tcp">tcp</a-select-option>
+                <a-select-option value="udp">udp</a-select-option>
+            </a-select>
+        </a-form-item>
+    </a-form>
+
+    <!-- dokodemo-door -->
+    <a-form v-if="inModal.inbound.protocol === Protocols.DOKODEMO"
+            layout="inline">
+        <a-form-item label="转发地址">
+            <a-input v-model.trim="inModal.inbound.settings.address"></a-input>
+        </a-form-item>
+        <a-form-item label="转发端口">
+            <a-input type="number" v-model.number="inModal.inbound.settings.port"></a-input>
+        </a-form-item>
+        <a-form-item label="转发协议">
+            <a-select v-model="inModal.inbound.settings.network" style="width: 100px;">
+                <a-select-option value="tcp,udp">tcp+udp</a-select-option>
+                <a-select-option value="tcp">tcp</a-select-option>
+                <a-select-option value="udp">udp</a-select-option>
+            </a-select>
+        </a-form-item>
+    </a-form>
+
+    <!-- socks -->
+    <a-form v-if="inModal.inbound.protocol === Protocols.SOCKS"
+            layout="inline">
+        <a-form-item label="密码认证">
+            <a-switch :checked="inModal.inbound.settings.auth === 'password'"
+                      @change="checked => inModal.inbound.settings.auth = checked ? 'password' : 'noauth'"></a-switch>
+        </a-form-item>
+        <template v-if="inModal.inbound.settings.auth === 'password'">
+            <a-form-item label="用户名">
+                <a-input v-model.trim="inModal.inbound.settings.accounts[0].user"></a-input>
+            </a-form-item>
+            <a-form-item label="密码">
+                <a-input v-model.trim="inModal.inbound.settings.accounts[0].pass"></a-input>
+            </a-form-item>
+        </template>
+        <a-form-item label="开启 udp">
+            <a-switch v-model="inModal.inbound.settings.udp"></a-switch>
+        </a-form-item>
+        <a-form-item v-if="inModal.inbound.settings.udp"
+                     label="IP">
+            <a-input v-model.trim="inModal.inbound.settings.ip"></a-input>
+        </a-form-item>
+    </a-form>
+
+    <!-- http -->
+    <a-form v-if="inModal.inbound.protocol === Protocols.HTTP"
+            layout="inline">
+        <a-form-item label="用户名">
+            <a-input v-model.trim="inModal.inbound.settings.accounts[0].user"></a-input>
+        </a-form-item>
+        <a-form-item label="密码">
+            <a-input v-model.trim="inModal.inbound.settings.accounts[0].pass"></a-input>
+        </a-form-item>
+    </a-form>
+
+    <!-- tls settings -->
+    <template v-if="inModal.inbound.protocol === Protocols.VMESS && ['ws', 'http'].indexOf(inModal.inbound.stream.network) >= 0">
+
+        <!-- tls enable -->
+        <a-form v-if="inModal.inbound.stream.network === 'ws'"
+                layout="inline">
+            <a-form-item label="tls">
+                <a-switch
+                        :checked="inModal.inbound.stream.security === 'tls'"
+                        @change="checked => inModal.inbound.stream.security = checked ? 'tls' : 'none'">
+                </a-switch>
+            </a-form-item>
+        </a-form>
+
+        <!-- tls settings -->
+        <a-form v-if="inModal.inbound.stream.security === 'tls'"
+                layout="vertical">
+            <a-form-item label="域名">
+                <a-input v-model.trim="inModal.inbound.stream.tls.server"></a-input>
+            </a-form-item>
+            <a-form-item label="允许不安全连接">
+                <a-switch v-model="inModal.inbound.stream.tls.allowInsecure"></a-switch>
+            </a-form-item>
+            <a-form-item label="证书">
+                <a-radio-group v-model="inModal.inbound.stream.tls.certs[0].useFile"
+                               button-style="solid">
+                    <a-radio-button :value="true">证书文件路径</a-radio-button>
+                    <a-radio-button :value="false">证书文件内容</a-radio-button>
+                </a-radio-group>
+            </a-form-item>
+            <template v-if="inModal.inbound.stream.tls.certs[0].useFile">
+                <a-form-item label="证书文件路径">
+                    <a-input v-model.trim="inModal.inbound.stream.tls.certs[0].certFile"></a-input>
+                </a-form-item>
+                <a-form-item label="密钥文件路径">
+                    <a-input v-model.trim="inModal.inbound.stream.tls.certs[0].keyFile"></a-input>
+                </a-form-item>
+            </template>
+            <template v-else>
+                <a-form-item label="证书文件内容">
+                    <a-input type="textarea" :rows="2"
+                             v-model="inModal.inbound.stream.tls.certs[0].cert"></a-input>
+                </a-form-item>
+                <a-form-item label="密钥文件内容">
+                    <a-input type="textarea" :rows="2"
+                             v-model="inModal.inbound.stream.tls.certs[0].key"></a-input>
+                </a-form-item>
+            </template>
+        </a-form>
+    </template>
+</a-modal>
+<script>
+
+    const inModal = {
+        title: '',
+        visible: false,
+        confirmLoading: false,
+        okText: '确定',
+        confirm: null,
+        inbound: new Inbound(),
+        ok() {
+            execute(inModal.confirm);
+        },
+        show({ title='', okText='确定', inbound=null, confirm=()=>{} }) {
+            this.title = title;
+            this.okText = okText;
+            if (inbound) {
+                this.inbound = Inbound.fromJson(inbound.toJson());
+            } else {
+                this.inbound = new Inbound();
+            }
+            this.confirm = confirm;
+            this.visible = true;
+        },
+        close() {
+            inModal.visible = false;
+            inModal.closeLoading();
+        },
+        loading() {
+            inModal.confirmLoading = true;
+        },
+        closeLoading() {
+            inModal.confirmLoading = false;
+        }
+    };
+
+    let protocols = {
+        VMESS: Protocols.VMESS,
+        SHADOWSOCKS: Protocols.SHADOWSOCKS,
+        DOKODEMO: Protocols.DOKODEMO,
+        SOCKS: Protocols.SOCKS,
+        HTTP: Protocols.HTTP,
+    };
+
+    new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#inbound-modal',
+        data: {
+            inModal: inModal,
+            Protocols: protocols,
+            SSMethods: SSMethods,
+        }
+    });
+
+</script>

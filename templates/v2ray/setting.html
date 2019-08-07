@@ -1,0 +1,217 @@
+{% extends 'v2ray/base.html' %}
+{% block title %}面板设置{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style>
+        .ant-card + .ant-card {
+            margin-top: 20px;
+        }
+
+        .ant-card:last-of-type {
+            margin-bottom: 20px;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+
+    <a-layout id="app" v-cloak>
+        {% include 'v2ray/common_sider.html' %}
+        <a-layout id="content-layout">
+            <a-layout-content>
+                <transition name="list" appear>
+                <a-card title="修改登录信息" hoverable>
+                    <a-form layout="inline">
+                        <a-form-item label="原用户名">
+                            <a-input v-model.trim="user.old_username"></a-input>
+                        </a-form-item>
+                        <a-form-item label="原密码">
+                            <a-input v-model.trim="user.old_password" type="password"></a-input>
+                        </a-form-item>
+                        <a-form-item label="新用户名">
+                            <a-input v-model.trim="user.username"></a-input>
+                        </a-form-item>
+                        <a-form-item label="新密码">
+                            <a-input v-model.trim="user.password" type="password"></a-input>
+                        </a-form-item>
+                        <a-form-item>
+                            <a-button type="primary" @click="updateUser()">修改</a-button>
+                        </a-form-item>
+                    </a-form>
+                </a-card>
+                </transition>
+                <transition name="list" appear>
+                <a-card title="面板设置" hoverable>
+                    <a-table :data-source="settings" :columns="columns"
+                             :pagination="false" bordered>
+                        <template slot="name" slot-scope="text, setting">
+{#                            <a-tooltip v-if="setting.need_restart">#}
+{#                                <template slot="title">修改后重启面板生效</template>#}
+{#                                <a-icon type="exclamation-circle" theme="filled"></a-icon>#}
+{#                            </a-tooltip>#}
+                            [[ text ]]
+                            <a-tooltip v-if="!isEmpty(setting.tip)">
+                                <template slot="title">
+                                    [[ setting.tip ]]
+                                    <template v-if="setting.need_restart">
+                                        。修改后需重启面板
+                                    </template>
+                                </template>
+                                <a-icon type="question-circle" theme="filled"></a-icon>
+                            </a-tooltip>
+                        </template>
+                        <template slot="value" slot-scope="text">
+                            [[ text.length > 50 ? text.substr(0, 50) + ' ...' : text ]]
+                        </template>
+                        <template slot="action" slot-scope="text, record">
+                            <a-button v-if="!isEmpty(record.value_type)" type="primary" icon="edit"
+                                      @click="openEdit(record)"></a-button>
+                        </template>
+                    </a-table>
+                </a-card>
+                </transition>
+            </a-layout-content>
+        </a-layout>
+    </a-layout>
+
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script>
+
+        const columns = [{
+            title: '名称',
+            dataIndex: 'name',
+            align: 'center',
+            width: '30%',
+            scopedSlots: { 'customRender': 'name' },
+        }, {
+            title: '值',
+            dataIndex: 'value',
+            align: 'center',
+            width: '70%',
+            scopedSlots: { 'customRender': 'value' },
+        }, {
+            title: '操作',
+            dataIndex: 'action',
+            align: 'center',
+            width: 50,
+            scopedSlots: { 'customRender': 'action' },
+        }];
+
+        let app = new Vue({
+            delimiters: ['[[', ']]'],
+            el: '#app',
+            data: {
+                siderDrawer: siderDrawer,
+                tableLoading: false,
+                columns: columns,
+                settings: [],
+                user: {},
+            },
+            methods: {
+                loading(tableLoading=true) {
+                    this.tableLoading = tableLoading;
+                },
+                getSettings() {
+                    this.loading();
+                    get({
+                        url: '/server/settings',
+                        success: data => {
+                            this.loading(false);
+                            this.setSettings(data);
+                        },
+                        error: () => this.loading(false)
+                    });
+                },
+                setSettings(settings) {
+                    settings.unshift({name: '当前面板版本', value: '{{ cur_ver }}'});
+                    this.settings = settings;
+                },
+                openEdit(setting) {
+                    switch (setting.value_type) {
+                        case 'int': this.openEditInt(setting); break;
+                        case 'text':
+                        case 'textarea': this.openEditText(setting); break;
+                        case 'bool': this.openEditBool(setting); break;
+                        default: this.$error({title: '错误', content: '不支持的类型'});
+                    }
+                },
+                openEditInt(setting) {
+                    this.openEditPrompt(setting, 'number');
+                },
+                openEditText(setting) {
+                    this.openEditPrompt(setting, setting.value_type);
+                },
+                openEditBool(setting) {
+
+                },
+                openEditPrompt(setting, promptType) {
+                    promptModal.open({
+                        title: '修改 - ' + setting.name,
+                        type: promptType,
+                        value: setting.value,
+                        confirm: value => {
+                            this.edit(setting, value.toString());
+                        },
+                    });
+                },
+                edit(setting, value) {
+                    let data = clone(setting);
+                    data.value = value;
+                    post({
+                        url: '/server/setting/update/' + setting.id,
+                        data: data,
+                        success: data => {
+                            if (data.success) {
+                                this.getSettings();
+                            }
+                        }
+                    });
+                },
+                updateUser() {
+                    if (isEmpty(this.user.old_username)) {
+                        this.$message.warning('请输入原用户名');
+                    } else if (isEmpty(this.user.old_password)) {
+                        this.$message.warning('请输入原密码');
+                    } else if (isEmpty(this.user.username)) {
+                        this.$message.warning('请输入新用户名');
+                    } else if (isEmpty(this.user.password)) {
+                        this.$message.warning('请输入新密码');
+                    } else {
+                        post({
+                            url: '/server/user/update',
+                            data: this.user,
+                            success: data => {
+                                if (data.success) {
+                                    this.user = {};
+                                }
+                            },
+                        });
+                    }
+                }
+            },
+            mounted() {
+                this.setSettings({{ settings | safe }});
+                if (!docCookies.getItem('close_setting_tip')) {
+                    const h = this.$createElement;
+                    this.$confirm({
+                        title: '用户须知',
+                        content: h('div', {}, [
+                            h('p', '此页面大部分配置项直接关乎面板与 v2ray 的存亡'),
+                            h('p', '修改不慎可能会导致无法启动面板，进而所有账号数据无法取出'),
+                            h('p', '请自行做好备份，若造成数据丢失概不负责'),
+                        ]),
+                        okText: '我已明白',
+                        cancelText: '不再提醒',
+                        closable: true,
+                        onCancel: () => {
+                            docCookies.setItem('close_setting_tip', true);
+                        }
+                    });
+                }
+            }
+        });
+
+    </script>
+    {% include 'common/prompt_modal.html' %}
+{% endblock %}
