@@ -15,5 +15,11 @@
         {#let deg = randomIntRange(0, 360);#}
         {#let background = 'linear-gradient(' + deg + 'deg, #' + leftColor + ' 10%, #' + rightColor + ' 100%)';#}
         {#document.querySelector('#content-layout').style.background = background;#}
+        let siderDrawerApp = new Vue({
+            el: '#sider-drawer',
+            data: {
+                siderDrawer
+            }
+        });
     </script>
 {% endblock %}

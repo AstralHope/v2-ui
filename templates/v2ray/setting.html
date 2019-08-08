@@ -44,10 +44,6 @@
                     <a-table :data-source="settings" :columns="columns"
                              :pagination="false" bordered>
                         <template slot="name" slot-scope="text, setting">
-{#                            <a-tooltip v-if="setting.need_restart">#}
-{#                                <template slot="title">修改后重启面板生效</template>#}
-{#                                <a-icon type="exclamation-circle" theme="filled"></a-icon>#}
-{#                            </a-tooltip>#}
                             [[ text ]]
                             <a-tooltip v-if="!isEmpty(setting.tip)">
                                 <template slot="title">
@@ -102,7 +98,6 @@
             delimiters: ['[[', ']]'],
             el: '#app',
             data: {
-                siderDrawer: siderDrawer,
                 tableLoading: false,
                 columns: columns,
                 settings: [],
@@ -125,6 +120,11 @@
                 },
                 setSettings(settings) {
                     settings.unshift({name: '当前面板版本', value: '{{ cur_ver }}'});
+                    for (let i = 0; i < settings.length; ++i) {
+                        if (isEmpty(settings[i].name)) {
+                            settings.splice(i--, 1);
+                        }
+                    }
                     this.settings = settings;
                 },
                 openEdit(setting) {

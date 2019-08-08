@@ -4,7 +4,8 @@
     <a-input id="prompt-modal-input" :type="promptModal.type"
              v-model="promptModal.value"
              :autosize="{minRows: 10, maxRows: 20}"
-             @keydown.enter.native.prevent="promptModal.ok"></a-input>
+             @keydown.enter.native="promptModal.keyEnter"
+             @keydown.ctrl.83="promptModal.ctrlS"></a-input>
 </a-modal>
 
 <script>
@@ -15,6 +16,18 @@
         value: '',
         okText: '确定',
         visible: false,
+        keyEnter(e) {
+            if (this.type !== 'textarea') {
+                e.preventDefault();
+                this.ok();
+            }
+        },
+        ctrlS(e) {
+            if (this.type === 'textarea') {
+                e.preventDefault();
+                promptModal.confirm(promptModal.value);
+            }
+        },
         ok: function() {
             promptModal.close();
             promptModal.confirm(promptModal.value);

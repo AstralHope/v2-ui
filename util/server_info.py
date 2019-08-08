@@ -20,8 +20,8 @@ def get_status():
     return __status
 
 
-@scheduler.scheduled_job(trigger=IntervalTrigger(seconds=1))
-def flush_status():
+@scheduler.scheduled_job(trigger=IntervalTrigger(seconds=2))
+def refresh_status():
     global __access_interval
     try:
         now = time.time()

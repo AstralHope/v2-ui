@@ -53,7 +53,7 @@ class V2CommonClass {
     }
 
     static base64(str) {
-        return btoa(str);
+        return base64(str);
     }
 
     static safeBase64(str) {

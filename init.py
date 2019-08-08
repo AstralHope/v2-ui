@@ -29,10 +29,8 @@ def init_db():
 
 
 def init_app():
-    if app.debug:
-        app.secret_key = b'01\xab\xd9J\xbdV(\n\xacE\xa2\xc1\x0e\xc1\x91\x15J\x08\xc5\xbdG\xe6J'
-    else:
-        app.secret_key = os.urandom(24)
+    from util import config
+    app.secret_key = config.get_secret_key()
 
 
 def init_common_context():

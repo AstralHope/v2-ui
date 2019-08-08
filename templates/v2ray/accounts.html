@@ -23,8 +23,7 @@
         <a-layout id="content-layout">
             <a-layout-content>
                 <a-spin :spinning="spinning" :delay="500" tip="加载中">
-{#                    <a-card>#}
-                        <transition name="list" appear>
+                    <transition name="list" appear>
                         <a-card hoverable style="margin-bottom: 20px;">
                             <div slot="title">
                                 <a-button type="primary" icon="plus" @click="openAddInbound"></a-button>
@@ -44,179 +43,162 @@
                                 </a-col>
                             </a-row>
                         </a-card>
-                        </transition>
-                        <a-card v-if="inbounds.length === 0">
-                            无账号，请先添加账号
-                        </a-card>
-                        <transition-group tag="div" name="list">
-                            <a-card v-for="inbound in inbounds" :key="inbound.id" hoverable>
-                                <div slot="title">
-                                    <a-button type="primary" icon="qrcode"
-                                              @click="qrModal.show(
-                                                        '二维码',
-                                                        inbound.genLink(inbound.listen === '0.0.0.0' ? ip : inbound.listen),
-                                                        '复制链接')"></a-button>
-                                    <a-button icon="edit" @click="openEditInbound(inbound)"></a-button>
-                                    <a-button style="float: right;" type="danger" icon="delete" @click="delInbound(inbound)"></a-button>
-                                </div>
-                                <div>
-                                    <a-row>
+                    </transition>
+                    <a-card v-if="inbounds.length === 0">
+                        无账号，请先添加账号
+                    </a-card>
+                    <transition-group tag="div" name="list">
+                        <a-card v-for="inbound in inbounds" :key="inbound.id" hoverable>
+                            <div slot="title">
+                                <a-button type="primary" icon="qrcode"
+                                          @click="qrModal.show(
+                                                    '二维码',
+                                                    inbound.genLink(inbound.listen === '0.0.0.0' ? ip : inbound.listen),
+                                                    '复制链接')"></a-button>
+                                <a-button icon="edit" @click="openEditInbound(inbound)"></a-button>
+                                <a-button style="float: right;" type="danger" icon="delete" @click="delInbound(inbound)"></a-button>
+                            </div>
+                            <div>
+                                <a-row>
+                                    <a-col :xs="24" :sm="24" :lg="12">
+                                        备注：
+                                        <a-tag color="blue">[[ empDefault(inbound.remark, '无') ]]</a-tag>
+                                    </a-col>
+                                    <a-col :xs="24" :sm="24" :lg="12">
+                                        启用：
+                                        <a-popconfirm :title="inbound.enable ? '是否禁用' : '是否启用'"
+                                                      @confirm="setEnable(inbound, !inbound.enable)"
+                                                      ok-text="是" cancel-text="否">
+                                            <a-tag v-if="inbound.enable" color="green">是</a-tag>
+                                            <a-tag v-else color="red">否</a-tag>
+                                        </a-popconfirm>
+                                    </a-col>
+                                    <a-col :xs="24" :sm="24" :lg="12">
+                                        上传/下载：
+                                        <a-tag color="green">[[ sizeFormat(inbound.up) ]] / [[ sizeFormat(inbound.down) ]]</a-tag>
+                                    </a-col>
+                                    <a-col :xs="24" :sm="24" :lg="12">
+                                        总用量：
+                                        <a-popconfirm title="确定要重置流量为 0 吗？不可恢复"
+                                                      @confirm="resetTraffic(inbound)"
+                                                      ok-text="确定" cancel-text="取消">
+                                            <a-tag color="green">[[ sizeFormat(inbound.up + inbound.down) ]]</a-tag>
+                                        </a-popconfirm>
+                                    </a-col>
+                                    <a-col :xs="24" :sm="24" :lg="12">
+                                        IP：
+                                        <a-tag color="green">[[ inbound.listen === '0.0.0.0' ? ip : inbound.listen ]]</a-tag>
+                                    </a-col>
+                                    <a-col :xs="24" :sm="24" :lg="12">
+                                        端口：
+                                        <a-tag color="green">[[ inbound.port ]]</a-tag>
+                                    </a-col>
+                                    <!-- vmess -->
+                                    <template v-if="inbound.protocol === Protocols.VMESS">
                                         <a-col :xs="24" :sm="24" :lg="12">
-                                            备注：
-                                            <a-tag color="blue">[[ empDefault(inbound.remark, '无') ]]</a-tag>
+                                            id：
+                                            <a-tag color="green">[[ inbound.settings.vmesses[0].id ]]</a-tag>
                                         </a-col>
                                         <a-col :xs="24" :sm="24" :lg="12">
-                                            启用：
-                                            <a-popconfirm :title="inbound.enable ? '是否禁用' : '是否启用'"
-                                                          @confirm="setEnable(inbound, !inbound.enable)"
-                                                          ok-text="是" cancel-text="否">
-                                                <a-tag v-if="inbound.enable" color="green">是</a-tag>
-                                                <a-tag v-else color="red">否</a-tag>
-                                            </a-popconfirm>
+                                            额外id：
+                                            <a-tag color="green">[[ inbound.settings.vmesses[0].alterId ]]</a-tag>
                                         </a-col>
                                         <a-col :xs="24" :sm="24" :lg="12">
-                                            上传/下载：
-                                            <a-tag color="green">[[ sizeFormat(inbound.up) ]] / [[ sizeFormat(inbound.down) ]]</a-tag>
+                                            加密：
+                                            <a-tag color="green">auto</a-tag>
                                         </a-col>
                                         <a-col :xs="24" :sm="24" :lg="12">
-                                            总用量：
-                                            <a-popconfirm title="确定要重置流量为 0 吗？不可恢复"
-                                                          @confirm="resetTraffic(inbound)"
-                                                          ok-text="确定" cancel-text="取消">
-                                                <a-tag color="green">[[ sizeFormat(inbound.up + inbound.down) ]]</a-tag>
-                                            </a-popconfirm>
+                                            传输配置：
+                                            <a-tag color="green">[[ inbound.stream.network ]]</a-tag>
                                         </a-col>
-                                        <a-col :xs="24" :sm="24" :lg="12">
-                                            IP：
-                                            <a-tag color="green">[[ inbound.listen === '0.0.0.0' ? ip : inbound.listen ]]</a-tag>
-                                        </a-col>
-                                        <a-col :xs="24" :sm="24" :lg="12">
-                                            端口：
-                                            <a-tag color="green">[[ inbound.port ]]</a-tag>
-                                        </a-col>
-                                        <!-- vmess -->
-                                        <template v-if="inbound.protocol === Protocols.VMESS">
+                                        <!-- vmess tcp -->
+                                        <template v-if="inbound.stream.network === 'tcp'">
                                             <a-col :xs="24" :sm="24" :lg="12">
-                                                id：
-                                                <a-tag color="green">[[ inbound.settings.vmesses[0].id ]]</a-tag>
+                                                伪装：
+                                                <a-tag color="green">[[ inbound.stream.tcp.type ]]</a-tag>
                                             </a-col>
-                                            <a-col :xs="24" :sm="24" :lg="12">
-                                                额外id：
-                                                <a-tag color="green">[[ inbound.settings.vmesses[0].alterId ]]</a-tag>
-                                            </a-col>
-                                            <a-col :xs="24" :sm="24" :lg="12">
-                                                加密：
-                                                <a-tag color="green">auto</a-tag>
-                                            </a-col>
-                                            <a-col :xs="24" :sm="24" :lg="12">
-                                                传输配置：
-                                                <a-tag color="green">[[ inbound.stream.network ]]</a-tag>
-                                            </a-col>
-                                            <!-- vmess tcp -->
-                                            <template v-if="inbound.stream.network === 'tcp'">
-                                                <a-col :xs="24" :sm="24" :lg="12">
-                                                    伪装：
-                                                    <a-tag color="green">[[ inbound.stream.tcp.type ]]</a-tag>
-                                                </a-col>
-                                                <template v-if="inbound.stream.tcp.type === 'http'">
-                                                    <a-col :xs="24" :sm="24" :lg="12">
-                                                        路径：
-                                                        <a-tag color="green">[[ inbound.stream.tcp.request.path[0] ]]</a-tag>
-                                                    </a-col>
-                                                </template>
-                                            </template>
-                                            <!-- vmess kcp -->
-                                            <template v-if="inbound.stream.network === 'kcp'">
-                                                <a-col :xs="24" :sm="24" :lg="12">
-                                                    伪装：
-                                                    <a-tag color="green">[[ inbound.stream.kcp.type ]]</a-tag>
-                                                </a-col>
-                                            </template>
-                                            <!-- vmess ws -->
-                                            <template v-if="inbound.stream.network === 'ws'">
+                                            <template v-if="inbound.stream.tcp.type === 'http'">
                                                 <a-col :xs="24" :sm="24" :lg="12">
                                                     路径：
-                                                    <a-tag color="green">[[ inbound.stream.ws.path ]]</a-tag>
-                                                </a-col>
-                                            </template>
-                                            <!-- vmess http -->
-                                            <template v-if="inbound.stream.network === 'http'">
-                                                <a-col :xs="24" :sm="24" :lg="12">
-                                                    路径：
-                                                    <a-tag color="green">[[ inbound.stream.http.path ]]</a-tag>
-                                                </a-col>
-                                                <a-col :xs="24" :sm="24" :lg="12">
-                                                    Host：
-                                                    <a-tag color="green">[[ empDefault(inbound.stream.http.host[0], '无') ]]</a-tag>
-                                                </a-col>
-                                            </template>
-                                            <template v-if="inbound.stream.security == 'tls'">
-                                                <a-col :xs="24" :sm="24" :lg="12">
-                                                    域名：
-                                                    <a-tag color="green">[[ empDefault(inbound.stream.tls.server, '无') ]]</a-tag>
-                                                </a-col>
-                                                <a-col :xs="24" :sm="24" :lg="12">
-                                                    允许不安全：
-                                                    <a-tag v-if="inbound.stream.tls.allowInsecure" color="green">是</a-tag>
-                                                    <a-tag v-else color="orange">否</a-tag>
+                                                    <a-tag color="green">[[ inbound.stream.tcp.request.path[0] ]]</a-tag>
                                                 </a-col>
                                             </template>
                                         </template>
-                                        <!-- shadowsocks -->
-                                        <template v-if="inbound.protocol === Protocols.SHADOWSOCKS">
+                                        <!-- vmess kcp -->
+                                        <template v-if="inbound.stream.network === 'kcp'">
                                             <a-col :xs="24" :sm="24" :lg="12">
-                                                加密：
-                                                <a-tag color="green">[[ inbound.settings.method ]]</a-tag>
-                                            </a-col>
-                                            <a-col :xs="24" :sm="24" :lg="12">
-                                                密码：
-                                                <a-tag color="green">[[ inbound.settings.password ]]</a-tag>
-                                            </a-col>
-                                            <a-col :xs="24" :sm="24" :lg="12">
-                                                网络：
-                                                <a-tag color="green">[[ inbound.settings.network ]]</a-tag>
+                                                伪装：
+                                                <a-tag color="green">[[ inbound.stream.kcp.type ]]</a-tag>
                                             </a-col>
                                         </template>
-                                        <!-- dokodemo-door -->
-                                        <template v-if="inbound.protocol === Protocols.DOKODEMO">
+                                        <!-- vmess ws -->
+                                        <template v-if="inbound.stream.network === 'ws'">
                                             <a-col :xs="24" :sm="24" :lg="12">
-                                                转发地址：
-                                                <a-tag color="green">[[ inbound.settings.address ]]</a-tag>
-                                            </a-col>
-                                            <a-col :xs="24" :sm="24" :lg="12">
-                                                转发端口：
-                                                <a-tag color="green">[[ inbound.settings.port ]]</a-tag>
-                                            </a-col>
-                                            <a-col :xs="24" :sm="24" :lg="12">
-                                                网络：
-                                                <a-tag color="green">[[ inbound.settings.network ]]</a-tag>
+                                                路径：
+                                                <a-tag color="green">[[ inbound.stream.ws.path ]]</a-tag>
                                             </a-col>
                                         </template>
-                                        <!-- socks -->
-                                        <template v-if="inbound.protocol === Protocols.SOCKS">
+                                        <!-- vmess http -->
+                                        <template v-if="inbound.stream.network === 'http'">
                                             <a-col :xs="24" :sm="24" :lg="12">
-                                                密码认证：
-                                                <a-tag v-if="inbound.settings.auth === 'password'" color="green">是</a-tag>
+                                                路径：
+                                                <a-tag color="green">[[ inbound.stream.http.path ]]</a-tag>
+                                            </a-col>
+                                            <a-col :xs="24" :sm="24" :lg="12">
+                                                Host：
+                                                <a-tag color="green">[[ empDefault(inbound.stream.http.host[0], '无') ]]</a-tag>
+                                            </a-col>
+                                        </template>
+                                        <template v-if="inbound.stream.security == 'tls'">
+                                            <a-col :xs="24" :sm="24" :lg="12">
+                                                域名：
+                                                <a-tag color="green">[[ empDefault(inbound.stream.tls.server, '无') ]]</a-tag>
+                                            </a-col>
+                                            <a-col :xs="24" :sm="24" :lg="12">
+                                                允许不安全：
+                                                <a-tag v-if="inbound.stream.tls.allowInsecure" color="green">是</a-tag>
                                                 <a-tag v-else color="orange">否</a-tag>
                                             </a-col>
-                                            <template v-if="inbound.settings.auth === 'password'">
-                                                <a-col :xs="24" :sm="24" :lg="12">
-                                                    用户名：
-                                                    <a-tag color="green">[[ inbound.settings.accounts[0].user ]]</a-tag>
-                                                </a-col>
-                                                <a-col :xs="24" :sm="24" :lg="12">
-                                                    密码：
-                                                    <a-tag color="green">[[ inbound.settings.accounts[0].pass ]]</a-tag>
-                                                </a-col>
-                                            </template>
-                                            <a-col :xs="24" :sm="24" :lg="12">
-                                                udp：
-                                                <a-tag v-if="inbound.settings.udp" color="green">开启</a-tag>
-                                                <a-tag v-else color="orange">未开启</a-tag>
-                                            </a-col>
                                         </template>
-                                        <!-- http -->
-                                        <template v-if="inbound.protocol === Protocols.HTTP">
+                                    </template>
+                                    <!-- shadowsocks -->
+                                    <template v-if="inbound.protocol === Protocols.SHADOWSOCKS">
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            加密：
+                                            <a-tag color="green">[[ inbound.settings.method ]]</a-tag>
+                                        </a-col>
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            密码：
+                                            <a-tag color="green">[[ inbound.settings.password ]]</a-tag>
+                                        </a-col>
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            网络：
+                                            <a-tag color="green">[[ inbound.settings.network ]]</a-tag>
+                                        </a-col>
+                                    </template>
+                                    <!-- dokodemo-door -->
+                                    <template v-if="inbound.protocol === Protocols.DOKODEMO">
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            转发地址：
+                                            <a-tag color="green">[[ inbound.settings.address ]]</a-tag>
+                                        </a-col>
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            转发端口：
+                                            <a-tag color="green">[[ inbound.settings.port ]]</a-tag>
+                                        </a-col>
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            网络：
+                                            <a-tag color="green">[[ inbound.settings.network ]]</a-tag>
+                                        </a-col>
+                                    </template>
+                                    <!-- socks -->
+                                    <template v-if="inbound.protocol === Protocols.SOCKS">
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            密码认证：
+                                            <a-tag v-if="inbound.settings.auth === 'password'" color="green">是</a-tag>
+                                            <a-tag v-else color="orange">否</a-tag>
+                                        </a-col>
+                                        <template v-if="inbound.settings.auth === 'password'">
                                             <a-col :xs="24" :sm="24" :lg="12">
                                                 用户名：
                                                 <a-tag color="green">[[ inbound.settings.accounts[0].user ]]</a-tag>
@@ -226,11 +208,27 @@
                                                 <a-tag color="green">[[ inbound.settings.accounts[0].pass ]]</a-tag>
                                             </a-col>
                                         </template>
-                                    </a-row>
-                                </div>
-                            </a-card>
-                        </transition-group>
-{#                    </a-card>#}
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            udp：
+                                            <a-tag v-if="inbound.settings.udp" color="green">开启</a-tag>
+                                            <a-tag v-else color="orange">未开启</a-tag>
+                                        </a-col>
+                                    </template>
+                                    <!-- http -->
+                                    <template v-if="inbound.protocol === Protocols.HTTP">
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            用户名：
+                                            <a-tag color="green">[[ inbound.settings.accounts[0].user ]]</a-tag>
+                                        </a-col>
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            密码：
+                                            <a-tag color="green">[[ inbound.settings.accounts[0].pass ]]</a-tag>
+                                        </a-col>
+                                    </template>
+                                </a-row>
+                            </div>
+                        </a-card>
+                    </transition-group>
                 </a-spin>
             </a-layout-content>
         </a-layout>
@@ -247,7 +245,6 @@
             data: {
                 ip: location.hostname,
                 spinning: false,
-                siderDrawer: siderDrawer,
                 inbounds: [],
             },
             methods: {

@@ -40,7 +40,7 @@ def update_setting(setting_id, key, name, value, value_type='text'):
 
 
 def all_settings():
-    return Setting.query.all()
+    return Setting.query.filter(Setting.name != '').all()
 
 
 def get_port():
@@ -91,8 +91,12 @@ def get_base_path():
     return __get('base_path', '')
 
 
+def get_secret_key():
+    return __get('secret_key', os.urandom(24))
+
+
 def get_current_version():
-    return '4.0.0'
+    return '4.0.1'
 
 
 def add_if_not_exist(setting, update=False):
@@ -142,6 +146,7 @@ def init_db(update=False):
     add_if_not_exist(Setting(
         'traffic_job_interval', '统计流量间隔时间（秒）', '60', 'int',
         '数值过小会导致CPU使用率上升，填0或负数后果自负', True), update)
+    add_if_not_exist(Setting('secret_key', '', os.urandom(24), 'text', '', True), update)
     db.session.commit()
 
 

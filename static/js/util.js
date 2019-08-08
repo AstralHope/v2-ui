@@ -138,7 +138,7 @@ window.propIgnoreCase = (obj, prop) => {
 };
 
 window.base64 = str => {
-    return btoa(str);
+    return Base64.encode(str);
 };
 
 window.safeBase64 = str => {
