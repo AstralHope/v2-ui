@@ -107,7 +107,7 @@ install_v2-ui() {
     systemctl daemon-reload
     systemctl enable v2-ui
     systemctl start v2-ui
-    echo -e "${green}v2-ui 安装完成，面板已启动，默认网页端口为 65432，用户名和密码默认都是 admin${plain}"
+    echo -e "${green}v2-ui v${last_version} 安装完成，面板已启动，默认网页端口为 65432，用户名和密码默认都是 admin${plain}"
     echo -e ""
     echo -e "若未安装 bbr 等加速工具，推荐使用以下命令一键安装 bbr："
     echo -e "wget --no-check-certificate https://github.com/sprov065/blog/raw/master/bbr.sh && bash bbr.sh"
