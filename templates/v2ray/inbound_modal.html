@@ -47,6 +47,7 @@
                     <a-select-option value="kcp">kcp</a-select-option>
                     <a-select-option value="ws">ws</a-select-option>
                     <a-select-option value="http">http</a-select-option>
+                    <a-select-option value="quic">quic</a-select-option>
                 </a-select>
             </a-form-item>
         </a-form>
@@ -154,6 +155,31 @@
                 </a-row>
             </a-form-item>
         </a-form>
+
+        <!-- vmess quic -->
+        <a-form v-if="inModal.inbound.stream.network === 'quic'"
+                layout="inline">
+            <a-form-item label="加密">
+                <a-select v-model="inModal.inbound.stream.quic.security" style="width: 165px;">
+                    <a-select-option value="none">none</a-select-option>
+                    <a-select-option value="aes-128-gcm">aes-128-gcm</a-select-option>
+                    <a-select-option value="chacha20-poly1305">chacha20-poly1305</a-select-option>
+                </a-select>
+            </a-form-item>
+            <a-form-item label="密码">
+                <a-input v-model.trim="inModal.inbound.stream.quic.key"></a-input>
+            </a-form-item>
+            <a-form-item label="伪装">
+                <a-select v-model="inModal.inbound.stream.quic.type" style="width: 280px;">
+                    <a-select-option value="none">none（不伪装）</a-select-option>
+                    <a-select-option value="srtp">srtp（伪装视频通话数据）</a-select-option>
+                    <a-select-option value="utp">utp（伪装BT下载）</a-select-option>
+                    <a-select-option value="wechat-video">wechat-video（伪装微信视频）</a-select-option>
+                    <a-select-option value="dtls">dtls（伪装DTLS 1.2数据包）</a-select-option>
+                    <a-select-option value="wireguard">wireguard（伪装WireGuard数据包）</a-select-option>
+                </a-select>
+            </a-form-item>
+        </a-form>
     </template>
 
     <!-- shadowsocks -->
@@ -230,10 +256,11 @@
     </a-form>
 
     <!-- tls settings -->
-    <template v-if="inModal.inbound.protocol === Protocols.VMESS && ['ws', 'http'].indexOf(inModal.inbound.stream.network) >= 0">
+    <template v-if="inModal.inbound.protocol === Protocols.VMESS
+                    && ['tcp', 'ws', 'http', 'quic'].indexOf(inModal.inbound.stream.network) >= 0">
 
         <!-- tls enable -->
-        <a-form v-if="inModal.inbound.stream.network === 'ws'"
+        <a-form v-if="['tcp', 'ws', 'quic'].indexOf(inModal.inbound.stream.network) >= 0"
                 layout="inline">
             <a-form-item label="tls">
                 <a-switch
@@ -245,7 +272,7 @@
 
         <!-- tls settings -->
         <a-form v-if="inModal.inbound.stream.security === 'tls'"
-                layout="vertical">
+                layout="inline">
             <a-form-item label="域名">
                 <a-input v-model.trim="inModal.inbound.stream.tls.server"></a-input>
             </a-form-item>

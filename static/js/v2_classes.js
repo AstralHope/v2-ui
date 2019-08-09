@@ -343,6 +343,34 @@ class HttpStreamSettings extends V2CommonClass {
     }
 }
 
+class QuicStreamSettings extends V2CommonClass {
+    constructor(security=VmessMethods.NONE,
+                key='', type='none') {
+        super();
+        this.security = security;
+        this.key = key;
+        this.type = type;
+    }
+
+    static fromJson(json={}) {
+        return new QuicStreamSettings(
+            json.security,
+            json.key,
+            json.header ? json.header.type : 'none',
+        );
+    }
+
+    toJson() {
+        return {
+            security: this.security,
+            key: this.key,
+            header: {
+                type: this.type,
+            }
+        }
+    }
+}
+
 class TlsStreamSettings extends V2CommonClass {
     constructor(serverName='',
                 allowInsecure=true,
@@ -431,6 +459,7 @@ class StreamSettings extends V2CommonClass {
                 kcpSettings=new KcpStreamSettings(),
                 wsSettings=new WsStreamSettings(),
                 httpSettings=new HttpStreamSettings(),
+                quicSettings=new QuicStreamSettings(),
                 ) {
         super();
         this.network = network;
@@ -440,6 +469,7 @@ class StreamSettings extends V2CommonClass {
         this.kcp = kcpSettings;
         this.ws = wsSettings;
         this.http = httpSettings;
+        this.quic = quicSettings;
     }
 
     static fromJson(json={}) {
@@ -451,6 +481,7 @@ class StreamSettings extends V2CommonClass {
             KcpStreamSettings.fromJson(json.kcpSettings),
             WsStreamSettings.fromJson(json.wsSettings),
             HttpStreamSettings.fromJson(json.httpSettings),
+            QuicStreamSettings.fromJson(json.quicSettings),
         );
     }
 
@@ -460,11 +491,12 @@ class StreamSettings extends V2CommonClass {
         return {
             network: network,
             security: security,
-            tlsSettings: security === 'tls' && ['ws', 'http'].indexOf(network) >= 0 ? this.tls.toJson() : undefined,
+            tlsSettings: security === 'tls' && ['ws', 'http', 'quic'].indexOf(network) >= 0 ? this.tls.toJson() : undefined,
             tcpSettings: network === 'tcp' ? this.tcp.toJson() : undefined,
             kcpSettings: network === 'kcp' ? this.kcp.toJson() : undefined,
             wsSettings: network === 'ws' ? this.ws.toJson() : undefined,
             httpSettings: network === 'http' ? this.http.toJson() : undefined,
+            quicSettings: network === 'quic' ? this.quic.toJson() : undefined,
         };
     }
 }
@@ -552,6 +584,10 @@ class Inbound extends V2CommonClass {
             network = 'h2';
             path = this.stream.http.path;
             host = this.stream.http.host.join(',');
+        } else if (network === 'quic') {
+            type = this.stream.quic.type;
+            host = this.stream.quic.security;
+            path = this.stream.quic.key;
         }
         let obj = {
             v: '2',

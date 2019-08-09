@@ -27,7 +27,6 @@ def refresh_status():
         now = time.time()
         __access_interval = now - __last_access
         if __access_interval <= 60:
-            # 若距离上次获取时间不超过 60 秒才真正去获取系统信息，以节省 CPU 资源
             global __get_interval, __last_get
             __get_interval = now - __last_get
             __last_get = now
@@ -40,7 +39,7 @@ def refresh_status():
             loads()
             net()
     except Exception as e:
-        logging.warning('获取系统状态信息失败：' + str(e))
+        logging.warning('Failed to get system status information: ' + str(e))
 
 
 def v2_status():

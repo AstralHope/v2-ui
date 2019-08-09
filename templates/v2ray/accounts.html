@@ -149,6 +149,21 @@
                                                 <a-tag color="green">[[ empDefault(inbound.stream.http.host[0], '无') ]]</a-tag>
                                             </a-col>
                                         </template>
+                                        <!-- vmess quic -->
+                                        <template v-if="inbound.stream.network === 'quic'">
+                                            <a-col :xs="24" :sm="24" :lg="12">
+                                                QUIC 加密：
+                                                <a-tag color="green">[[ inbound.stream.quic.security ]]</a-tag>
+                                            </a-col>
+                                            <a-col :xs="24" :sm="24" :lg="12">
+                                                密码：
+                                                <a-tag color="green">[[ empDefault(inbound.stream.quic.key, '无') ]]</a-tag>
+                                            </a-col>
+                                            <a-col :xs="24" :sm="24" :lg="12">
+                                                伪装：
+                                                <a-tag color="green">[[ inbound.stream.quic.type ]]</a-tag>
+                                            </a-col>
+                                        </template>
                                         <template v-if="inbound.stream.security == 'tls'">
                                             <a-col :xs="24" :sm="24" :lg="12">
                                                 域名：

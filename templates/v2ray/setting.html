@@ -120,11 +120,6 @@
                 },
                 setSettings(settings) {
                     settings.unshift({name: '当前面板版本', value: '{{ cur_ver }}'});
-                    for (let i = 0; i < settings.length; ++i) {
-                        if (isEmpty(settings[i].name)) {
-                            settings.splice(i--, 1);
-                        }
-                    }
                     this.settings = settings;
                 },
                 openEdit(setting) {

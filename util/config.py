@@ -47,6 +47,10 @@ def get_port():
     return __get('port', 65432)
 
 
+def get_address():
+    return __get('address', '0.0.0.0')
+
+
 def get_cert_file():
     return __get('cert_file', '')
 
@@ -96,7 +100,7 @@ def get_secret_key():
 
 
 def get_current_version():
-    return '4.0.1'
+    return '4.1.0'
 
 
 def add_if_not_exist(setting, update=False):
@@ -116,6 +120,9 @@ def reset_config():
 
 
 def init_db(update=False):
+    add_if_not_exist(Setting(
+        'address', '面板网页监听地址', '0.0.0.0', 'text',
+        '谨慎修改！！！如果你会使用 nginx 等软件，可以将此设置为 127.0.0.1，这样外界就无法直接访问面板。如果不懂就不要乱修改', True), update)
     add_if_not_exist(Setting(
         'port', '面板网页端口', '65432', 'int',
         '', True), update)
@@ -146,7 +153,7 @@ def init_db(update=False):
     add_if_not_exist(Setting(
         'traffic_job_interval', '统计流量间隔时间（秒）', '60', 'int',
         '数值过小会导致CPU使用率上升，填0或负数后果自负', True), update)
-    add_if_not_exist(Setting('secret_key', '', os.urandom(24), 'text', '', True), update)
+    add_if_not_exist(Setting('secret_key', '', os.urandom(24), 'text', '', True), False)
     db.session.commit()
 
 

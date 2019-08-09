@@ -33,7 +33,7 @@ def read_v2_config():
         with open(path, encoding='utf-8') as f:
             return f.read()
     except Exception as e:
-        logging.error('读取 v2ray 配置文件发生错误：' + str(e))
+        logging.error('An error occurred while reading the v2ray configuration file: ' + str(e))
         return None
 
 
@@ -46,7 +46,7 @@ def write_v2_config(v2_config):
             f.write(v2_config)
         restart(True)
     except Exception as e:
-        logging.error('写入 v2ray 配置文件发生错误：' + str(e))
+        logging.error('An error occurred while writing the v2ray configuration file: ' + str(e))
 
 
 def __get_api_port():
@@ -75,7 +75,7 @@ def restart(now=False):
 
 def start():
     if is_running():
-        raise V2rayException('已经在运行了')
+        raise V2rayException('v2ray already running')
 
     def f():
         cmd_util.exec_cmd(config.get_v2_start_cmd())
@@ -84,7 +84,7 @@ def start():
 
 def stop():
     if not is_running():
-        raise V2rayException('已经停止了')
+        raise V2rayException('v2ray has stopped')
 
     def f():
         cmd_util.exec_cmd(config.get_v2_stop_cmd())
@@ -94,7 +94,8 @@ def stop():
 try:
     __api_port = __get_api_port()
 except Exception as e:
-    logging.error('开启 v2ray api 失败，请删除 /etc/v2ray/config.json 配置文件，并强制升级 v2ray')
+    logging.error('Failed to open v2ray api, '
+                  'please delete /etc/v2ray/config.json configuration file and force upgrade v2ray')
     logging.error(str(e))
     exit(-1)
 __traffic_pattern = re.compile('stat:\s*<\s*name:\s*"inbound>>>'
@@ -109,7 +110,7 @@ def __get_v2ray_api_cmd(service, method, pattern, reset):
 
 def get_inbounds_traffic(reset=True):
     if __api_port < 0:
-        logging.warning('v2ray api 端口未配置')
+        logging.warning('v2ray api port is not configured')
         return None
     cmd = __get_v2ray_api_cmd('StatsService', 'QueryStats', '', 'true' if reset else 'false')
     result, code = cmd_util.exec_cmd(cmd)
