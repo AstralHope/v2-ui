@@ -65,3 +65,7 @@ cat /etc/v2-ui/v2-ui.log           #查看运行日志
 ```
 /usr/local/v2-ui/v2-ui resetconfig
 ```
+
+## 面板启动失败
+### 出现：‘ascii’ codec can’t encode characters in position 0-6: ordinal not in range(128)
+这是因为系统编码不支持中文的缘故，将系统编码设置为 UTF-8 即可，具体请自行搜索方法。
