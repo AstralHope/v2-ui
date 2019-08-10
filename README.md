@@ -48,6 +48,17 @@ cat /etc/v2-ui/v2-ui.log           #查看运行日志
 ## 数据备份与迁移
 面板所有数据包括账号信息等都存在 /etc/v2-ui/v2-ui.db 中，只要备份此文件即可。在新服务器安装了面板之后，先关闭面板，再将备份的文件覆盖新安装的，最后启动面板即可。
 
+## 卸载面板
+执行以下命令即可完全卸载面板，如果还需要卸载 v2ray，请自行找相关教程。
+```
+systemctl stop v2-ui
+systemctl disable v2-ui
+rm /usr/local/v2-ui/ -rf
+rm /etc/v2-ui/ -rf
+rm /etc/systemd/system/v2-ui.service
+systemctl daemon-reload
+```
+
 # 常见问题
 ## 安装完了打不开面板
 检查面板状态，确认正在运行后再确保 65432 端口已经放行，我再说三遍：***端口放行、端口放行、端口放行***。
