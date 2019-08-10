@@ -50,7 +50,8 @@
                     <transition-group tag="div" name="list">
                         <a-card v-for="inbound in inbounds" :key="inbound.id" hoverable>
                             <div slot="title">
-                                <a-button type="primary" icon="qrcode"
+                                <a-button v-if="[Protocols.VMESS, Protocols.SHADOWSOCKS].indexOf(inbound.protocol) >= 0"
+                                          type="primary" icon="qrcode"
                                           @click="qrModal.show(
                                                     '二维码',
                                                     inbound.genLink(inbound.listen === '0.0.0.0' ? ip : inbound.listen),
@@ -164,6 +165,13 @@
                                                 <a-tag color="green">[[ inbound.stream.quic.type ]]</a-tag>
                                             </a-col>
                                         </template>
+                                        <!-- tls enable -->
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            tls：
+                                            <a-tag v-if="inbound.stream.security == 'tls'" color="green">开启</a-tag>
+                                            <a-tag color="orange">关闭</a-tag>
+                                        </a-col>
+                                        <!-- tls -->
                                         <template v-if="inbound.stream.security == 'tls'">
                                             <a-col :xs="24" :sm="24" :lg="12">
                                                 域名：
@@ -317,6 +325,8 @@
                         protocol: inbound.protocol,
                         settings: inbound.settings.toString(false),
                         stream_settings: inbound.stream.toString(false),
+                        sniffing: [Protocols.VMESS, Protocols.SHADOWSOCKS].indexOf(inbound.protocol) >= 0 ?
+                            inbound.sniffing.toString(false) : '{}',
                         remark: inbound.remark,
                     };
                     this.submit('/v2ray/inbound/add', data, inModal, callback, callback);
@@ -328,6 +338,8 @@
                         protocol: inbound.protocol,
                         settings: inbound.settings.toString(false),
                         stream_settings: inbound.stream.toString(false),
+                        sniffing: [Protocols.VMESS, Protocols.SHADOWSOCKS].indexOf(inbound.protocol) >= 0 ?
+                            inbound.sniffing.toString(false) : '{}',
                         remark: inbound.remark,
                         enable: inbound.enable,
                     };

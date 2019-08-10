@@ -21,14 +21,14 @@ class Inbound(db.Model):
     enable = Column(Boolean, default=True, nullable=False)
 
     def __init__(self, port=None, listen=None, protocol=None,
-                 settings=None, stream_settings=None, remark=None):
+                 settings=None, stream_settings=None, sniffing=None, remark=None):
         self.port = port
         self.listen = listen
         self.protocol = protocol
         self.settings = settings
         self.stream_settings = stream_settings
         self.tag = 'inbound-%d' % self.port
-        self.sniffing = None
+        self.sniffing = sniffing
         self.remark = remark
         self.up = 0
         self.down = 0

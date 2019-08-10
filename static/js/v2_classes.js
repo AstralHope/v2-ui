@@ -491,7 +491,7 @@ class StreamSettings extends V2CommonClass {
         return {
             network: network,
             security: security,
-            tlsSettings: security === 'tls' && ['ws', 'http', 'quic'].indexOf(network) >= 0 ? this.tls.toJson() : undefined,
+            tlsSettings: security === 'tls' && ['tcp', 'ws', 'http', 'quic'].indexOf(network) >= 0 ? this.tls.toJson() : undefined,
             tcpSettings: network === 'tcp' ? this.tcp.toJson() : undefined,
             kcpSettings: network === 'kcp' ? this.kcp.toJson() : undefined,
             wsSettings: network === 'ws' ? this.ws.toJson() : undefined,

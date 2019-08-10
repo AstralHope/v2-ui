@@ -55,8 +55,9 @@ def add_inbound():
     protocol = request.form['protocol']
     settings = request.form['settings']
     stream_settings = request.form['stream_settings']
+    sniffing = request.form['sniffing']
     remark = request.form['remark']
-    inbound = Inbound(port, listen, protocol, settings, stream_settings, remark)
+    inbound = Inbound(port, listen, protocol, settings, stream_settings, sniffing, remark)
     db.session.add(inbound)
     db.session.commit()
     return jsonify(Msg(True, '添加成功，将在 %d 秒内自动生效' % __check_interval))
@@ -73,6 +74,7 @@ def update_inbound(in_id):
     add_if_not_none(update, 'protocol', request.form.get('protocol'))
     add_if_not_none(update, 'settings', request.form.get('settings'))
     add_if_not_none(update, 'stream_settings', request.form.get('stream_settings'))
+    add_if_not_none(update, 'sniffing', request.form.get('sniffing'))
     add_if_not_none(update, 'remark', request.form.get('remark'))
     add_if_not_none(update, 'enable', request.form.get('enable') == 'true')
     Inbound.query.filter_by(id=in_id).update(update)
