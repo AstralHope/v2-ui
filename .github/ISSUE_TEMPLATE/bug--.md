@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-#提问须知
+# 提问须知
  - 先仔细阅读博客文章及评论，查看是否有相关问题和解决方案，再查看所有 issues，包括已开启的和已关闭的，确认没有任何地方可以解决你的问题时再提问。
  - 提问的艺术：https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md
 
