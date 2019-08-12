@@ -40,7 +40,7 @@ systemctl stop v2-ui               #停止面板
 systemctl restart v2-ui            #重启面板
 systemctl enable v2-ui             #设置开机自启
 systemctl disable v2-ui            #关闭开机自启
-systemctl status v2-ui             #查看运行状态
+systemctl status v2-ui -l          #查看运行状态
 
 cat /etc/v2-ui/v2-ui.log           #查看运行日志
 ```
