@@ -9,6 +9,7 @@ assignees: ''
 
 # Before you report
  - Read the blog post and comments carefully to see if there are any issues and solutions, and then check all Github issues, including those that are open and closed, and ask if there is no place to solve your problem.
+ - If you need to upload images, drag the images directly into this text box.
  - How To Ask Questions The Smart Way: http://www.catb.org/~esr/faqs/smart-questions.html
 
 
