@@ -12,7 +12,7 @@ https://blog.sprov.xyz/v2-ui/
  - 系统状态监控
  - 支持多用户多协议，浏览器可视化操作，无需敲命令
  - 支持的协议：vmess、shadowsocks、dokodemo-door、socks、http
- - vmess 支持的传输配置：tcp、kcp、ws（tls）、http（tls）
+ - vmess 支持的传输配置：tcp（http伪装、tls）、kcp（伪装）、ws（tls）、http（tls）、quic（tls）
  - 支持账号流量统计
  - 支持自定义 v2ray 配置模板
  - 支持 https 访问面板（需自备域名 + ssl 证书）
@@ -35,14 +35,17 @@ bash <(curl -Ls https://blog.sprov.xyz/v2-ui.sh)
 
 # 面板其它操作
 ```
-systemctl start v2-ui              #启动面板
-systemctl stop v2-ui               #停止面板
-systemctl restart v2-ui            #重启面板
-systemctl enable v2-ui             #设置开机自启
-systemctl disable v2-ui            #关闭开机自启
-systemctl status v2-ui -l          #查看运行状态
-
-cat /etc/v2-ui/v2-ui.log           #查看运行日志
+v2-ui                  # 显示管理菜单 (功能更多)
+v2-ui start            # 启动 v2-ui 面板
+v2-ui stop             # 停止 v2-ui 面板
+v2-ui restart          # 重启 v2-ui 面板
+v2-ui status           # 查看 v2-ui 状态
+v2-ui enable           # 设置 v2-ui 开机自启
+v2-ui disable          # 取消 v2-ui 开机自启
+v2-ui log              # 查看 v2-ui 日志
+v2-ui update           # 更新 v2-ui 面板
+v2-ui install          # 安装 v2-ui 面板
+v2-ui uninstall        # 卸载 v2-ui 面板
 ```
 
 ## 数据备份与迁移
@@ -55,7 +58,7 @@ systemctl stop v2-ui
 systemctl disable v2-ui
 rm /usr/local/v2-ui/ -rf
 rm /etc/v2-ui/ -rf
-rm /etc/systemd/system/v2-ui.service
+rm /etc/systemd/system/v2-ui.service -f
 systemctl daemon-reload
 ```
 
