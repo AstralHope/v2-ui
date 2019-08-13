@@ -80,3 +80,6 @@ systemctl daemon-reload
 ## 面板启动失败
 ### 出现：‘ascii’ codec can’t encode characters in position 0-6: ordinal not in range(128)
 这是因为系统编码不支持中文的缘故，将系统编码设置为 UTF-8 即可，具体请自行搜索方法。
+
+## 怎么没有重启 v2ray 的按钮了
+本面板与 sprov-ui 手动重启 v2ray 的方式不同，采用自动的方式，当添加、修改、删除账号后，默认会在 60 秒内自动更新 v2ray 配置文件，并重启 v2ray。可在面板设置中修改【账号生效时间】，**不宜设置过小的数值**，否则会造成 CPU 使用率上升。
