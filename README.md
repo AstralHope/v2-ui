@@ -2,7 +2,7 @@
 python 重构 sprov-ui，一个船新的 v2ray 面板，给你一种船新的体验
 
 # 详细教程
-https://blog.sprov.xyz/2019/08/03/v2-ui/
+https://blog.sprov.xyz/v2-ui/
 
 # 运行截图
 ![1.png](1.png)
