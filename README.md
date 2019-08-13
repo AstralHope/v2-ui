@@ -12,7 +12,7 @@ https://blog.sprov.xyz/v2-ui/
  - 系统状态监控
  - 支持多用户多协议，浏览器可视化操作，无需敲命令
  - 支持的协议：vmess、shadowsocks、dokodemo-door、socks、http
- - vmess 支持的传输配置：tcp、kcp、ws（tls）、http（tls）
+ - vmess 支持的传输配置：tcp（http伪装、tls）、kcp（伪装）、ws（tls）、http（tls）、quic（tls）
  - 支持账号流量统计
  - 支持自定义 v2ray 配置模板
  - 支持 https 访问面板（需自备域名 + ssl 证书）
