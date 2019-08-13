@@ -1,5 +1,5 @@
 # v2-ui
-python 重构 sprov-ui，一个船新的 v2ray 面板，给你一种船新的体验
+支持多协议多用户的 v2ray 面板，Support multi-protocol multi-user v2ray panel
 
 # 详细教程
 https://blog.sprov.xyz/v2-ui/
