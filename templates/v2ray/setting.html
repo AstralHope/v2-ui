@@ -90,7 +90,6 @@
             title: '操作',
             dataIndex: 'action',
             align: 'center',
-            width: 50,
             scopedSlots: { 'customRender': 'action' },
         }];
 
@@ -200,8 +199,8 @@
                         cancelText: '不再提醒',
                         closable: true,
                         onCancel: () => {
-                            docCookies.setItem('close_setting_tip', true);
-                        }
+                            docCookies.setItem('close_setting_tip', true, null, '/');
+                        },
                     });
                 }
             }

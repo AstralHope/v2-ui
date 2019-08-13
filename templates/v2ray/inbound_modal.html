@@ -33,6 +33,9 @@
         <a-form-item label="alterId">
             <a-input type="number" v-model.number="inModal.inbound.settings.vmesses[0].alterId"></a-input>
         </a-form-item>
+        <a-form-item label="禁止不安全加密">
+            <a-switch v-model.number="inModal.inbound.settings.disableInsecure"></a-switch>
+        </a-form-item>
     </a-form>
 
     <!-- stream settings -->

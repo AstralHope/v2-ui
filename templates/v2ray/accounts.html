@@ -106,7 +106,10 @@
                                         </a-col>
                                         <a-col :xs="24" :sm="24" :lg="12">
                                             加密：
-                                            <a-tag color="green">auto</a-tag>
+                                            <a-tag v-if="inbound.settings.disableInsecure" color="green">
+                                                [[ VmessMethods.AES_128_GCM ]]、[[ VmessMethods.CHACHA20_POLY1305 ]]
+                                            </a-tag>
+                                            <a-tag v-else color="green">auto</a-tag>
                                         </a-col>
                                         <a-col :xs="24" :sm="24" :lg="12">
                                             传输配置：
@@ -169,7 +172,7 @@
                                         <a-col :xs="24" :sm="24" :lg="12">
                                             tls：
                                             <a-tag v-if="inbound.stream.security == 'tls'" color="green">开启</a-tag>
-                                            <a-tag color="orange">关闭</a-tag>
+                                            <a-tag v-else color="orange">关闭</a-tag>
                                         </a-col>
                                         <!-- tls -->
                                         <template v-if="inbound.stream.security == 'tls'">
@@ -178,9 +181,9 @@
                                                 <a-tag color="green">[[ empDefault(inbound.stream.tls.server, '无') ]]</a-tag>
                                             </a-col>
                                             <a-col :xs="24" :sm="24" :lg="12">
-                                                允许不安全：
+                                                允许不安全连接：
                                                 <a-tag v-if="inbound.stream.tls.allowInsecure" color="green">是</a-tag>
-                                                <a-tag v-else color="orange">否</a-tag>
+                                                <a-tag v-else color="green">否</a-tag>
                                             </a-col>
                                         </template>
                                     </template>

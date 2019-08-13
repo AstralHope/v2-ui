@@ -688,9 +688,12 @@ Inbound.Settings = class extends V2CommonClass {
 };
 
 Inbound.VmessSettings = class extends Inbound.Settings {
-    constructor(protocol, vmesses=[new Inbound.VmessSettings.Vmess()]) {
+    constructor(protocol,
+                vmesses=[new Inbound.VmessSettings.Vmess()],
+                disableInsecureEncryption=false) {
         super(protocol);
         this.vmesses = vmesses;
+        this.disableInsecure = disableInsecureEncryption;
     }
 
     indexOfVmessById(id) {
@@ -715,12 +718,14 @@ Inbound.VmessSettings = class extends Inbound.Settings {
         return new Inbound.VmessSettings(
             Protocols.VMESS,
             json.clients.map(client => Inbound.VmessSettings.Vmess.fromJson(client)),
+            isEmpty(json.disableInsecureEncryption) ? false : json.disableInsecureEncryption,
         );
     }
 
     toJson() {
         return {
-            'clients': Inbound.VmessSettings.toJsonArray(this.vmesses),
+            clients: Inbound.VmessSettings.toJsonArray(this.vmesses),
+            disableInsecureEncryption: this.disableInsecure,
         };
     }
 };
