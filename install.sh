@@ -114,7 +114,6 @@ install_v2-ui() {
     echo -e ""
     echo -e "如果是更新面板，则按你之前的方式访问面板"
     echo -e ""
-    echo -e "下载 v2-ui 管理脚本"
     curl -o /usr/bin/v2-ui --silent https://raw.githubusercontent.com/sprov065/v2-ui/master/install.sh
     chmod +x /usr/bin/v2-ui
     echo -e "v2-ui 管理脚本使用方法: "
