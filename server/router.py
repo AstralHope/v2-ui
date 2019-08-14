@@ -1,5 +1,6 @@
 from flask import jsonify, request
 from flask.blueprints import Blueprint
+from flask_babel import gettext
 
 from base.models import Msg, User
 from init import db
@@ -27,7 +28,7 @@ def update_setting(setting_id):
     value = request.form['value']
     value_type = request.form['value_type']
     config.update_setting(setting_id, key, name, value, value_type)
-    return jsonify(Msg(True, '修改成功，请自行确定是否需要重启面板'))
+    return jsonify(Msg(True, gettext('update success, please determine if you need to restart the panel.')))
 
 
 @server_bp.route('/user/update', methods=['POST'])
@@ -38,8 +39,8 @@ def update_user():
     password = request.form['password']
     user = User.query.filter_by(username=old_username, password=old_password).first()
     if not user:
-        return jsonify(Msg(False, '原用户名或密码错误'))
+        return jsonify(Msg(False, gettext('old username or old password wrong')))
     user.username = username
     user.password = password
     db.session.commit()
-    return jsonify(Msg(True, '修改成功'))
+    return jsonify(Msg(True, gettext('update success')))

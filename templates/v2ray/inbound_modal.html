@@ -1,25 +1,25 @@
 <a-modal id="inbound-modal" v-model="inModal.visible" :title="inModal.title" @ok="inModal.ok"
          :confirm-loading="inModal.confirmLoading" :closable="true"
-         :ok-text="inModal.okText" cancel-text="关闭">
+         :ok-text="inModal.okText" cancel-text="{{ _('close') }}">
 
     <!-- base -->
     <a-form layout="inline">
-        <a-form-item label="备注">
+        <a-form-item label="{{ _('remark') }}">
             <a-input v-model.trim="inModal.inbound.remark"></a-input>
         </a-form-item>
-        <a-form-item label="启用">
+        <a-form-item label="{{ _('enable') }}">
             <a-switch v-model="inModal.inbound.enable"></a-switch>
         </a-form-item>
-        <a-form-item label="选择协议">
+        <a-form-item label="{{ _('protocol') }}">
             <a-select v-model="inModal.inbound.protocol" style="width: 160px;"
                       @change="value => inModal.inbound.settings = Inbound.Settings.getSettings(value)">
                 <a-select-option v-for="p in Protocols" :key="p" :value="p">[[ p ]]</a-select-option>
             </a-select>
         </a-form-item>
-        <a-form-item label="监听IP">
+        <a-form-item label="{{ _('listening IP') }}">
             <a-input v-model.trim="inModal.inbound.listen"></a-input>
         </a-form-item>
-        <a-form-item label="端口">
+        <a-form-item label="{{ _('port') }}">
             <a-input type="number" v-model.number="inModal.inbound.port"></a-input>
         </a-form-item>
     </a-form>
@@ -30,10 +30,10 @@
         <a-form-item label="id">
             <a-input v-model.trim="inModal.inbound.settings.vmesses[0].id"></a-input>
         </a-form-item>
-        <a-form-item label="alterId">
+        <a-form-item label="{{ _('alter id') }}">
             <a-input type="number" v-model.number="inModal.inbound.settings.vmesses[0].alterId"></a-input>
         </a-form-item>
-        <a-form-item label="禁止不安全加密">
+        <a-form-item label="{{ _('disable insecure encryption') }}">
             <a-switch v-model.number="inModal.inbound.settings.disableInsecure"></a-switch>
         </a-form-item>
     </a-form>
@@ -43,7 +43,7 @@
 
         <!-- select stream network -->
         <a-form layout="inline">
-            <a-form-item label="选择传输配置">
+            <a-form-item label="{{ _('transport') }}">
                 <a-select v-model="inModal.inbound.stream.network"
                           @change="value => value === 'http' ? inModal.inbound.stream.security = 'tls' : ''">
                     <a-select-option value="tcp">tcp</a-select-option>
@@ -59,7 +59,7 @@
         <template v-if="inModal.inbound.stream.network === 'tcp'">
             <!-- vmess tcp type -->
             <a-form layout="inline">
-                <a-form-item label="http 伪装">
+                <a-form-item label="http {{ _('camouflage') }}">
                     <a-switch
                             :checked="inModal.inbound.stream.tcp.type === 'http'"
                             @change="checked => inModal.inbound.stream.tcp.type = checked ? 'http' : 'none'">
@@ -70,30 +70,72 @@
             <!-- vmess tcp request -->
             <a-form v-if="inModal.inbound.stream.tcp.type === 'http'"
                     layout="inline">
-                <a-form-item label="request version">
+                <a-form-item label="{{ _('request version') }}">
                     <a-input v-model.trim="inModal.inbound.stream.tcp.request.version"></a-input>
                 </a-form-item>
-                <a-form-item label="request method">
+                <a-form-item label="{{ _('request method') }}">
                     <a-input v-model.trim="inModal.inbound.stream.tcp.request.method"></a-input>
                 </a-form-item>
-                <a-form-item label="request path">
+                <a-form-item label="{{ _('request path') }}">
                     <a-row v-for="(path, index) in inModal.inbound.stream.tcp.request.path">
                         <a-input v-model.trim="inModal.inbound.stream.tcp.request.path[index]"></a-input>
                     </a-row>
+                </a-form-item>
+                <a-form-item label="{{ _('request header') }}">
+                    <a-row>
+                        <a-button size="small"
+                                  @click="inModal.inbound.stream.tcp.request.addHeader('Host', 'xxx.com')">
+                            +
+                        </a-button>
+                    </a-row>
+                    <a-input-group v-for="(header, index) in inModal.inbound.stream.tcp.request.headers">
+                        <a-input style="width: 50%" v-model.trim="header.name"
+                                 addon-before="{{ _('name') }}"></a-input>
+                        <a-input style="width: 50%" v-model.trim="header.value"
+                                 addon-before="{{ _('value') }}">
+                            <template slot="addonAfter">
+                                <a-button size="small"
+                                          @click="inModal.inbound.stream.tcp.request.removeHeader(index)">
+                                    -
+                                </a-button>
+                            </template>
+                        </a-input>
+                    </a-input-group>
                 </a-form-item>
             </a-form>
 
             <!-- vmess tcp response -->
             <a-form v-if="inModal.inbound.stream.tcp.type === 'http'"
                     layout="inline">
-                <a-form-item label="response version">
+                <a-form-item label="{{ _('response version') }}">
                     <a-input v-model.trim="inModal.inbound.stream.tcp.response.version"></a-input>
                 </a-form-item>
-                <a-form-item label="response status">
+                <a-form-item label="{{ _('response status') }}">
                     <a-input v-model.trim="inModal.inbound.stream.tcp.response.status"></a-input>
                 </a-form-item>
-                <a-form-item label="response reason">
+                <a-form-item label="{{ _('response reason') }}">
                     <a-input v-model.trim="inModal.inbound.stream.tcp.response.reason"></a-input>
+                </a-form-item>
+                <a-form-item label="{{ _('response header') }}">
+                    <a-row>
+                        <a-button size="small"
+                                  @click="inModal.inbound.stream.tcp.response.addHeader('Content-Type', 'application/octet-stream')">
+                            +
+                        </a-button>
+                    </a-row>
+                    <a-input-group v-for="(header, index) in inModal.inbound.stream.tcp.response.headers">
+                        <a-input style="width: 50%" v-model.trim="header.name"
+                                 addon-before="{{ _('name') }}"></a-input>
+                        <a-input style="width: 50%" v-model.trim="header.value"
+                                 addon-before="{{ _('value') }}">
+                            <template slot="addonAfter">
+                                <a-button size="small"
+                                          @click="inModal.inbound.stream.tcp.response.removeHeader(index)">
+                                    -
+                                </a-button>
+                            </template>
+                        </a-input>
+                    </a-input-group>
                 </a-form-item>
             </a-form>
         </template>
@@ -101,35 +143,35 @@
         <!-- vmess kcp -->
         <a-form v-if="inModal.inbound.stream.network === 'kcp'"
                 layout="inline">
-            <a-form-item label="伪装">
+            <a-form-item label="{{ _('camouflage') }}">
                 <a-select v-model="inModal.inbound.stream.kcp.type" style="width: 280px;">
-                    <a-select-option value="none">none（不伪装）</a-select-option>
-                    <a-select-option value="srtp">srtp（伪装视频通话数据）</a-select-option>
-                    <a-select-option value="utp">utp（伪装BT下载）</a-select-option>
-                    <a-select-option value="wechat-video">wechat-video（伪装微信视频）</a-select-option>
-                    <a-select-option value="dtls">dtls（伪装DTLS 1.2数据包）</a-select-option>
-                    <a-select-option value="wireguard">wireguard（伪装WireGuard数据包）</a-select-option>
+                    <a-select-option value="none">none（{{ _('not camouflage') }}）</a-select-option>
+                    <a-select-option value="srtp">srtp（{{ _('camouflage video call') }}）</a-select-option>
+                    <a-select-option value="utp">utp（{{ _('camouflage BT download') }}）</a-select-option>
+                    <a-select-option value="wechat-video">wechat-video（{{ _('camouflage WeChat video') }}）</a-select-option>
+                    <a-select-option value="dtls">dtls（{{ _('camouflage DTLS 1.2 packages') }}）</a-select-option>
+                    <a-select-option value="wireguard">wireguard（{{ _('camouflage wireguard packages') }}）</a-select-option>
                 </a-select>
             </a-form-item>
-            <a-form-item label="mtu">
+            <a-form-item label="{{ _('mtu') }}">
                 <a-input type="number" v-model.number="inModal.inbound.stream.kcp.mtu"></a-input>
             </a-form-item>
-            <a-form-item label="tti">
+            <a-form-item label="{{ _('tti') }} (ms)">
                 <a-input type="number" v-model.number="inModal.inbound.stream.kcp.tti"></a-input>
             </a-form-item>
-            <a-form-item label="uplinkCapacity">
+            <a-form-item label="{{ _('uplink capacity') }} (MB/S)">
                 <a-input type="number" v-model.number="inModal.inbound.stream.kcp.upCap"></a-input>
             </a-form-item>
-            <a-form-item label="downlinkCapacity">
+            <a-form-item label="{{ _('downlink capacity') }} (MB/S)">
                 <a-input type="number" v-model.number="inModal.inbound.stream.kcp.downCap"></a-input>
             </a-form-item>
-            <a-form-item label="congestion">
+            <a-form-item label="{{ _('congestion') }}">
                 <a-switch v-model="inModal.inbound.stream.kcp.congestion"></a-switch>
             </a-form-item>
-            <a-form-item label="readBufferSize">
+            <a-form-item label="{{ _('read buffer size') }} (MB)">
                 <a-input type="number" v-model.number="inModal.inbound.stream.kcp.readBuffer"></a-input>
             </a-form-item>
-            <a-form-item label="writeBufferSize">
+            <a-form-item label="{{ _('write buffer size') }} (MB)">
                 <a-input type="number" v-model.number="inModal.inbound.stream.kcp.writeBuffer"></a-input>
             </a-form-item>
         </a-form>
@@ -137,7 +179,7 @@
         <!-- vmess ws -->
         <a-form v-if="inModal.inbound.stream.network === 'ws'"
                 layout="inline">
-            <a-form-item label="路径">
+            <a-form-item label="{{ _('path') }}">
                 <a-input v-model.trim="inModal.inbound.stream.ws.path"></a-input>
             </a-form-item>
             <!-- TODO -->
@@ -149,10 +191,10 @@
         <!-- vmess http -->
         <a-form v-if="inModal.inbound.stream.network === 'http'"
                 layout="inline">
-            <a-form-item label="路径">
+            <a-form-item label="{{ _('path') }}">
                 <a-input v-model.trim="inModal.inbound.stream.http.path"></a-input>
             </a-form-item>
-            <a-form-item label="Host">
+            <a-form-item label="host">
                 <a-row v-for="(host, index) in inModal.inbound.stream.http.host">
                     <a-input v-model.trim="inModal.inbound.stream.http.host[index]"></a-input>
                 </a-row>
@@ -162,24 +204,24 @@
         <!-- vmess quic -->
         <a-form v-if="inModal.inbound.stream.network === 'quic'"
                 layout="inline">
-            <a-form-item label="加密">
+            <a-form-item label="{{ _('method') }}">
                 <a-select v-model="inModal.inbound.stream.quic.security" style="width: 165px;">
                     <a-select-option value="none">none</a-select-option>
                     <a-select-option value="aes-128-gcm">aes-128-gcm</a-select-option>
                     <a-select-option value="chacha20-poly1305">chacha20-poly1305</a-select-option>
                 </a-select>
             </a-form-item>
-            <a-form-item label="密码">
+            <a-form-item label="{{ _('password') }}">
                 <a-input v-model.trim="inModal.inbound.stream.quic.key"></a-input>
             </a-form-item>
-            <a-form-item label="伪装">
+            <a-form-item label="{{ _('camouflage') }}">
                 <a-select v-model="inModal.inbound.stream.quic.type" style="width: 280px;">
-                    <a-select-option value="none">none（不伪装）</a-select-option>
-                    <a-select-option value="srtp">srtp（伪装视频通话数据）</a-select-option>
-                    <a-select-option value="utp">utp（伪装BT下载）</a-select-option>
-                    <a-select-option value="wechat-video">wechat-video（伪装微信视频）</a-select-option>
-                    <a-select-option value="dtls">dtls（伪装DTLS 1.2数据包）</a-select-option>
-                    <a-select-option value="wireguard">wireguard（伪装WireGuard数据包）</a-select-option>
+                    <a-select-option value="none">none（{{ _('not camouflage') }}）</a-select-option>
+                    <a-select-option value="srtp">srtp（{{ _('camouflage video call') }}）</a-select-option>
+                    <a-select-option value="utp">utp（{{ _('camouflage BT download') }}）</a-select-option>
+                    <a-select-option value="wechat-video">wechat-video（{{ _('camouflage WeChat video') }}）</a-select-option>
+                    <a-select-option value="dtls">dtls（{{ _('camouflage DTLS 1.2 packages') }}）</a-select-option>
+                    <a-select-option value="wireguard">wireguard（{{ _('camouflage wireguard packages') }}）</a-select-option>
                 </a-select>
             </a-form-item>
         </a-form>
@@ -188,15 +230,15 @@
     <!-- shadowsocks -->
     <a-form v-if="inModal.inbound.protocol === Protocols.SHADOWSOCKS"
             layout="inline">
-        <a-form-item label="加密">
+        <a-form-item label="{{ _('method') }}">
             <a-select v-model="inModal.inbound.settings.method" style="width: 165px;">
                 <a-select-option v-for="method in SSMethods" :value="method">[[ method ]]</a-select-option>
             </a-select>
         </a-form-item>
-        <a-form-item label="密码">
+        <a-form-item label="{{ _('password') }}">
             <a-input v-model.trim="inModal.inbound.settings.password"></a-input>
         </a-form-item>
-        <a-form-item label="网络">
+        <a-form-item label="{{ _('network') }}">
             <a-select v-model="inModal.inbound.settings.network" style="width: 100px;">
                 <a-select-option value="tcp,udp">tcp+udp</a-select-option>
                 <a-select-option value="tcp">tcp</a-select-option>
@@ -208,13 +250,13 @@
     <!-- dokodemo-door -->
     <a-form v-if="inModal.inbound.protocol === Protocols.DOKODEMO"
             layout="inline">
-        <a-form-item label="转发地址">
+        <a-form-item label="{{ _('forward address') }}">
             <a-input v-model.trim="inModal.inbound.settings.address"></a-input>
         </a-form-item>
-        <a-form-item label="转发端口">
+        <a-form-item label="{{ _('forward port') }}">
             <a-input type="number" v-model.number="inModal.inbound.settings.port"></a-input>
         </a-form-item>
-        <a-form-item label="转发协议">
+        <a-form-item label="{{ _('forward network') }}">
             <a-select v-model="inModal.inbound.settings.network" style="width: 100px;">
                 <a-select-option value="tcp,udp">tcp+udp</a-select-option>
                 <a-select-option value="tcp">tcp</a-select-option>
@@ -226,19 +268,19 @@
     <!-- socks -->
     <a-form v-if="inModal.inbound.protocol === Protocols.SOCKS"
             layout="inline">
-        <a-form-item label="密码认证">
+        <a-form-item label="{{ _('password auth') }}">
             <a-switch :checked="inModal.inbound.settings.auth === 'password'"
                       @change="checked => inModal.inbound.settings.auth = checked ? 'password' : 'noauth'"></a-switch>
         </a-form-item>
         <template v-if="inModal.inbound.settings.auth === 'password'">
-            <a-form-item label="用户名">
+            <a-form-item label="{{ _('username') }}">
                 <a-input v-model.trim="inModal.inbound.settings.accounts[0].user"></a-input>
             </a-form-item>
-            <a-form-item label="密码">
+            <a-form-item label="{{ _('password') }}">
                 <a-input v-model.trim="inModal.inbound.settings.accounts[0].pass"></a-input>
             </a-form-item>
         </template>
-        <a-form-item label="开启 udp">
+        <a-form-item label="{{ _('enable') }} udp">
             <a-switch v-model="inModal.inbound.settings.udp"></a-switch>
         </a-form-item>
         <a-form-item v-if="inModal.inbound.settings.udp"
@@ -250,10 +292,10 @@
     <!-- http -->
     <a-form v-if="inModal.inbound.protocol === Protocols.HTTP"
             layout="inline">
-        <a-form-item label="用户名">
+        <a-form-item label="{{ _('username') }}">
             <a-input v-model.trim="inModal.inbound.settings.accounts[0].user"></a-input>
         </a-form-item>
-        <a-form-item label="密码">
+        <a-form-item label="{{ _('password') }}">
             <a-input v-model.trim="inModal.inbound.settings.accounts[0].pass"></a-input>
         </a-form-item>
     </a-form>
@@ -276,33 +318,33 @@
         <!-- tls settings -->
         <a-form v-if="inModal.inbound.stream.security === 'tls'"
                 layout="inline">
-            <a-form-item label="域名">
+            <a-form-item label="{{ _('domain') }}">
                 <a-input v-model.trim="inModal.inbound.stream.tls.server"></a-input>
             </a-form-item>
-            <a-form-item label="允许不安全连接">
+            <a-form-item label="{{ _('allow insecure') }}">
                 <a-switch v-model="inModal.inbound.stream.tls.allowInsecure"></a-switch>
             </a-form-item>
-            <a-form-item label="证书">
+            <a-form-item label="{{ _('certificate') }}">
                 <a-radio-group v-model="inModal.inbound.stream.tls.certs[0].useFile"
                                button-style="solid">
-                    <a-radio-button :value="true">证书文件路径</a-radio-button>
-                    <a-radio-button :value="false">证书文件内容</a-radio-button>
+                    <a-radio-button :value="true">{{ _('certificate file path') }}</a-radio-button>
+                    <a-radio-button :value="false">{{ _('certificate file content') }}</a-radio-button>
                 </a-radio-group>
             </a-form-item>
             <template v-if="inModal.inbound.stream.tls.certs[0].useFile">
-                <a-form-item label="证书文件路径">
+                <a-form-item label="{{ _('certificate file path') }}">
                     <a-input v-model.trim="inModal.inbound.stream.tls.certs[0].certFile"></a-input>
                 </a-form-item>
-                <a-form-item label="密钥文件路径">
+                <a-form-item label="{{ _('key file path') }}">
                     <a-input v-model.trim="inModal.inbound.stream.tls.certs[0].keyFile"></a-input>
                 </a-form-item>
             </template>
             <template v-else>
-                <a-form-item label="证书文件内容">
+                <a-form-item label="{{ _('certificate file content') }}">
                     <a-input type="textarea" :rows="2"
                              v-model="inModal.inbound.stream.tls.certs[0].cert"></a-input>
                 </a-form-item>
-                <a-form-item label="密钥文件内容">
+                <a-form-item label="{{ _('key file content') }}">
                     <a-input type="textarea" :rows="2"
                              v-model="inModal.inbound.stream.tls.certs[0].key"></a-input>
                 </a-form-item>
@@ -316,13 +358,13 @@
         title: '',
         visible: false,
         confirmLoading: false,
-        okText: '确定',
+        okText: '{{ _('confirm') }}',
         confirm: null,
         inbound: new Inbound(),
         ok() {
             execute(inModal.confirm);
         },
-        show({ title='', okText='确定', inbound=null, confirm=()=>{} }) {
+        show({ title='', okText='{{ _('confirm') }}', inbound=null, confirm=()=>{} }) {
             this.title = title;
             this.okText = okText;
             if (inbound) {

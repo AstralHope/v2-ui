@@ -1,17 +1,13 @@
 {% extends 'v2ray/base.html' %}
-{% block title %}账号列表{% endblock %}
+{% block title %}{{ _('accounts') }}{% endblock %}
 {% block head %}
     {{ super() }}
     <style>
-        .ant-card + .ant-card {
-            margin-top: 20px;
-        }
-
-        .ant-card:last-of-type {
+        .ant-card {
             margin-bottom: 20px;
         }
 
-        div[class^=ant-col] + div[class^=ant-col] {
+        div[class*=ant-col] {
             margin-top: 10px;
         }
     </style>
@@ -22,7 +18,7 @@
         {% include 'v2ray/common_sider.html' %}
         <a-layout id="content-layout">
             <a-layout-content>
-                <a-spin :spinning="spinning" :delay="500" tip="加载中">
+                <a-spin :spinning="spinning" :delay="500" tip="{{ _('loading') }}">
                     <transition name="list" appear>
                         <a-card hoverable style="margin-bottom: 20px;">
                             <div slot="title">
@@ -30,14 +26,14 @@
                             </div>
                             <a-row>
                                 <a-col :xs="24" :sm="24" :lg="12">
-                                    上传/下载：
+                                    {{ _('upload') }} / {{ _('download') }}：
                                     <a-tag color="green">[[ sizeFormat(total.up) ]] / [[ sizeFormat(total.down) ]]</a-tag>
                                 </a-col>
                                 <a-col :xs="24" :sm="24" :lg="12">
-                                    总用量：
-                                    <a-popconfirm title="确定要重置所有流量为 0 吗？不可恢复"
+                                    {{ _('total traffic') }}：
+                                    <a-popconfirm title="{{ _('Are you sure you want to reset all traffic to 0? It\'s unrecoverable') }}"
                                                   @confirm="resetAllTraffic()"
-                                                  ok-text="确定" cancel-text="取消">
+                                                  ok-text="{{ _('confirm') }}" cancel-text="{{ _('cancel') }}">
                                         <a-tag color="green">[[ sizeFormat(total.up + total.down) ]]</a-tag>
                                     </a-popconfirm>
                                 </a-col>
@@ -45,44 +41,49 @@
                         </a-card>
                     </transition>
                     <a-card v-if="inbounds.length === 0">
-                        无账号，请先添加账号
+                        {{ _('No account, please add an account first') }}
                     </a-card>
                     <transition-group tag="div" name="list">
                         <a-card v-for="inbound in inbounds" :key="inbound.id" hoverable>
                             <div slot="title">
+                                <a-tag class="hidden-sm-and-down" color="green">[[ inbound.protocol ]]</a-tag>
                                 <a-button v-if="[Protocols.VMESS, Protocols.SHADOWSOCKS].indexOf(inbound.protocol) >= 0"
                                           type="primary" icon="qrcode"
                                           @click="qrModal.show(
-                                                    '二维码',
+                                                    '{{ _('qrcode') }}',
                                                     inbound.genLink(inbound.listen === '0.0.0.0' ? ip : inbound.listen),
-                                                    '复制链接')"></a-button>
+                                                    '{{ _('copy link') }}')"></a-button>
                                 <a-button icon="edit" @click="openEditInbound(inbound)"></a-button>
                                 <a-button style="float: right;" type="danger" icon="delete" @click="delInbound(inbound)"></a-button>
                             </div>
                             <div>
                                 <a-row>
-                                    <a-col :xs="24" :sm="24" :lg="12">
-                                        备注：
-                                        <a-tag color="blue">[[ empDefault(inbound.remark, '无') ]]</a-tag>
+                                    <a-col class="hidden-md-and-up" :xs="24" :sm="24" :lg="12">
+                                        {{ _('protocol') }}：
+                                        <a-tag color="green">[[ inbound.protocol ]]</a-tag>
                                     </a-col>
                                     <a-col :xs="24" :sm="24" :lg="12">
-                                        启用：
-                                        <a-popconfirm :title="inbound.enable ? '是否禁用' : '是否启用'"
+                                        {{ _('remark') }}：
+                                        <a-tag color="blue">[[ empDefault(inbound.remark, '{{ _('none') }}') ]]</a-tag>
+                                    </a-col>
+                                    <a-col :xs="24" :sm="24" :lg="12">
+                                        {{ _('enable') }}：
+                                        <a-popconfirm :title="inbound.enable ? '{{ _('Whether to disable') }}' : '{{ _('Whether to enable') }}'"
                                                       @confirm="setEnable(inbound, !inbound.enable)"
-                                                      ok-text="是" cancel-text="否">
-                                            <a-tag v-if="inbound.enable" color="green">是</a-tag>
-                                            <a-tag v-else color="red">否</a-tag>
+                                                      ok-text="{{ _('yes') }}" cancel-text="{{ _('no') }}">
+                                            <a-tag v-if="inbound.enable" color="green">{{ _('yes') }}</a-tag>
+                                            <a-tag v-else color="red">{{ _('no') }}</a-tag>
                                         </a-popconfirm>
                                     </a-col>
                                     <a-col :xs="24" :sm="24" :lg="12">
-                                        上传/下载：
+                                        {{ _('upload') }} / {{ _('download') }}：
                                         <a-tag color="green">[[ sizeFormat(inbound.up) ]] / [[ sizeFormat(inbound.down) ]]</a-tag>
                                     </a-col>
                                     <a-col :xs="24" :sm="24" :lg="12">
-                                        总用量：
-                                        <a-popconfirm title="确定要重置流量为 0 吗？不可恢复"
+                                        {{ _('total traffic') }}：
+                                        <a-popconfirm title="{{ _('Are you sure you want to reset all traffic to 0? It\'s unrecoverable') }}"
                                                       @confirm="resetTraffic(inbound)"
-                                                      ok-text="确定" cancel-text="取消">
+                                                      ok-text="{{ _('confirm') }}" cancel-text="{{ _('cancel') }}">
                                             <a-tag color="green">[[ sizeFormat(inbound.up + inbound.down) ]]</a-tag>
                                         </a-popconfirm>
                                     </a-col>
@@ -91,7 +92,7 @@
                                         <a-tag color="green">[[ inbound.listen === '0.0.0.0' ? ip : inbound.listen ]]</a-tag>
                                     </a-col>
                                     <a-col :xs="24" :sm="24" :lg="12">
-                                        端口：
+                                        {{ _('port') }}：
                                         <a-tag color="green">[[ inbound.port ]]</a-tag>
                                     </a-col>
                                     <!-- vmess -->
@@ -101,29 +102,29 @@
                                             <a-tag color="green">[[ inbound.settings.vmesses[0].id ]]</a-tag>
                                         </a-col>
                                         <a-col :xs="24" :sm="24" :lg="12">
-                                            额外id：
+                                            {{ _('alter id') }}：
                                             <a-tag color="green">[[ inbound.settings.vmesses[0].alterId ]]</a-tag>
                                         </a-col>
                                         <a-col :xs="24" :sm="24" :lg="12">
-                                            加密：
+                                            {{ _('method') }}：
                                             <a-tag v-if="inbound.settings.disableInsecure" color="green">
                                                 [[ VmessMethods.AES_128_GCM ]]、[[ VmessMethods.CHACHA20_POLY1305 ]]
                                             </a-tag>
                                             <a-tag v-else color="green">auto</a-tag>
                                         </a-col>
                                         <a-col :xs="24" :sm="24" :lg="12">
-                                            传输配置：
+                                            {{ _('transport') }}：
                                             <a-tag color="green">[[ inbound.stream.network ]]</a-tag>
                                         </a-col>
                                         <!-- vmess tcp -->
                                         <template v-if="inbound.stream.network === 'tcp'">
                                             <a-col :xs="24" :sm="24" :lg="12">
-                                                伪装：
+                                                {{ _('camouflage') }}：
                                                 <a-tag color="green">[[ inbound.stream.tcp.type ]]</a-tag>
                                             </a-col>
                                             <template v-if="inbound.stream.tcp.type === 'http'">
                                                 <a-col :xs="24" :sm="24" :lg="12">
-                                                    路径：
+                                                    {{ _('path') }}：
                                                     <a-tag color="green">[[ inbound.stream.tcp.request.path[0] ]]</a-tag>
                                                 </a-col>
                                             </template>
@@ -131,123 +132,123 @@
                                         <!-- vmess kcp -->
                                         <template v-if="inbound.stream.network === 'kcp'">
                                             <a-col :xs="24" :sm="24" :lg="12">
-                                                伪装：
+                                                {{ _('camouflage') }}：
                                                 <a-tag color="green">[[ inbound.stream.kcp.type ]]</a-tag>
                                             </a-col>
                                         </template>
                                         <!-- vmess ws -->
                                         <template v-if="inbound.stream.network === 'ws'">
                                             <a-col :xs="24" :sm="24" :lg="12">
-                                                路径：
+                                                {{ _('path') }}：
                                                 <a-tag color="green">[[ inbound.stream.ws.path ]]</a-tag>
                                             </a-col>
                                         </template>
                                         <!-- vmess http -->
                                         <template v-if="inbound.stream.network === 'http'">
                                             <a-col :xs="24" :sm="24" :lg="12">
-                                                路径：
+                                                {{ _('path') }}：
                                                 <a-tag color="green">[[ inbound.stream.http.path ]]</a-tag>
                                             </a-col>
                                             <a-col :xs="24" :sm="24" :lg="12">
-                                                Host：
-                                                <a-tag color="green">[[ empDefault(inbound.stream.http.host[0], '无') ]]</a-tag>
+                                                host：
+                                                <a-tag color="green">[[ empDefault(inbound.stream.http.host[0], '{{ _('none') }}') ]]</a-tag>
                                             </a-col>
                                         </template>
                                         <!-- vmess quic -->
                                         <template v-if="inbound.stream.network === 'quic'">
                                             <a-col :xs="24" :sm="24" :lg="12">
-                                                QUIC 加密：
+                                                QUIC {{ _('method') }}：
                                                 <a-tag color="green">[[ inbound.stream.quic.security ]]</a-tag>
                                             </a-col>
                                             <a-col :xs="24" :sm="24" :lg="12">
-                                                密码：
-                                                <a-tag color="green">[[ empDefault(inbound.stream.quic.key, '无') ]]</a-tag>
+                                                {{ _('password') }}：
+                                                <a-tag color="green">[[ empDefault(inbound.stream.quic.key, '{{ _('none') }}') ]]</a-tag>
                                             </a-col>
                                             <a-col :xs="24" :sm="24" :lg="12">
-                                                伪装：
+                                                {{ _('camouflage') }}：
                                                 <a-tag color="green">[[ inbound.stream.quic.type ]]</a-tag>
                                             </a-col>
                                         </template>
                                         <!-- tls enable -->
                                         <a-col :xs="24" :sm="24" :lg="12">
                                             tls：
-                                            <a-tag v-if="inbound.stream.security == 'tls'" color="green">开启</a-tag>
-                                            <a-tag v-else color="orange">关闭</a-tag>
+                                            <a-tag v-if="inbound.stream.security == 'tls'" color="green">{{ _('open') }}</a-tag>
+                                            <a-tag v-else color="orange">{{ _('close') }}</a-tag>
                                         </a-col>
                                         <!-- tls -->
                                         <template v-if="inbound.stream.security == 'tls'">
                                             <a-col :xs="24" :sm="24" :lg="12">
-                                                域名：
-                                                <a-tag color="green">[[ empDefault(inbound.stream.tls.server, '无') ]]</a-tag>
+                                                {{ _('domain') }}：
+                                                <a-tag color="green">[[ empDefault(inbound.stream.tls.server, '{{ _('none') }}') ]]</a-tag>
                                             </a-col>
                                             <a-col :xs="24" :sm="24" :lg="12">
-                                                允许不安全连接：
-                                                <a-tag v-if="inbound.stream.tls.allowInsecure" color="green">是</a-tag>
-                                                <a-tag v-else color="green">否</a-tag>
+                                                {{ _('allow insecure') }}：
+                                                <a-tag v-if="inbound.stream.tls.allowInsecure" color="green">{{ _('yes') }}</a-tag>
+                                                <a-tag v-else color="green">{{ _('no') }}</a-tag>
                                             </a-col>
                                         </template>
                                     </template>
                                     <!-- shadowsocks -->
                                     <template v-if="inbound.protocol === Protocols.SHADOWSOCKS">
                                         <a-col :xs="24" :sm="24" :lg="12">
-                                            加密：
+                                            {{ _('method') }}：
                                             <a-tag color="green">[[ inbound.settings.method ]]</a-tag>
                                         </a-col>
                                         <a-col :xs="24" :sm="24" :lg="12">
-                                            密码：
+                                            {{ _('password') }}：
                                             <a-tag color="green">[[ inbound.settings.password ]]</a-tag>
                                         </a-col>
                                         <a-col :xs="24" :sm="24" :lg="12">
-                                            网络：
+                                            {{ _('network') }}：
                                             <a-tag color="green">[[ inbound.settings.network ]]</a-tag>
                                         </a-col>
                                     </template>
                                     <!-- dokodemo-door -->
                                     <template v-if="inbound.protocol === Protocols.DOKODEMO">
                                         <a-col :xs="24" :sm="24" :lg="12">
-                                            转发地址：
+                                            {{ _('forward address') }}：
                                             <a-tag color="green">[[ inbound.settings.address ]]</a-tag>
                                         </a-col>
                                         <a-col :xs="24" :sm="24" :lg="12">
-                                            转发端口：
+                                            {{ _('forward port') }}：
                                             <a-tag color="green">[[ inbound.settings.port ]]</a-tag>
                                         </a-col>
                                         <a-col :xs="24" :sm="24" :lg="12">
-                                            网络：
+                                            {{ _('network') }}：
                                             <a-tag color="green">[[ inbound.settings.network ]]</a-tag>
                                         </a-col>
                                     </template>
                                     <!-- socks -->
                                     <template v-if="inbound.protocol === Protocols.SOCKS">
                                         <a-col :xs="24" :sm="24" :lg="12">
-                                            密码认证：
-                                            <a-tag v-if="inbound.settings.auth === 'password'" color="green">是</a-tag>
-                                            <a-tag v-else color="orange">否</a-tag>
+                                            {{ _('password auth') }}：
+                                            <a-tag v-if="inbound.settings.auth === 'password'" color="green">{{ _('yes') }}</a-tag>
+                                            <a-tag v-else color="orange">{{ _('no') }}</a-tag>
                                         </a-col>
                                         <template v-if="inbound.settings.auth === 'password'">
                                             <a-col :xs="24" :sm="24" :lg="12">
-                                                用户名：
+                                                {{ _('username') }}：
                                                 <a-tag color="green">[[ inbound.settings.accounts[0].user ]]</a-tag>
                                             </a-col>
                                             <a-col :xs="24" :sm="24" :lg="12">
-                                                密码：
+                                                {{ _('password') }}：
                                                 <a-tag color="green">[[ inbound.settings.accounts[0].pass ]]</a-tag>
                                             </a-col>
                                         </template>
                                         <a-col :xs="24" :sm="24" :lg="12">
                                             udp：
-                                            <a-tag v-if="inbound.settings.udp" color="green">开启</a-tag>
-                                            <a-tag v-else color="orange">未开启</a-tag>
+                                            <a-tag v-if="inbound.settings.udp" color="green">{{ _('open') }}</a-tag>
+                                            <a-tag v-else color="orange">{{ _('close') }}</a-tag>
                                         </a-col>
                                     </template>
                                     <!-- http -->
                                     <template v-if="inbound.protocol === Protocols.HTTP">
                                         <a-col :xs="24" :sm="24" :lg="12">
-                                            用户名：
+                                            {{ _('username') }}：
                                             <a-tag color="green">[[ inbound.settings.accounts[0].user ]]</a-tag>
                                         </a-col>
                                         <a-col :xs="24" :sm="24" :lg="12">
-                                            密码：
+                                            {{ _('password') }}：
                                             <a-tag color="green">[[ inbound.settings.accounts[0].pass ]]</a-tag>
                                         </a-col>
                                     </template>
@@ -301,8 +302,8 @@
                 },
                 openAddInbound() {
                     inModal.show({
-                        title: '添加账号',
-                        okText: '添加',
+                        title: '{{ _('add account') }}',
+                        okText: '{{ _('add') }}',
                         confirm: () => {
                             inModal.loading();
                             this.addInbound(inModal.inbound, () => inModal.closeLoading());
@@ -311,8 +312,8 @@
                 },
                 openEditInbound(inbound) {
                     inModal.show({
-                        title: '修改账号',
-                        okText: '修改',
+                        title: '{{ _('update account') }}',
+                        okText: '{{ _('update') }}',
                         inbound: inbound,
                         confirm: () => {
                             inModal.loading();
@@ -350,10 +351,10 @@
                 },
                 delInbound(inbound) {
                     this.$confirm({
-                        title: '删除账号',
-                        content: '删除后不可恢复，确认删除吗',
-                        okText: '删除',
-                        cancelText: '取消',
+                        title: '{{ _('delete account') }}',
+                        content: '{{ _('Cannot be restored after deletion, confirm deletion?') }}',
+                        okText: '{{ _('delete') }}',
+                        cancelText: '{{ _('cancel') }}',
                         onOk: () => this.submit('/v2ray/inbound/del/' + inbound.id)
                     });
                 },

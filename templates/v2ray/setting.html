@@ -1,5 +1,5 @@
 {% extends 'v2ray/base.html' %}
-{% block title %}面板设置{% endblock %}
+{% block title %}{{ _('panel settings') }}{% endblock %}
 {% block head %}
     {{ super() }}
     <style>
@@ -19,28 +19,28 @@
         <a-layout id="content-layout">
             <a-layout-content>
                 <transition name="list" appear>
-                <a-card title="修改登录信息" hoverable>
+                <a-card title="{{ _('update login username & password') }}" hoverable>
                     <a-form layout="inline">
-                        <a-form-item label="原用户名">
+                        <a-form-item label="{{ _('old username') }}">
                             <a-input v-model.trim="user.old_username"></a-input>
                         </a-form-item>
-                        <a-form-item label="原密码">
+                        <a-form-item label="{{ _('old password') }}">
                             <a-input v-model.trim="user.old_password" type="password"></a-input>
                         </a-form-item>
-                        <a-form-item label="新用户名">
+                        <a-form-item label="{{ _('new username') }}">
                             <a-input v-model.trim="user.username"></a-input>
                         </a-form-item>
-                        <a-form-item label="新密码">
+                        <a-form-item label="{{ _('new password') }}">
                             <a-input v-model.trim="user.password" type="password"></a-input>
                         </a-form-item>
                         <a-form-item>
-                            <a-button type="primary" @click="updateUser()">修改</a-button>
+                            <a-button type="primary" @click="updateUser()">{{ _('update') }}</a-button>
                         </a-form-item>
                     </a-form>
                 </a-card>
                 </transition>
                 <transition name="list" appear>
-                <a-card title="面板设置" hoverable>
+                <a-card title="{{ _('panel settings') }}" hoverable>
                     <a-table :data-source="settings" :columns="columns"
                              :pagination="false" bordered>
                         <template slot="name" slot-scope="text, setting">
@@ -75,19 +75,19 @@
     <script>
 
         const columns = [{
-            title: '名称',
+            title: '{{ _('name') }}',
             dataIndex: 'name',
             align: 'center',
             width: '30%',
             scopedSlots: { 'customRender': 'name' },
         }, {
-            title: '值',
+            title: '{{ _('value') }}',
             dataIndex: 'value',
             align: 'center',
             width: '70%',
             scopedSlots: { 'customRender': 'value' },
         }, {
-            title: '操作',
+            title: '{{ _('action') }}',
             dataIndex: 'action',
             align: 'center',
             scopedSlots: { 'customRender': 'action' },
@@ -118,7 +118,7 @@
                     });
                 },
                 setSettings(settings) {
-                    settings.unshift({name: '当前面板版本', value: '{{ cur_ver }}'});
+                    settings.unshift({name: '{{ _('current panel version') }}', value: '{{ cur_ver }}'});
                     this.settings = settings;
                 },
                 openEdit(setting) {
@@ -127,7 +127,7 @@
                         case 'text':
                         case 'textarea': this.openEditText(setting); break;
                         case 'bool': this.openEditBool(setting); break;
-                        default: this.$error({title: '错误', content: '不支持的类型'});
+                        default: this.$error({title: '{{ _('error') }}', content: '{{ _('not supported type') }}'});
                     }
                 },
                 openEditInt(setting) {
@@ -141,7 +141,7 @@
                 },
                 openEditPrompt(setting, promptType) {
                     promptModal.open({
-                        title: '修改 - ' + setting.name,
+                        title: '{{ _('update') }} - ' + setting.name,
                         type: promptType,
                         value: setting.value,
                         confirm: value => {
@@ -164,13 +164,13 @@
                 },
                 updateUser() {
                     if (isEmpty(this.user.old_username)) {
-                        this.$message.warning('请输入原用户名');
+                        this.$message.warning('{{ _('please input old username') }}');
                     } else if (isEmpty(this.user.old_password)) {
-                        this.$message.warning('请输入原密码');
+                        this.$message.warning('{{ _('please input old password') }}');
                     } else if (isEmpty(this.user.username)) {
-                        this.$message.warning('请输入新用户名');
+                        this.$message.warning('{{ _('please input new username') }}');
                     } else if (isEmpty(this.user.password)) {
-                        this.$message.warning('请输入新密码');
+                        this.$message.warning('{{ _('please input new password') }}');
                     } else {
                         post({
                             url: '/server/user/update',
@@ -189,14 +189,14 @@
                 if (!docCookies.getItem('close_setting_tip')) {
                     const h = this.$createElement;
                     this.$confirm({
-                        title: '用户须知',
+                        title: '{{ _('NOTICE') }}',
                         content: h('div', {}, [
-                            h('p', '此页面大部分配置项直接关乎面板与 v2ray 的存亡'),
-                            h('p', '修改不慎可能会导致无法启动面板，进而所有账号数据无法取出'),
-                            h('p', '请自行做好备份，若造成数据丢失概不负责'),
+                            h('p', '{{ _('Most of the configuration items on this page are directly related to the survival of the panel and v2ray.') }}'),
+                            h('p', '{{ _('Modifying the wrong value will cause the panel to fail to start, then you must reset all values.') }}'),
+                            h('p', '{{ _('Please make a backup yourself. If the data is lost, I will not be responsible for it.') }}'),
                         ]),
-                        okText: '我已明白',
-                        cancelText: '不再提醒',
+                        okText: '{{ _('understood') }}',
+                        cancelText: '{{ _('not remind') }}',
                         closable: true,
                         onCancel: () => {
                             docCookies.setItem('close_setting_tip', true, null, '/');

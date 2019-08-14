@@ -1,0 +1,553 @@
+# Translations template for PROJECT.
+# Copyright (C) 2019 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2019-08-14 20:31+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.7.0\n"
+
+#: init.py:93
+msgid "You has been logout, please refresh this page and login again"
+msgstr ""
+
+#: base/router.py:28
+msgid "login success"
+msgstr ""
+
+#: base/router.py:29
+msgid "username or password wrong"
+msgstr ""
+
+#: server/router.py:31
+msgid "update success, please determine if you need to restart the panel."
+msgstr ""
+
+#: server/router.py:42
+msgid "old username or old password wrong"
+msgstr ""
+
+#: server/router.py:46
+msgid "update success"
+msgstr ""
+
+#: templates/index.html:47 templates/v2ray/accounts.html:225
+#: templates/v2ray/accounts.html:242 templates/v2ray/inbound_modal.html:276
+#: templates/v2ray/inbound_modal.html:295
+msgid "username"
+msgstr ""
+
+#: templates/index.html:54 templates/v2ray/accounts.html:159
+#: templates/v2ray/accounts.html:193 templates/v2ray/accounts.html:229
+#: templates/v2ray/accounts.html:246 templates/v2ray/inbound_modal.html:214
+#: templates/v2ray/inbound_modal.html:238
+#: templates/v2ray/inbound_modal.html:279
+#: templates/v2ray/inbound_modal.html:298
+msgid "password"
+msgstr ""
+
+#: templates/index.html:59
+msgid "login"
+msgstr ""
+
+#: templates/common/prompt_modal.html:3 templates/v2ray/accounts.html:36
+#: templates/v2ray/accounts.html:81 templates/v2ray/accounts.html:352
+msgid "cancel"
+msgstr ""
+
+#: templates/common/prompt_modal.html:17 templates/common/prompt_modal.html:40
+#: templates/v2ray/accounts.html:36 templates/v2ray/accounts.html:81
+#: templates/v2ray/inbound_modal.html:361
+#: templates/v2ray/inbound_modal.html:367
+msgid "confirm"
+msgstr ""
+
+#: templates/common/qrcode_modal.html:3 templates/common/text_modal.html:2
+#: templates/v2ray/accounts.html:171 templates/v2ray/accounts.html:236
+#: templates/v2ray/inbound_modal.html:3
+msgid "close"
+msgstr ""
+
+#: templates/common/qrcode_modal.html:16 templates/common/text_modal.html:2
+msgid "copy"
+msgstr ""
+
+#: templates/common/qrcode_modal.html:26 templates/common/text_modal.html:31
+msgid "copied"
+msgstr ""
+
+#: templates/common/text_modal.html:6 templates/v2ray/accounts.html:29
+#: templates/v2ray/accounts.html:74
+msgid "download"
+msgstr ""
+
+#: templates/v2ray/accounts.html:2 templates/v2ray/common_sider.html:10
+#: templates/v2ray/common_sider.html:54
+msgid "accounts"
+msgstr ""
+
+#: templates/v2ray/accounts.html:21 templates/v2ray/index.html:120
+#: templates/v2ray/index.html:122
+msgid "loading"
+msgstr ""
+
+#: templates/v2ray/accounts.html:29 templates/v2ray/accounts.html:74
+msgid "upload"
+msgstr ""
+
+#: templates/v2ray/accounts.html:33 templates/v2ray/accounts.html:78
+msgid "total traffic"
+msgstr ""
+
+#: templates/v2ray/accounts.html:34 templates/v2ray/accounts.html:79
+msgid "Are you sure you want to reset all traffic to 0? It's unrecoverable"
+msgstr ""
+
+#: templates/v2ray/accounts.html:44
+msgid "No account, please add an account first"
+msgstr ""
+
+#: templates/v2ray/accounts.html:52
+msgid "qrcode"
+msgstr ""
+
+#: templates/v2ray/accounts.html:54
+msgid "copy link"
+msgstr ""
+
+#: templates/v2ray/accounts.html:61 templates/v2ray/inbound_modal.html:7
+msgid "remark"
+msgstr ""
+
+#: templates/v2ray/accounts.html:62 templates/v2ray/accounts.html:149
+#: templates/v2ray/accounts.html:160 templates/v2ray/accounts.html:177
+msgid "none"
+msgstr ""
+
+#: templates/v2ray/accounts.html:65 templates/v2ray/inbound_modal.html:10
+#: templates/v2ray/inbound_modal.html:283
+msgid "enable"
+msgstr ""
+
+#: templates/v2ray/accounts.html:66
+msgid "Whether to disable"
+msgstr ""
+
+#: templates/v2ray/accounts.html:66
+msgid "Whether to enable"
+msgstr ""
+
+#: templates/v2ray/accounts.html:68 templates/v2ray/accounts.html:69
+#: templates/v2ray/accounts.html:181 templates/v2ray/accounts.html:220
+msgid "yes"
+msgstr ""
+
+#: templates/v2ray/accounts.html:68 templates/v2ray/accounts.html:70
+#: templates/v2ray/accounts.html:182 templates/v2ray/accounts.html:221
+msgid "no"
+msgstr ""
+
+#: templates/v2ray/accounts.html:90 templates/v2ray/inbound_modal.html:22
+msgid "port"
+msgstr ""
+
+#: templates/v2ray/accounts.html:100 templates/v2ray/inbound_modal.html:33
+msgid "alter id"
+msgstr ""
+
+#: templates/v2ray/accounts.html:104 templates/v2ray/accounts.html:155
+#: templates/v2ray/accounts.html:189 templates/v2ray/inbound_modal.html:207
+#: templates/v2ray/inbound_modal.html:233
+msgid "method"
+msgstr ""
+
+#: templates/v2ray/accounts.html:111 templates/v2ray/inbound_modal.html:46
+msgid "transport"
+msgstr ""
+
+#: templates/v2ray/accounts.html:117 templates/v2ray/accounts.html:130
+#: templates/v2ray/accounts.html:163 templates/v2ray/inbound_modal.html:62
+#: templates/v2ray/inbound_modal.html:146
+#: templates/v2ray/inbound_modal.html:217
+msgid "camouflage"
+msgstr ""
+
+#: templates/v2ray/accounts.html:122 templates/v2ray/accounts.html:137
+#: templates/v2ray/accounts.html:144 templates/v2ray/inbound_modal.html:182
+#: templates/v2ray/inbound_modal.html:194
+msgid "path"
+msgstr ""
+
+#: templates/v2ray/accounts.html:170 templates/v2ray/accounts.html:235
+msgid "open"
+msgstr ""
+
+#: templates/v2ray/accounts.html:176 templates/v2ray/inbound_modal.html:321
+msgid "domain"
+msgstr ""
+
+#: templates/v2ray/accounts.html:180 templates/v2ray/inbound_modal.html:324
+msgid "allow insecure"
+msgstr ""
+
+#: templates/v2ray/accounts.html:197 templates/v2ray/accounts.html:212
+#: templates/v2ray/inbound_modal.html:241
+msgid "network"
+msgstr ""
+
+#: templates/v2ray/accounts.html:204 templates/v2ray/inbound_modal.html:253
+msgid "forward address"
+msgstr ""
+
+#: templates/v2ray/accounts.html:208 templates/v2ray/inbound_modal.html:256
+msgid "forward port"
+msgstr ""
+
+#: templates/v2ray/accounts.html:219 templates/v2ray/inbound_modal.html:271
+msgid "password auth"
+msgstr ""
+
+#: templates/v2ray/accounts.html:300
+msgid "add account"
+msgstr ""
+
+#: templates/v2ray/accounts.html:301
+msgid "add"
+msgstr ""
+
+#: templates/v2ray/accounts.html:310
+msgid "update account"
+msgstr ""
+
+#: templates/v2ray/accounts.html:311 templates/v2ray/setting.html:37
+#: templates/v2ray/setting.html:144
+msgid "update"
+msgstr ""
+
+#: templates/v2ray/accounts.html:349
+msgid "delete account"
+msgstr ""
+
+#: templates/v2ray/accounts.html:350
+msgid "Cannot be restored after deletion, confirm deletion?"
+msgstr ""
+
+#: templates/v2ray/accounts.html:351
+msgid "delete"
+msgstr ""
+
+#: templates/v2ray/clients.html:2
+msgid "clients"
+msgstr ""
+
+#: templates/v2ray/common_sider.html:6 templates/v2ray/common_sider.html:50
+#: templates/v2ray/index.html:2
+msgid "system status"
+msgstr ""
+
+#: templates/v2ray/common_sider.html:14 templates/v2ray/common_sider.html:58
+#: templates/v2ray/setting.html:2 templates/v2ray/setting.html:43
+msgid "panel settings"
+msgstr ""
+
+#: templates/v2ray/common_sider.html:19 templates/v2ray/common_sider.html:63
+msgid "other"
+msgstr ""
+
+#: templates/v2ray/common_sider.html:27 templates/v2ray/common_sider.html:71
+msgid "report issue"
+msgstr ""
+
+#: templates/v2ray/common_sider.html:36 templates/v2ray/common_sider.html:80
+msgid "logout"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:13
+msgid "protocol"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:19
+msgid "listening IP"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:36
+msgid "disable insecure encryption"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:73
+msgid "request version"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:76
+msgid "request method"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:79
+msgid "request path"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:84
+msgid "request header"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:93 templates/v2ray/inbound_modal.html:128
+#: templates/v2ray/setting.html:78
+msgid "name"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:95 templates/v2ray/inbound_modal.html:130
+#: templates/v2ray/setting.html:84
+msgid "value"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:110
+msgid "response version"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:113
+msgid "response status"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:116
+msgid "response reason"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:119
+msgid "response header"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:148
+#: templates/v2ray/inbound_modal.html:219
+msgid "not camouflage"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:149
+#: templates/v2ray/inbound_modal.html:220
+msgid "camouflage video call"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:150
+#: templates/v2ray/inbound_modal.html:221
+msgid "camouflage BT download"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:151
+#: templates/v2ray/inbound_modal.html:222
+msgid "camouflage WeChat video"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:152
+#: templates/v2ray/inbound_modal.html:223
+msgid "camouflage DTLS 1.2 packages"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:153
+#: templates/v2ray/inbound_modal.html:224
+msgid "camouflage wireguard packages"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:156
+msgid "mtu"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:159
+msgid "tti"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:162
+msgid "uplink capacity"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:165
+msgid "downlink capacity"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:168
+msgid "congestion"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:171
+msgid "read buffer size"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:174
+msgid "write buffer size"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:259
+msgid "forward network"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:327
+msgid "certificate"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:330
+#: templates/v2ray/inbound_modal.html:335
+msgid "certificate file path"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:331
+#: templates/v2ray/inbound_modal.html:343
+msgid "certificate file content"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:338
+msgid "key file path"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:347
+msgid "key file content"
+msgstr ""
+
+#: templates/v2ray/index.html:33
+msgid "memory"
+msgstr ""
+
+#: templates/v2ray/index.html:51
+msgid "disk"
+msgstr ""
+
+#: templates/v2ray/index.html:64
+msgid "status"
+msgstr ""
+
+#: templates/v2ray/index.html:69
+msgid "uptime"
+msgstr ""
+
+#: templates/v2ray/index.html:74
+msgid "loads"
+msgstr ""
+
+#: templates/v2ray/index.html:79
+msgid "connections"
+msgstr ""
+
+#: templates/v2ray/index.html:151
+msgid "running"
+msgstr ""
+
+#: templates/v2ray/index.html:152
+msgid "not running"
+msgstr ""
+
+#: templates/v2ray/index.html:153 templates/v2ray/setting.html:130
+msgid "error"
+msgstr ""
+
+#: templates/v2ray/setting.html:22
+msgid "update login username & password"
+msgstr ""
+
+#: templates/v2ray/setting.html:24
+msgid "old username"
+msgstr ""
+
+#: templates/v2ray/setting.html:27
+msgid "old password"
+msgstr ""
+
+#: templates/v2ray/setting.html:30
+msgid "new username"
+msgstr ""
+
+#: templates/v2ray/setting.html:33
+msgid "new password"
+msgstr ""
+
+#: templates/v2ray/setting.html:90
+msgid "action"
+msgstr ""
+
+#: templates/v2ray/setting.html:121
+msgid "current panel version"
+msgstr ""
+
+#: templates/v2ray/setting.html:130
+msgid "not supported type"
+msgstr ""
+
+#: templates/v2ray/setting.html:167
+msgid "please input old username"
+msgstr ""
+
+#: templates/v2ray/setting.html:169
+msgid "please input old password"
+msgstr ""
+
+#: templates/v2ray/setting.html:171
+msgid "please input new username"
+msgstr ""
+
+#: templates/v2ray/setting.html:173
+msgid "please input new password"
+msgstr ""
+
+#: templates/v2ray/setting.html:192
+msgid "NOTICE"
+msgstr ""
+
+#: templates/v2ray/setting.html:194
+msgid ""
+"Most of the configuration items on this page are directly related to the "
+"survival of the panel and v2ray."
+msgstr ""
+
+#: templates/v2ray/setting.html:195
+msgid ""
+"Modifying the wrong value will cause the panel to fail to start, then you"
+" must reset all values."
+msgstr ""
+
+#: templates/v2ray/setting.html:196
+msgid ""
+"Please make a backup yourself. If the data is lost, I will not be "
+"responsible for it."
+msgstr ""
+
+#: templates/v2ray/setting.html:198
+msgid "understood"
+msgstr ""
+
+#: templates/v2ray/setting.html:199
+msgid "not remind"
+msgstr ""
+
+#: v2ray/router.py:54
+msgid "port exists"
+msgstr ""
+
+#: v2ray/router.py:66
+#, python-format
+msgid "Successfully added, will take effect within %(seconds)d seconds"
+msgstr ""
+
+#: v2ray/router.py:89
+#, python-format
+msgid "Successfully updated, will take effect within %(seconds)d seconds"
+msgstr ""
+
+#: v2ray/router.py:100
+#, python-format
+msgid "Successfully deleted, will take effect within %(seconds)d seconds"
+msgstr ""
+
+#: v2ray/router.py:109
+msgid "Reset traffic successfully"
+msgstr ""
+
+#: v2ray/router.py:116
+msgid "Reset add traffic successfully"
+msgstr ""
+

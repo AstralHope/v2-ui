@@ -1,4 +1,5 @@
 from flask import Blueprint, Response, render_template, request, jsonify, redirect, url_for
+from flask_babel import gettext
 
 from base.models import Msg, User
 from init import db
@@ -24,8 +25,8 @@ def login():
     user = User.query.filter_by(username=username, password=password).first()
     if user is not None:
         session_util.login_success(user)
-        return jsonify(Msg(True, '登录成功'))
-    return jsonify(Msg(False, '用户名或密码错误'))
+        return jsonify(Msg(True, gettext('login success')))
+    return jsonify(Msg(False, gettext('username or password wrong')))
 
 
 @base_bp.route('/logout', methods=['GET', 'POST'])

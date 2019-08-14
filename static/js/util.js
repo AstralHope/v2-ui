@@ -36,17 +36,6 @@ window.execute = (func, ... args) => {
     }
 };
 
-(function () {
-    let clipboard = new ClipboardJS('.clipboard');
-    clipboard.on('success', function () {
-        Vue.prototype.$message.success('复制成功');
-    });
-    clipboard.on('error', function (e) {
-        console.log(e);
-        Vue.prototype.$message.error('复制失败，请手动复制或使用最新版的 chrome 浏览器');
-    });
-})();
-
 let ONE_KB = 1024;
 let ONE_MB = ONE_KB * 1024;
 let ONE_GB = ONE_MB * 1024;
@@ -150,13 +139,13 @@ window.safeBase64 = str => {
 
 window.formatSecond = second =>{
     if (second < 60) {
-        return second.toFixed(0) + ' 秒';
+        return second.toFixed(0) + ' s';
     } else if (second < 3600) {
-        return (second / 60).toFixed(0) + ' 分钟'
+        return (second / 60).toFixed(0) + ' min'
     } else if (second < 3600 * 24) {
-        return (second / 3600).toFixed(0) + ' 小时'
+        return (second / 3600).toFixed(0) + ' hour'
     } else {
-        return (second / 3600 / 24).toFixed(0) + ' 天'
+        return (second / 3600 / 24).toFixed(0) + ' day'
     }
 };
 

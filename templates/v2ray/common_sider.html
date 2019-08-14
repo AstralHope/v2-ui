@@ -3,20 +3,20 @@
             @click="({key}) => key.startsWith('http') ? window.open(key) : location.href = key">
         <a-menu-item key="{{ url_for('v2ray.index') }}">
             <a-icon type="desktop"></a-icon>
-            <span>系统状态</span>
+            <span>{{ _('system status') }}</span>
         </a-menu-item>
         <a-menu-item key="{{ url_for('v2ray.accounts') }}">
             <a-icon type="user"></a-icon>
-            <span>账号列表</span>
+            <span>{{ _('accounts') }}</span>
         </a-menu-item>
         <a-menu-item key="{{ url_for('v2ray.setting') }}">
             <a-icon type="setting"></a-icon>
-            <span>面板设置</span>
+            <span>{{ _('panel settings') }}</span>
         </a-menu-item>
         <a-sub-menu>
             <template slot="title">
                 <a-icon type="link"></a-icon>
-                <span>其它</span>
+                <span>{{ _('other') }}</span>
             </template>
             <a-menu-item key="https://github.com/sprov065/v2-ui/">
                 <a-icon type="github"></a-icon>
@@ -24,7 +24,7 @@
             </a-menu-item>
             <a-menu-item key="https://github.com/sprov065/v2-ui/issues">
                 <a-icon type="exception"></a-icon>
-                <span>反馈问题</span>
+                <span>{{ _('report issue') }}</span>
             </a-menu-item>
         </a-sub-menu>
 {#        <a-menu-item key="{{ url_for('v2ray.clients') }}">#}
@@ -33,7 +33,7 @@
 {#        </a-menu-item>#}
         <a-menu-item key="{{ url_for('base.logout') }}">
             <a-icon type="logout"></a-icon>
-            <span>退出登录</span>
+            <span>{{ _('logout') }}</span>
         </a-menu-item>
     </a-menu>
 </a-layout-sider>
@@ -47,20 +47,20 @@
         @click="({key}) => key.startsWith('http') ? window.open(key) : location.href = key">
         <a-menu-item key="{{ url_for('v2ray.index') }}">
             <a-icon type="desktop"></a-icon>
-            <span>系统状态</span>
+            <span>{{ _('system status') }}</span>
         </a-menu-item>
         <a-menu-item key="{{ url_for('v2ray.accounts') }}">
             <a-icon type="user"></a-icon>
-            <span>账号列表</span>
+            <span>{{ _('accounts') }}</span>
         </a-menu-item>
         <a-menu-item key="{{ url_for('v2ray.setting') }}">
             <a-icon type="setting"></a-icon>
-            <span>面板设置</span>
+            <span>{{ _('panel settings') }}</span>
         </a-menu-item>
         <a-sub-menu>
             <template slot="title">
                 <a-icon type="link"></a-icon>
-                <span>其它</span>
+                <span>{{ _('other') }}</span>
             </template>
             <a-menu-item key="https://github.com/sprov065/v2-ui/">
                 <a-icon type="github"></a-icon>
@@ -68,7 +68,7 @@
             </a-menu-item>
             <a-menu-item key="https://github.com/sprov065/v2-ui/issues">
                 <a-icon type="exception"></a-icon>
-                <span>反馈问题</span>
+                <span>{{ _('report issue') }}</span>
             </a-menu-item>
         </a-sub-menu>
 {#        <a-menu-item key="{{ url_for('v2ray.clients') }}">#}
@@ -77,7 +77,7 @@
 {#        </a-menu-item>#}
         <a-menu-item key="{{ url_for('base.logout') }}">
             <a-icon type="logout"></a-icon>
-            <span>退出登录</span>
+            <span>{{ _('logout') }}</span>
         </a-menu-item>
     </a-menu>
 </a-drawer>

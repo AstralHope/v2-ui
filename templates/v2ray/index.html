@@ -1,5 +1,5 @@
 {% extends 'v2ray/base.html' %}
-{% block title %}系统状态{% endblock %}
+{% block title %}{{ _('system status') }}{% endblock %}
 {% block head %}
     {{ super() }}
     <style>
@@ -30,7 +30,7 @@
                                         <a-progress type="dashboard" status="normal"
                                                     :stroke-color="status.memory.color"
                                                     :percent="status.memory.percent"></a-progress>
-                                        <div>内存：[[ sizeFormat(status.memory.used) ]] /
+                                        <div>{{ _('memory') }}：[[ sizeFormat(status.memory.used) ]] /
                                             [[ sizeFormat(status.memory.total) ]]</div>
                                     </a-col>
                                 </a-row>
@@ -48,7 +48,7 @@
                                         <a-progress type="dashboard" status="normal"
                                                     :stroke-color="status.disk.color"
                                                     :percent="status.disk.percent"></a-progress>
-                                        <div>硬盘：[[ sizeFormat(status.disk.used) ]] /
+                                        <div>{{ _('disk') }}：[[ sizeFormat(status.disk.used) ]] /
                                             [[ sizeFormat(status.disk.total) ]]</div>
                                     </a-col>
                                 </a-row>
@@ -61,22 +61,22 @@
                 <a-row>
                     <a-col :sm="24" :md="12">
                         <a-card hoverable>
-                            v2ray 状态：<a-tag :color="status.v2.color">[[ status.v2.stat ]]</a-tag>
+                            v2ray {{ _('status') }}：<a-tag :color="status.v2.color">[[ status.v2.stat ]]</a-tag>
                         </a-card>
                     </a-col>
                     <a-col :sm="24" :md="12">
                         <a-card hoverable>
-                            已运行：<a-tag color="#87d068">[[ status.uptime ]]</a-tag>
+                            {{ _('uptime') }}：<a-tag color="#87d068">[[ status.uptime ]]</a-tag>
                         </a-card>
                     </a-col>
                     <a-col :sm="24" :md="12">
                         <a-card hoverable>
-                            负载：[[ status.loads[0] ]] | [[ status.loads[1] ]] | [[ status.loads[2] ]]
+                            {{ _('loads') }}：[[ status.loads[0] ]] | [[ status.loads[1] ]] | [[ status.loads[2] ]]
                         </a-card>
                     </a-col>
                     <a-col :sm="24" :md="12">
                         <a-card hoverable>
-                            tcp / udp 连接数：[[ status.tcp_count ]] / [[ status.udp_count ]]
+                            tcp / udp {{ _('connections') }}：[[ status.tcp_count ]] / [[ status.udp_count ]]
                         </a-card>
                     </a-col>
                     <a-col :sm="24" :md="12">
@@ -117,9 +117,9 @@
         let status = {
             v2: {
                 color: '',
-                stat: '获取中',
+                stat: '{{ _('loading') }}',
             },
-            uptime: '获取中',
+            uptime: '{{ _('loading') }}',
             cpu: { percent: 0 },
             memory: { percent: 0 },
             swap: { percent: 0 },
@@ -148,9 +148,9 @@
                 },
                 setStatus(status) {
                     switch (status.v2.code) {
-                        case 0: status.v2.stat = '已运行'; status.v2.color = '#67C23A'; break;
-                        case 1: status.v2.stat = '未运行'; status.v2.color = '#E6A23C'; break;
-                        default: status.v2.stat = '出错'; status.v2.color = '#F56C6C';
+                        case 0: status.v2.stat = '{{ _('running') }}'; status.v2.color = '#67C23A'; break;
+                        case 1: status.v2.stat = '{{ _('not running') }}'; status.v2.color = '#E6A23C'; break;
+                        default: status.v2.stat = '{{ _('error') }}'; status.v2.color = '#F56C6C';
                     }
                     status.uptime = formatSecond(status.uptime);
                     status.cpu.percent = status.cpu.percent.toFixed(2);

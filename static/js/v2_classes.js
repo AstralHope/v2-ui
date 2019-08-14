@@ -67,13 +67,6 @@ class V2CommonClass {
         return new V2CommonClass();
     }
 
-    static emptyOrDefault(obj, defaultValue) {
-        if (isArrEmpty(obj)) {
-            return defaultValue;
-        }
-        return clone(obj);
-    }
-
     toJson() {
         return this;
     }
@@ -82,33 +75,42 @@ class V2CommonClass {
         return format ? JSON.stringify(this.toJson(), null, 2) : JSON.stringify(this.toJson());
     }
 
-    static putHeader(headers, name, value, arr=true) {
-        if (!(name in headers)) {
-            headers[name] = arr ? [value] : value;
-        } else {
-            if (arr) {
-                headers[name].push(value);
-            } else {
-                headers[name] = value;
-            }
+    static toHeaders(v2Headers) {
+        let newHeaders = [];
+        if (v2Headers) {
+            Object.keys(v2Headers).forEach(key => {
+                let values = v2Headers[key];
+                if (typeof(values) === 'string') {
+                    newHeaders.push({ name: key, value: values });
+                } else {
+                    for (let i = 0; i < values.length; ++i) {
+                        newHeaders.push({ name: key, value: values[i] });
+                    }
+                }
+            });
         }
+        return newHeaders;
     }
 
-    static removeHeader(headers, name, value, arr=true) {
-        if (name in headers) {
-            if (arr) {
-                let values = headers[name];
-                let index = values.indexOf(values);
-                if (index >= 0) {
-                    values.splice(index, 1);
-                }
-                if (values.length === 0) {
-                    delete headers[name];
-                }
+    static toV2Headers(headers, arr=true) {
+        let v2Headers = {};
+        for (let i = 0; i < headers.length; ++i) {
+            let name = headers[i].name;
+            let value = headers[i].value;
+            if (isEmpty(name) || isEmpty(value)) {
+                continue;
+            }
+            if (!(name in v2Headers)) {
+                v2Headers[name] = arr ? [value] : value;
             } else {
-                delete headers[name];
+                if (arr) {
+                    v2Headers[name].push(value);
+                } else {
+                    v2Headers[name] = value;
+                }
             }
         }
+        return v2Headers;
     }
 }
 
@@ -121,26 +123,6 @@ class TcpStreamSettings extends V2CommonClass {
         this.type = type;
         this.request = request;
         this.response = response;
-    }
-
-    putReqHeader(name, value) {
-        let headers = this.request.headers;
-        TcpStreamSettings.putHeader(headers, name, value);
-    }
-
-    removeReqHeader(name, value) {
-        let headers = this.request.headers;
-        TcpStreamSettings.removeHeader(headers, name, value);
-    }
-
-    putResHeader(name, value) {
-        let headers = this.response.headers;
-        TcpStreamSettings.putHeader(headers, name, value);
-    }
-
-    removeResHeader(name, value) {
-        let headers = this.response.headers;
-        TcpStreamSettings.removeHeader(headers, name, value);
     }
 
     static fromJson(json={}) {
@@ -164,12 +146,12 @@ TcpStreamSettings.TcpRequest = class extends V2CommonClass {
     constructor(version='1.1',
                 method='GET',
                 path=['/'],
-                headers={},
+                headers=[],
     ) {
         super();
         this.version = version;
         this.method = method;
-        this.path = path.length === 0 ? [''] : path;
+        this.path = path.length === 0 ? ['/'] : path;
         this.headers = headers;
     }
 
@@ -181,12 +163,20 @@ TcpStreamSettings.TcpRequest = class extends V2CommonClass {
         this.path.splice(index, 1);
     }
 
+    addHeader(name, value) {
+        this.headers.push({ name: name, value: value });
+    }
+
+    removeHeader(index) {
+        this.headers.splice(index, 1);
+    }
+
     static fromJson(json={}) {
         return new TcpStreamSettings.TcpRequest(
             json.version,
             json.method,
             json.path,
-            json.headers,
+            V2CommonClass.toHeaders(json.headers),
         );
     }
 
@@ -194,7 +184,7 @@ TcpStreamSettings.TcpRequest = class extends V2CommonClass {
         return {
             method: this.method,
             path: clone(this.path),
-            headers: clone(this.headers),
+            headers: V2CommonClass.toV2Headers(this.headers),
         };
     }
 };
@@ -203,7 +193,7 @@ TcpStreamSettings.TcpResponse = class extends V2CommonClass {
     constructor(version='1.1',
                 status='200',
                 reason='OK',
-                headers={},
+                headers=[],
     ) {
         super();
         this.version = version;
@@ -212,12 +202,20 @@ TcpStreamSettings.TcpResponse = class extends V2CommonClass {
         this.headers = headers;
     }
 
+    addHeader(name, value) {
+        this.headers.push({ name: name, value: value });
+    }
+
+    removeHeader(index) {
+        this.headers.splice(index, 1);
+    }
+
     static fromJson(json={}) {
         return new TcpStreamSettings.TcpResponse(
             json.version,
             json.status,
             json.reason,
-            json.headers,
+            V2CommonClass.toHeaders(json.headers),
         );
     }
 
@@ -226,7 +224,7 @@ TcpStreamSettings.TcpResponse = class extends V2CommonClass {
             version: this.version,
             status: this.status,
             reason: this.reason,
-            headers: clone(this.headers),
+            headers: V2CommonClass.toV2Headers(this.headers),
         };
     }
 };
@@ -281,31 +279,31 @@ class KcpStreamSettings extends V2CommonClass {
 }
 
 class WsStreamSettings extends V2CommonClass {
-    constructor(path='/', headers={}) {
+    constructor(path='/', headers=[]) {
         super();
         this.path = path;
         this.headers = headers;
     }
 
-    putHeader(name, value) {
-        V2CommonClass.putHeader(this.headers, name, value, false);
+    addHeader(name, value) {
+        this.headers.push({ name: name, value: value });
     }
 
-    removeHeader(name, value) {
-        V2CommonClass.removeHeader(this.headers, name, value, false);
+    removeHeader(index) {
+        this.headers.splice(index, 1);
     }
 
     static fromJson(json={}) {
         return new WsStreamSettings(
             json.path,
-            json.headers,
+            V2CommonClass.toHeaders(json.headers),
         );
     }
 
     toJson() {
         return {
             path: this.path,
-            headers: clone(this.headers),
+            headers: V2CommonClass.toV2Headers(this.headers, false),
         };
     }
 }

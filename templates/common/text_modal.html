@@ -1,9 +1,9 @@
 <a-modal id="text-modal" v-model="txtModal.visible" :title="txtModal.title"
-         :closable="true" ok-text="复制" cancel-text="关闭"
+         :closable="true" ok-text="{{ _('copy') }}" cancel-text="{{ _('close') }}"
          :ok-button-props="{attrs:{id:'txt-modal-ok-btn'}}">
     <a-button v-if="!isEmpty(txtModal.fileName)" type="primary" style="margin-bottom: 10px;"
               @click="downloader.download(txtModal.fileName, txtModal.content)">
-        下载 [[ txtModal.fileName ]]
+        {{ _('download') }} [[ txtModal.fileName ]]
     </a-button>
     <a-input type="textarea" v-model="txtModal.content"
              :autosize="{ minRows: 10, maxRows: 20}"></a-input>
@@ -28,7 +28,7 @@
                     this.clipboard = new ClipboardJS('#txt-modal-ok-btn', {
                         text: () => this.content,
                     });
-                    this.clipboard.on('success', () => app.$message.success('复制成功'));
+                    this.clipboard.on('success', () => app.$message.success('{{ _('copied') }}'));
                 }
                 if (this.qrcode === null) {
                     this.qrcode = new QRious({

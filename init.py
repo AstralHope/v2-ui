@@ -2,6 +2,7 @@ import logging
 import os
 
 from flask import Flask, request, redirect, url_for, jsonify
+from flask_babel import Babel, gettext
 from flask_sqlalchemy import SQLAlchemy
 
 from util import session_util, file_util
@@ -10,12 +11,24 @@ from util.schedule_util import scheduler
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 app = Flask(__name__)
+babel = Babel(app)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 6307200
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////etc/v2-ui/v2-ui.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 need_login_bps = []
 common_context = {}
+
+LANGUAGES = {
+    'zh': '中文',
+    'en': 'English',
+    'es': 'Español',
+}
+
+
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(LANGUAGES.keys())
 
 
 def init_db():
@@ -77,7 +90,7 @@ def before():
         for bp in need_login_bps:
             if request.path.startswith(bp.url_prefix):
                 if is_ajax():
-                    return jsonify(Msg(False, '你的登录时效已过，请刷新页面重新登录'))
+                    return jsonify(Msg(False, gettext('You has been logout, please refresh this page and login again')))
                 else:
                     return redirect(url_for('base.index'))
 
