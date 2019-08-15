@@ -1,3 +1,5 @@
+中文 | [English](README.en.md)
+
 # v2-ui
 支持多协议多用户的 v2ray 面板，Support multi-protocol multi-user v2ray panel
 
