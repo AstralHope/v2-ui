@@ -4,8 +4,8 @@
 Support multi-protocol multi-user v2ray panel
 
 # Screenshot
-![1.png](1.png)
-![2.png](2.png)
+![1_en.png](1_en.png)
+![2_en.png](2_en.png)
 
 # Features
  - System status monitoring
