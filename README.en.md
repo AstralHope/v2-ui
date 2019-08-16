@@ -3,6 +3,11 @@
 # v2-ui
 Support multi-protocol multi-user v2ray panel
 
+# Help translate
+The panel currently supports Chinese and English. If you find the wrong translation to help you fix, or want to help translate into more languages, you can find translations for each language in the translations folder, such as translations/zh/LC_MESSAGES/message.po files It is Chinese translation content. Where msgid is the original English text, msgstr is the translated content, and each msgid corresponds to a msgstr.
+
+Of course, the document currently only supports Chinese and English. If you want to help with translation, create a file README.lang.md, where lang is the English abbreviation for the language, for example, en for English.
+
 # Screenshot
 ![1_en.png](1_en.png)
 ![2_en.png](2_en.png)
