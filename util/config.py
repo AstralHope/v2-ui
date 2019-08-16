@@ -125,17 +125,17 @@ def reset_config():
 
 
 def init_db(update=False):
-    add_if_not_exist(Setting('address', '', '0.0.0.0', 'text', '', True), update)
-    add_if_not_exist(Setting('port', '', '65432', 'int', '', True), update)
-    add_if_not_exist(Setting('base_path', '', '', 'text', '', True), update)
-    add_if_not_exist(Setting('cert_file', '', '', 'text', '', True), update)
-    add_if_not_exist(Setting('key_file', '', '', 'text', '', True), update)
-    add_if_not_exist(Setting('login_title', '', 'Sign in', 'text', '', False), update)
-    add_if_not_exist(Setting('v2_config_path', '', '/etc/v2ray/config.json', 'text', '', False), update)
-    add_if_not_exist(Setting('v2_template_config', '', __read_v2_template_config(), 'textarea', '', False), update)
-    add_if_not_exist(Setting('v2_config_check_interval', '', '60', 'int', '', True), update)
-    add_if_not_exist(Setting('v2_restart_cmd', '', 'systemctl restart v2ray', 'text', '', False), update)
-    add_if_not_exist(Setting('traffic_job_interval', '', '60', 'int', '', True), update)
+    add_if_not_exist(Setting('address', 'address', '0.0.0.0', 'text', '', True), update)
+    add_if_not_exist(Setting('port', 'port', '65432', 'int', '', True), update)
+    add_if_not_exist(Setting('base_path', 'base_path', '', 'text', '', True), update)
+    add_if_not_exist(Setting('cert_file', 'cert_file', '', 'text', '', True), update)
+    add_if_not_exist(Setting('key_file', 'key_file', '', 'text', '', True), update)
+    add_if_not_exist(Setting('login_title', 'login_title', 'Sign in', 'text', '', False), update)
+    add_if_not_exist(Setting('v2_config_path', 'v2_config_path', '/etc/v2ray/config.json', 'text', '', False), update)
+    add_if_not_exist(Setting('v2_template_config', 'v2_template_config', __read_v2_template_config(), 'textarea', '', False), update)
+    add_if_not_exist(Setting('v2_config_check_interval', 'v2_config_check_interval', '60', 'int', '', True), update)
+    add_if_not_exist(Setting('v2_restart_cmd', 'v2_restart_cmd', 'systemctl restart v2ray', 'text', '', False), update)
+    add_if_not_exist(Setting('traffic_job_interval', 'traffic_job_interval', '60', 'int', '', True), update)
     add_if_not_exist(Setting('secret_key', '', os.urandom(24), 'text', '', True), False)
     db.session.commit()
 
