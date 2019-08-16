@@ -177,6 +177,18 @@ reset_config() {
     confirm_restart
 }
 
+set_port() {
+    echo && echo -n -e "输入端口号[1-65535]: " && read port
+    if [[ -z "${port}" ]]; then
+        echo -e "${yellow}已取消${plain}"
+        before_show_menu
+    else
+        /usr/local/v2-ui/v2-ui setport ${port}
+        echo -e "设置端口完毕，现在请重启面板，并使用新设置的端口 ${green}${port}${plain} 访问面板"
+        confirm_restart
+    fi
+}
+
 start() {
     check_status
     if [[ $? == 0 ]]; then
@@ -405,20 +417,21 @@ show_menu() {
 ————————————————
   ${green}4.${plain} 重置用户名密码
   ${green}5.${plain} 重置面板设置
+  ${green}6.${plain} 设置面板端口
 ————————————————
-  ${green}6.${plain} 启动 v2-ui
-  ${green}7.${plain} 停止 v2-ui
-  ${green}8.${plain} 重启 v2-ui
-  ${green}9.${plain} 查看 v2-ui 状态
- ${green}10.${plain} 查看 v2-ui 日志
+  ${green}7.${plain} 启动 v2-ui
+  ${green}8.${plain} 停止 v2-ui
+  ${green}9.${plain} 重启 v2-ui
+ ${green}10.${plain} 查看 v2-ui 状态
+ ${green}11.${plain} 查看 v2-ui 日志
 ————————————————
- ${green}11.${plain} 设置 v2-ui 开机自启
- ${green}12.${plain} 取消 v2-ui 开机自启
+ ${green}12.${plain} 设置 v2-ui 开机自启
+ ${green}13.${plain} 取消 v2-ui 开机自启
 ————————————————
- ${green}13.${plain} 一键安装 bbr (最新内核)
+ ${green}14.${plain} 一键安装 bbr (最新内核)
  "
     show_status
-    echo && read -p "请输入选择 [0-13]: " num
+    echo && read -p "请输入选择 [0-14]: " num
 
     case "${num}" in
         0) exit 0
@@ -433,23 +446,25 @@ show_menu() {
         ;;
         5) check_install && reset_config
         ;;
-        6) check_install && start
+        6) check_install && set_port
         ;;
-        7) check_install && stop
+        7) check_install && start
         ;;
-        8) check_install && restart
+        8) check_install && stop
         ;;
-        9) check_install && status
+        9) check_install && restart
         ;;
-        10) check_install && show_log
+        10) check_install && status
         ;;
-        11) check_install && enable
+        11) check_install && show_log
         ;;
-        12) check_install && disable
+        12) check_install && enable
         ;;
-        13) install_bbr
+        13) check_install && disable
         ;;
-        *) echo -e "${red}请输入正确的数字 [0-13]${plain}"
+        14) install_bbr
+        ;;
+        *) echo -e "${red}请输入正确的数字 [0-14]${plain}"
         ;;
     esac
 }

@@ -21,7 +21,9 @@ common_context = {}
 
 LANGUAGES = {
     'zh': '中文',
+    'zh_CN': '中文',
     'en': 'English',
+    'en_US': 'English',
     'es': 'Español',
 }
 

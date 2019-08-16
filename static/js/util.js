@@ -137,18 +137,6 @@ window.safeBase64 = str => {
         .replace(/\//g, '_');
 };
 
-window.formatSecond = second =>{
-    if (second < 60) {
-        return second.toFixed(0) + ' s';
-    } else if (second < 3600) {
-        return (second / 60).toFixed(0) + ' min'
-    } else if (second < 3600 * 24) {
-        return (second / 3600).toFixed(0) + ' hour'
-    } else {
-        return (second / 3600 / 24).toFixed(0) + ' day'
-    }
-};
-
 window.docCookies = {
     getItem: function (sKey) {
         return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[-.+*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;

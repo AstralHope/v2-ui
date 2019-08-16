@@ -126,18 +126,24 @@ class TcpStreamSettings extends V2CommonClass {
     }
 
     static fromJson(json={}) {
+        let header = json.header;
+        if (!header) {
+            header = {};
+        }
         return new TcpStreamSettings(
-            json.type,
-            TcpStreamSettings.TcpRequest.fromJson(json.request),
-            TcpStreamSettings.TcpResponse.fromJson(json.response),
+            header.type,
+            TcpStreamSettings.TcpRequest.fromJson(header.request),
+            TcpStreamSettings.TcpResponse.fromJson(header.response),
         );
     }
 
     toJson() {
         return {
-            type: this.type,
-            request: this.type === 'http' ? this.request.toJson() : undefined,
-            response: this.type === 'http' ? this.response.toJson() : undefined,
+            header: {
+                type: this.type,
+                request: this.type === 'http' ? this.request.toJson() : undefined,
+                response: this.type === 'http' ? this.response.toJson() : undefined,
+            },
         };
     }
 }

@@ -49,7 +49,7 @@
                                 <template slot="title">
                                     [[ setting.tip ]]
                                     <template v-if="setting.need_restart">
-                                        。修改后需重启面板
+                                        {{ _('Restart the panel after updated') }}
                                     </template>
                                 </template>
                                 <a-icon type="question-circle" theme="filled"></a-icon>
@@ -93,6 +93,53 @@
             scopedSlots: { 'customRender': 'action' },
         }];
 
+        const settings_translate = {
+            address: {
+                name: '{{ _('Listening IP') }}',
+                tip: "{{ _('Be careful modifying it! ! ! If you are using software such as nginx, you can set this to 127.0.0.1 so that the outside world cannot access the panel directly. Don\'t change it if you don\'t understand.') }}",
+            },
+            port: {
+                name: '{{ _('Panel port') }}',
+                tip: '',
+            },
+            base_path: {
+                name: '{{ _('Web root path') }}',
+                tip: "{{ _('Be careful modifying it! ! ! You can fill in the root path of your personality page, such as /v2-ui, which is empty by default. If the fill-in must start with / and cannot end with /, the error will result in inaccessible panels.') }}",
+            },
+            cert_file: {
+                name: '{{ _('SSL cert file path') }}',
+                tip: "{{ _('Be careful modifying it! ! ! An absolute path is required, and a modification error will prevent the panel from starting.') }}",
+            },
+            key_file: {
+                name: '{{ _('SSL key file path') }}',
+                tip: "{{ _('Be careful modifying it! ! ! An absolute path is required, and a modification error will prevent the panel from starting.') }}",
+            },
+            login_title: {
+                name: '{{ _('Login page title') }}',
+                tip: '',
+            },
+            v2_config_path: {
+                name: '{{ _('v2ray config.json path') }}',
+                tip: '{{ _('Be careful modifying it! ! ! The resulting v2ray configuration is written to the file of this configuration and generally does not need to be modified.') }}',
+            },
+            v2_template_config: {
+                name: '{{ _('v2ray config template') }}',
+                tip: '{{ _('Be careful modifying it! ! ! Make sure you are very familiar with the configuration of v2ray, please do not delete the configuration about api.') }}',
+            },
+            v2_config_check_interval: {
+                name: '{{ _('Change Effective Time') }} ({{ _('seconds') }})',
+                tip: '{{ _('Too small number can lead to increased CPU usage, fill 0 or negative at your own risk.') }}',
+            },
+            v2_restart_cmd: {
+                name: '{{ _('Command to restart v2ray') }}',
+                tip: '{{ _('When v2ray needs to be restarted, the panel will automatically run this command to restart v2ray, generally without modification.') }}',
+            },
+            traffic_job_interval: {
+                name: '{{ _('Statistical traffic interval time') }} ({{ _('seconds') }})',
+                tip: '{{ _('Too small number can lead to increased CPU usage, fill 0 or negative at your own risk.') }}',
+            }
+        };
+
         let app = new Vue({
             delimiters: ['[[', ']]'],
             el: '#app',
@@ -118,6 +165,14 @@
                     });
                 },
                 setSettings(settings) {
+                    for (let i = 0; i < settings.length; ++i) {
+                        let setting = settings[i];
+                        let key = setting.key;
+                        if (settings_translate[key]) {
+                            setting.name = settings_translate[key].name;
+                            setting.tip = settings_translate[key].tip;
+                        }
+                    }
                     settings.unshift({name: '{{ _('current panel version') }}', value: '{{ cur_ver }}'});
                     this.settings = settings;
                 },

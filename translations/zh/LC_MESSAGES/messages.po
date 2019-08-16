@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-08-14 20:31+0800\n"
+"POT-Creation-Date: 2019-08-16 09:54+0800\n"
 "PO-Revision-Date: 2019-08-14 14:37+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
 
-#: init.py:93
+#: init.py:95
 msgid "You has been logout, please refresh this page and login again"
 msgstr "你已退出登录，请刷新页面重新登录"
 
@@ -42,15 +42,15 @@ msgstr "旧用户名或旧密码错误"
 msgid "update success"
 msgstr "修改成功"
 
-#: templates/index.html:47 templates/v2ray/accounts.html:225
-#: templates/v2ray/accounts.html:242 templates/v2ray/inbound_modal.html:276
+#: templates/index.html:47 templates/v2ray/accounts.html:230
+#: templates/v2ray/accounts.html:247 templates/v2ray/inbound_modal.html:276
 #: templates/v2ray/inbound_modal.html:295
 msgid "username"
 msgstr "用户名"
 
-#: templates/index.html:54 templates/v2ray/accounts.html:159
-#: templates/v2ray/accounts.html:193 templates/v2ray/accounts.html:229
-#: templates/v2ray/accounts.html:246 templates/v2ray/inbound_modal.html:214
+#: templates/index.html:54 templates/v2ray/accounts.html:164
+#: templates/v2ray/accounts.html:198 templates/v2ray/accounts.html:234
+#: templates/v2ray/accounts.html:251 templates/v2ray/inbound_modal.html:214
 #: templates/v2ray/inbound_modal.html:238
 #: templates/v2ray/inbound_modal.html:279
 #: templates/v2ray/inbound_modal.html:298
@@ -61,20 +61,37 @@ msgstr "密码"
 msgid "login"
 msgstr "登录"
 
+#: templates/common/base.html:39 templates/v2ray/setting.html:130
+#: templates/v2ray/setting.html:138
+msgid "seconds"
+msgstr "秒"
+
+#: templates/common/base.html:41
+msgid "minutes"
+msgstr "分钟"
+
+#: templates/common/base.html:43
+msgid "hours"
+msgstr "小时"
+
+#: templates/common/base.html:45
+msgid "days"
+msgstr "天"
+
 #: templates/common/prompt_modal.html:3 templates/v2ray/accounts.html:36
-#: templates/v2ray/accounts.html:81 templates/v2ray/accounts.html:352
+#: templates/v2ray/accounts.html:86 templates/v2ray/accounts.html:357
 msgid "cancel"
 msgstr "取消"
 
 #: templates/common/prompt_modal.html:17 templates/common/prompt_modal.html:40
-#: templates/v2ray/accounts.html:36 templates/v2ray/accounts.html:81
+#: templates/v2ray/accounts.html:36 templates/v2ray/accounts.html:86
 #: templates/v2ray/inbound_modal.html:361
 #: templates/v2ray/inbound_modal.html:367
 msgid "confirm"
 msgstr "确定"
 
 #: templates/common/qrcode_modal.html:3 templates/common/text_modal.html:2
-#: templates/v2ray/accounts.html:171 templates/v2ray/accounts.html:236
+#: templates/v2ray/accounts.html:176 templates/v2ray/accounts.html:241
 #: templates/v2ray/inbound_modal.html:3
 msgid "close"
 msgstr "关闭"
@@ -88,7 +105,7 @@ msgid "copied"
 msgstr "复制成功"
 
 #: templates/common/text_modal.html:6 templates/v2ray/accounts.html:29
-#: templates/v2ray/accounts.html:74
+#: templates/v2ray/accounts.html:79
 msgid "download"
 msgstr "下载"
 
@@ -102,15 +119,15 @@ msgstr "账号列表"
 msgid "loading"
 msgstr "加载中"
 
-#: templates/v2ray/accounts.html:29 templates/v2ray/accounts.html:74
+#: templates/v2ray/accounts.html:29 templates/v2ray/accounts.html:79
 msgid "upload"
 msgstr "上传"
 
-#: templates/v2ray/accounts.html:33 templates/v2ray/accounts.html:78
+#: templates/v2ray/accounts.html:33 templates/v2ray/accounts.html:83
 msgid "total traffic"
 msgstr "总流量"
 
-#: templates/v2ray/accounts.html:34 templates/v2ray/accounts.html:79
+#: templates/v2ray/accounts.html:34 templates/v2ray/accounts.html:84
 msgid "Are you sure you want to reset all traffic to 0? It's unrecoverable"
 msgstr "确定要重置流量为0吗？不可恢复"
 
@@ -118,132 +135,136 @@ msgstr "确定要重置流量为0吗？不可恢复"
 msgid "No account, please add an account first"
 msgstr "没有账号，请先添加一个账号"
 
-#: templates/v2ray/accounts.html:52
+#: templates/v2ray/accounts.html:53
 msgid "qrcode"
 msgstr "二维码"
 
-#: templates/v2ray/accounts.html:54
+#: templates/v2ray/accounts.html:55
 msgid "copy link"
 msgstr "复制链接"
 
-#: templates/v2ray/accounts.html:61 templates/v2ray/inbound_modal.html:7
+#: templates/v2ray/accounts.html:62 templates/v2ray/inbound_modal.html:13
+msgid "protocol"
+msgstr "协议"
+
+#: templates/v2ray/accounts.html:66 templates/v2ray/inbound_modal.html:7
 msgid "remark"
 msgstr "备注"
 
-#: templates/v2ray/accounts.html:62 templates/v2ray/accounts.html:149
-#: templates/v2ray/accounts.html:160 templates/v2ray/accounts.html:177
+#: templates/v2ray/accounts.html:67 templates/v2ray/accounts.html:154
+#: templates/v2ray/accounts.html:165 templates/v2ray/accounts.html:182
 msgid "none"
 msgstr "无"
 
-#: templates/v2ray/accounts.html:65 templates/v2ray/inbound_modal.html:10
+#: templates/v2ray/accounts.html:70 templates/v2ray/inbound_modal.html:10
 #: templates/v2ray/inbound_modal.html:283
 msgid "enable"
 msgstr "启用"
 
-#: templates/v2ray/accounts.html:66
+#: templates/v2ray/accounts.html:71
 msgid "Whether to disable"
 msgstr "是否禁用"
 
-#: templates/v2ray/accounts.html:66
+#: templates/v2ray/accounts.html:71
 msgid "Whether to enable"
 msgstr "是否启用"
 
-#: templates/v2ray/accounts.html:68 templates/v2ray/accounts.html:69
-#: templates/v2ray/accounts.html:181 templates/v2ray/accounts.html:220
+#: templates/v2ray/accounts.html:73 templates/v2ray/accounts.html:74
+#: templates/v2ray/accounts.html:186 templates/v2ray/accounts.html:225
 msgid "yes"
 msgstr "是"
 
-#: templates/v2ray/accounts.html:68 templates/v2ray/accounts.html:70
-#: templates/v2ray/accounts.html:182 templates/v2ray/accounts.html:221
+#: templates/v2ray/accounts.html:73 templates/v2ray/accounts.html:75
+#: templates/v2ray/accounts.html:187 templates/v2ray/accounts.html:226
 msgid "no"
 msgstr "否"
 
-#: templates/v2ray/accounts.html:90 templates/v2ray/inbound_modal.html:22
+#: templates/v2ray/accounts.html:95 templates/v2ray/inbound_modal.html:22
 msgid "port"
 msgstr "端口"
 
-#: templates/v2ray/accounts.html:100 templates/v2ray/inbound_modal.html:33
+#: templates/v2ray/accounts.html:105 templates/v2ray/inbound_modal.html:33
 msgid "alter id"
 msgstr "额外id"
 
-#: templates/v2ray/accounts.html:104 templates/v2ray/accounts.html:155
-#: templates/v2ray/accounts.html:189 templates/v2ray/inbound_modal.html:207
+#: templates/v2ray/accounts.html:109 templates/v2ray/accounts.html:160
+#: templates/v2ray/accounts.html:194 templates/v2ray/inbound_modal.html:207
 #: templates/v2ray/inbound_modal.html:233
 msgid "method"
 msgstr "加密"
 
-#: templates/v2ray/accounts.html:111 templates/v2ray/inbound_modal.html:46
+#: templates/v2ray/accounts.html:116 templates/v2ray/inbound_modal.html:46
 msgid "transport"
 msgstr "传输配置"
 
-#: templates/v2ray/accounts.html:117 templates/v2ray/accounts.html:130
-#: templates/v2ray/accounts.html:163 templates/v2ray/inbound_modal.html:62
+#: templates/v2ray/accounts.html:122 templates/v2ray/accounts.html:135
+#: templates/v2ray/accounts.html:168 templates/v2ray/inbound_modal.html:62
 #: templates/v2ray/inbound_modal.html:146
 #: templates/v2ray/inbound_modal.html:217
 msgid "camouflage"
 msgstr "伪装"
 
-#: templates/v2ray/accounts.html:122 templates/v2ray/accounts.html:137
-#: templates/v2ray/accounts.html:144 templates/v2ray/inbound_modal.html:182
+#: templates/v2ray/accounts.html:127 templates/v2ray/accounts.html:142
+#: templates/v2ray/accounts.html:149 templates/v2ray/inbound_modal.html:182
 #: templates/v2ray/inbound_modal.html:194
 msgid "path"
 msgstr "路径"
 
-#: templates/v2ray/accounts.html:170 templates/v2ray/accounts.html:235
+#: templates/v2ray/accounts.html:175 templates/v2ray/accounts.html:240
 msgid "open"
 msgstr "开启"
 
-#: templates/v2ray/accounts.html:176 templates/v2ray/inbound_modal.html:321
+#: templates/v2ray/accounts.html:181 templates/v2ray/inbound_modal.html:321
 msgid "domain"
 msgstr "域名"
 
-#: templates/v2ray/accounts.html:180 templates/v2ray/inbound_modal.html:324
+#: templates/v2ray/accounts.html:185 templates/v2ray/inbound_modal.html:324
 msgid "allow insecure"
 msgstr "允许不安全"
 
-#: templates/v2ray/accounts.html:197 templates/v2ray/accounts.html:212
+#: templates/v2ray/accounts.html:202 templates/v2ray/accounts.html:217
 #: templates/v2ray/inbound_modal.html:241
 msgid "network"
 msgstr "网络"
 
-#: templates/v2ray/accounts.html:204 templates/v2ray/inbound_modal.html:253
+#: templates/v2ray/accounts.html:209 templates/v2ray/inbound_modal.html:253
 msgid "forward address"
 msgstr "转发地址"
 
-#: templates/v2ray/accounts.html:208 templates/v2ray/inbound_modal.html:256
+#: templates/v2ray/accounts.html:213 templates/v2ray/inbound_modal.html:256
 msgid "forward port"
 msgstr "转发端口"
 
-#: templates/v2ray/accounts.html:219 templates/v2ray/inbound_modal.html:271
+#: templates/v2ray/accounts.html:224 templates/v2ray/inbound_modal.html:271
 msgid "password auth"
 msgstr "密码认证"
 
-#: templates/v2ray/accounts.html:300
+#: templates/v2ray/accounts.html:305
 msgid "add account"
 msgstr "添加账号"
 
-#: templates/v2ray/accounts.html:301
+#: templates/v2ray/accounts.html:306
 msgid "add"
 msgstr "添加"
 
-#: templates/v2ray/accounts.html:310
+#: templates/v2ray/accounts.html:315
 msgid "update account"
 msgstr "修改账号"
 
-#: templates/v2ray/accounts.html:311 templates/v2ray/setting.html:37
-#: templates/v2ray/setting.html:144
+#: templates/v2ray/accounts.html:316 templates/v2ray/setting.html:37
+#: templates/v2ray/setting.html:199
 msgid "update"
 msgstr "修改"
 
-#: templates/v2ray/accounts.html:349
+#: templates/v2ray/accounts.html:354
 msgid "delete account"
 msgstr "删除账号"
 
-#: templates/v2ray/accounts.html:350
+#: templates/v2ray/accounts.html:355
 msgid "Cannot be restored after deletion, confirm deletion?"
 msgstr "删除后不可恢复，确认删除？"
 
-#: templates/v2ray/accounts.html:351
+#: templates/v2ray/accounts.html:356
 msgid "delete"
 msgstr "删除"
 
@@ -272,10 +293,6 @@ msgstr "反馈问题"
 #: templates/v2ray/common_sider.html:36 templates/v2ray/common_sider.html:80
 msgid "logout"
 msgstr "退出登录"
-
-#: templates/v2ray/inbound_modal.html:13
-msgid "protocol"
-msgstr "协议"
 
 #: templates/v2ray/inbound_modal.html:19
 msgid "listening IP"
@@ -443,7 +460,7 @@ msgstr "运行"
 msgid "not running"
 msgstr "未运行"
 
-#: templates/v2ray/index.html:153 templates/v2ray/setting.html:130
+#: templates/v2ray/index.html:153 templates/v2ray/setting.html:185
 msgid "error"
 msgstr "错误"
 
@@ -467,61 +484,155 @@ msgstr "新用户名"
 msgid "new password"
 msgstr "新密码"
 
+#: templates/v2ray/setting.html:52
+msgid "Restart the panel after updated"
+msgstr "修改后需重启面板"
+
 #: templates/v2ray/setting.html:90
 msgid "action"
 msgstr "操作"
 
-#: templates/v2ray/setting.html:121
+#: templates/v2ray/setting.html:98
+msgid "Listening IP"
+msgstr "面板监听IP"
+
+#: templates/v2ray/setting.html:99
+msgid ""
+"Be careful modifying it! ! ! If you are using software such as nginx, you"
+" can set this to 127.0.0.1 so that the outside world cannot access the "
+"panel directly. Don't change it if you don't understand."
+msgstr "谨慎修改！！！如果你会使用 nginx 等软件，可以将此设置为 127.0.0.1，这样外界就无法直接访问面板。如果不懂就不要改。"
+
+#: templates/v2ray/setting.html:102
+msgid "Panel port"
+msgstr "面板端口"
+
+#: templates/v2ray/setting.html:106
+msgid "Web root path"
+msgstr "网页根路径"
+
+#: templates/v2ray/setting.html:107
+msgid ""
+"Be careful modifying it! ! ! You can fill in the root path of your "
+"personality page, such as /v2-ui, which is empty by default. If the fill-"
+"in must start with / and cannot end with /, the error will result in "
+"inaccessible panels."
+msgstr "谨慎修改！！！可以填写你的个性网页根路径，例如 /v2-ui，默认为空。若填写则必须以 / 开头，不能以 / 结尾，填错会导致无法访问面板。"
+
+#: templates/v2ray/setting.html:110
+msgid "SSL cert file path"
+msgstr "ssl 证书文件路径"
+
+#: templates/v2ray/setting.html:111 templates/v2ray/setting.html:115
+msgid ""
+"Be careful modifying it! ! ! An absolute path is required, and a "
+"modification error will prevent the panel from starting."
+msgstr "谨慎修改！！！需填写一个绝对路径，修改错误会导致无法启动面板。"
+
+#: templates/v2ray/setting.html:114
+msgid "SSL key file path"
+msgstr "ssl 密钥文件路径"
+
+#: templates/v2ray/setting.html:118
+msgid "Login page title"
+msgstr "登录标题"
+
+#: templates/v2ray/setting.html:122
+msgid "v2ray config.json path"
+msgstr "config.json 位置"
+
+#: templates/v2ray/setting.html:123
+msgid ""
+"Be careful modifying it! ! ! The resulting v2ray configuration is written"
+" to the file of this configuration and generally does not need to be "
+"modified."
+msgstr "谨慎修改！！！生成的v2ray配置会写入此项配置的文件中，一般无需修改。"
+
+#: templates/v2ray/setting.html:126
+msgid "v2ray config template"
+msgstr "v2ray 配置模板"
+
+#: templates/v2ray/setting.html:127
+msgid ""
+"Be careful modifying it! ! ! Make sure you are very familiar with the "
+"configuration of v2ray, please do not delete the configuration about api."
+msgstr "谨慎修改！！！请确保你对v2ray的配置非常熟悉，请不要删除关于api的配置。"
+
+#: templates/v2ray/setting.html:130
+msgid "Change Effective Time"
+msgstr "账号生效时间"
+
+#: templates/v2ray/setting.html:131 templates/v2ray/setting.html:139
+msgid ""
+"Too small number can lead to increased CPU usage, fill 0 or negative at "
+"your own risk."
+msgstr "数值过小会导致CPU使用率上升，填0或负数后果自负。"
+
+#: templates/v2ray/setting.html:134
+msgid "Command to restart v2ray"
+msgstr "重启 v2ray 命令"
+
+#: templates/v2ray/setting.html:135
+msgid ""
+"When v2ray needs to be restarted, the panel will automatically run this "
+"command to restart v2ray, generally without modification."
+msgstr "当v2ray需重启时，面板会自动运行此命令来重启v2ray，一般无需修改。"
+
+#: templates/v2ray/setting.html:138
+msgid "Statistical traffic interval time"
+msgstr "统计流量间隔"
+
+#: templates/v2ray/setting.html:176
 msgid "current panel version"
 msgstr "当前面板版本"
 
-#: templates/v2ray/setting.html:130
+#: templates/v2ray/setting.html:185
 msgid "not supported type"
 msgstr "不支持的类型"
 
-#: templates/v2ray/setting.html:167
+#: templates/v2ray/setting.html:222
 msgid "please input old username"
 msgstr "请输入原用户名"
 
-#: templates/v2ray/setting.html:169
+#: templates/v2ray/setting.html:224
 msgid "please input old password"
 msgstr "请输入原密码"
 
-#: templates/v2ray/setting.html:171
+#: templates/v2ray/setting.html:226
 msgid "please input new username"
 msgstr "请输入新用户名"
 
-#: templates/v2ray/setting.html:173
+#: templates/v2ray/setting.html:228
 msgid "please input new password"
 msgstr "请输入新密码"
 
-#: templates/v2ray/setting.html:192
+#: templates/v2ray/setting.html:247
 msgid "NOTICE"
 msgstr "用户须知"
 
-#: templates/v2ray/setting.html:194
+#: templates/v2ray/setting.html:249
 msgid ""
 "Most of the configuration items on this page are directly related to the "
 "survival of the panel and v2ray."
 msgstr "此页的大多数配置项都关乎面板与v2ray的存亡"
 
-#: templates/v2ray/setting.html:195
+#: templates/v2ray/setting.html:250
 msgid ""
 "Modifying the wrong value will cause the panel to fail to start, then you"
 " must reset all values."
 msgstr "修改不慎会导致面板无法启动，然后你必须要重置所有设置"
 
-#: templates/v2ray/setting.html:196
+#: templates/v2ray/setting.html:251
 msgid ""
 "Please make a backup yourself. If the data is lost, I will not be "
 "responsible for it."
 msgstr "请自行备份，造成数据丢失概不负责"
 
-#: templates/v2ray/setting.html:198
+#: templates/v2ray/setting.html:253
 msgid "understood"
 msgstr "我已明白"
 
-#: templates/v2ray/setting.html:199
+#: templates/v2ray/setting.html:254
 msgid "not remind"
 msgstr "不再提醒"
 

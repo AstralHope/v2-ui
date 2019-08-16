@@ -64,10 +64,14 @@ if __name__ == '__main__':
             User.query.update({'username': 'admin', 'password': 'admin'})
             db.session.commit()
             print('The username and password have been reset to admin, please restart the panel now')
+        elif sys.argv[1] == 'setport':
+            config.update_setting_by_key('port', sys.argv[2])
+            print('Set port to ' + sys.argv[2] + ' successfully')
         else:
             print('Invalid command')
             print('resetconfig: Reset all panel settings to default values')
             print('resetuser: Reset username and password to \'admin\'')
+            print('setport: Set port')
     else:
         logging_init()
         try:
