@@ -4,7 +4,7 @@
 支持多协议多用户的 v2ray 面板，Support multi-protocol multi-user v2ray panel
 
 # 帮助翻译
-面板目前支持中文与英文，如果你发现了错误的翻译想帮助修正，或者想帮助翻译成更多的语言，可以在 translations 文件夹中找到各语言对应的翻译，例如 translations/zh/LC_MESSAGES/message.po 文件是中文翻译内容。其中 msgid 是英文原文，msgstr 是翻译后的内容，每个 msgid 对应一个 msgstr。
+面板目前支持中文与英文，如果你发现了错误的翻译想帮助修正，或者想帮助翻译成更多的语言，可以在 translations 文件夹中找到各语言对应的翻译，例如 [translations/zh/LC_MESSAGES/message.po](translations/zh/LC_MESSAGES/messages.po) 文件是中文翻译内容。其中 msgid 是英文原文，msgstr 是翻译后的内容，每个 msgid 对应一个 msgstr。
 
 当然，文档目前也只支持中文和英文，如果你想帮助翻译，那么创建一个文件 README.lang.md，lang 是该语言的英文缩写，例如 en 代表英文。
 
