@@ -1,23 +1,19 @@
 import threading
 
-from apscheduler.triggers.interval import IntervalTrigger
-
 from init import db
 from util import config, v2_util
-from util.schedule_util import scheduler
+from util.schedule_util import schedule_job
 from v2ray.models import Inbound
 
 __lock = threading.Lock()
 
 
-@scheduler.scheduled_job(trigger=IntervalTrigger(seconds=config.get_v2_config_check_interval()))
 def check_v2_config_job():
     with __lock:
         v2_config = v2_util.gen_v2_config_from_db()
         v2_util.write_v2_config(v2_config)
 
 
-@scheduler.scheduled_job(trigger=IntervalTrigger(seconds=config.get_traffic_job_interval()))
 def traffic_job():
     with __lock:
         if not v2_util.is_running():
@@ -34,4 +30,5 @@ def traffic_job():
 
 
 def init():
-    pass
+    schedule_job(check_v2_config_job, config.get_v2_config_check_interval())
+    schedule_job(traffic_job, config.get_traffic_job_interval())

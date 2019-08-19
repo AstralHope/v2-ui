@@ -2,10 +2,9 @@ import logging
 import time
 
 import psutil
-from apscheduler.triggers.interval import IntervalTrigger
 
 from util import cmd_util
-from util.schedule_util import scheduler
+from util.schedule_util import schedule_job
 
 __status = {}
 __last_access = time.time()
@@ -20,7 +19,6 @@ def get_status():
     return __status
 
 
-@scheduler.scheduled_job(trigger=IntervalTrigger(seconds=2))
 def refresh_status():
     global __access_interval
     try:
@@ -141,6 +139,9 @@ def net():
     __status['tcp_count'] = tcp_count
     __status['udp_count'] = udp_count
     __last_net_io = cur_net_io
+
+
+schedule_job(refresh_status, 2)
 
 
 if __name__ == '__main__':

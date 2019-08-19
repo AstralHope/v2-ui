@@ -6,7 +6,7 @@ from flask_babel import Babel, gettext
 from flask_sqlalchemy import SQLAlchemy
 
 from util import session_util, file_util
-from util.schedule_util import scheduler
+from util.schedule_util import start_schedule
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -111,4 +111,4 @@ init_app()
 init_common_context()
 init_bps()
 init_v2_jobs()
-scheduler.start()
+start_schedule()
