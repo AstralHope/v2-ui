@@ -2,6 +2,7 @@ import codecs
 import json
 import logging
 import re
+import sys
 from enum import Enum
 from threading import Timer
 
@@ -94,17 +95,19 @@ def stop():
 try:
     __api_port = __get_api_port()
 except Exception as e:
-    logging.error('Failed to open v2ray api, '
-                  'please delete /etc/v2ray/config.json configuration file and force upgrade v2ray')
+    logging.error('Failed to open v2ray api, please reset all panel settings.')
     logging.error(str(e))
-    exit(-1)
+    sys.exit(-1)
 __traffic_pattern = re.compile('stat:\s*<\s*name:\s*"inbound>>>'
                                '(?P<tag>[^>]+)>>>traffic>>>(?P<type>uplink|downlink)"(\s*value:\s*(?P<value>\d+))?')
 
 
+__v2ctl_cmd = config.get_v2ctl_cmd_path()
+
+
 def __get_v2ray_api_cmd(service, method, pattern, reset):
-    cmd = '/usr/bin/v2ray/v2ctl api --server=127.0.0.1:%d %s.%s \'pattern: "%s" reset: %s\''\
-          % (__api_port, service, method, pattern, reset)
+    cmd = '%s api --server=127.0.0.1:%d %s.%s \'pattern: "%s" reset: %s\''\
+          % (__v2ctl_cmd, __api_port, service, method, pattern, reset)
     return cmd
 
 

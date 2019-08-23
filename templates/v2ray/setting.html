@@ -137,7 +137,11 @@
             traffic_job_interval: {
                 name: '{{ _('Statistical traffic interval time') }} ({{ _('seconds') }})',
                 tip: '{{ _('Too small number can lead to increased CPU usage, fill 0 or negative at your own risk.') }}',
-            }
+            },
+            v2ctl_cmd_path: {
+                name: '{{ _('v2ctl command location') }}',
+                tip: '{{ _('Usually do not have to modify.') }}',
+            },
         };
 
         let app = new Vue({
@@ -254,7 +258,9 @@
                         cancelText: '{{ _('not remind') }}',
                         closable: true,
                         onCancel: () => {
-                            docCookies.setItem('close_setting_tip', true, null, '/');
+                            let vEnd = new Date().getTime() + 1000 * 3600 * 24 * 365;
+                            vEnd = new Date(vEnd);
+                            docCookies.setItem('close_setting_tip', true, vEnd, '/');
                         },
                     });
                 }

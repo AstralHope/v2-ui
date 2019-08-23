@@ -33,6 +33,10 @@
     <script>
         const basePath = '{{ base_path }}';
         axios.defaults.baseURL = basePath;
+        Vue.prototype.$message.config({
+            duration: 10,
+            maxCount: 5,
+        });
 
         window.formatSecond = second => {
             if (second < 60) {

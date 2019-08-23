@@ -142,10 +142,3 @@ def net():
 
 
 schedule_job(refresh_status, 2)
-
-
-if __name__ == '__main__':
-    time.sleep(1)
-    while True:
-        time.sleep(1)
-        print(get_status())

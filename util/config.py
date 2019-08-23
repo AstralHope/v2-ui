@@ -100,12 +100,16 @@ def get_base_path():
     return __get('base_path', '')
 
 
+def get_v2ctl_cmd_path():
+    return __get('v2ctl_cmd_path', '/usr/bin/v2ray/v2ctl')
+
+
 def get_secret_key():
     return __get('secret_key', os.urandom(24))
 
 
 def get_current_version():
-    return '4.4.2'
+    return '4.4.3'
 
 
 def add_if_not_exist(setting, update=False):
@@ -136,6 +140,7 @@ def init_db(update=False):
     add_if_not_exist(Setting('v2_config_check_interval', 'v2_config_check_interval', '60', 'int', '', True), update)
     add_if_not_exist(Setting('v2_restart_cmd', 'v2_restart_cmd', 'systemctl restart v2ray', 'text', '', False), update)
     add_if_not_exist(Setting('traffic_job_interval', 'traffic_job_interval', '60', 'int', '', True), update)
+    add_if_not_exist(Setting('v2ctl_cmd_path', 'v2ctl_cmd_path', '/usr/bin/v2ray/v2ctl', 'text', '', True), update)
     add_if_not_exist(Setting('secret_key', '', os.urandom(24), 'text', '', True), False)
     db.session.commit()
 

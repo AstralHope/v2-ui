@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-08-16 09:54+0800\n"
+"POT-Creation-Date: 2019-08-23 22:29+0800\n"
 "PO-Revision-Date: 2019-08-14 14:37+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh\n"
@@ -61,20 +61,20 @@ msgstr "密码"
 msgid "login"
 msgstr "登录"
 
-#: templates/common/base.html:39 templates/v2ray/setting.html:130
+#: templates/common/base.html:43 templates/v2ray/setting.html:130
 #: templates/v2ray/setting.html:138
 msgid "seconds"
 msgstr "秒"
 
-#: templates/common/base.html:41
+#: templates/common/base.html:45
 msgid "minutes"
 msgstr "分钟"
 
-#: templates/common/base.html:43
+#: templates/common/base.html:47
 msgid "hours"
 msgstr "小时"
 
-#: templates/common/base.html:45
+#: templates/common/base.html:49
 msgid "days"
 msgstr "天"
 
@@ -252,7 +252,7 @@ msgid "update account"
 msgstr "修改账号"
 
 #: templates/v2ray/accounts.html:316 templates/v2ray/setting.html:37
-#: templates/v2ray/setting.html:199
+#: templates/v2ray/setting.html:203
 msgid "update"
 msgstr "修改"
 
@@ -460,7 +460,7 @@ msgstr "运行"
 msgid "not running"
 msgstr "未运行"
 
-#: templates/v2ray/index.html:153 templates/v2ray/setting.html:185
+#: templates/v2ray/index.html:153 templates/v2ray/setting.html:189
 msgid "error"
 msgstr "错误"
 
@@ -582,57 +582,65 @@ msgstr "当v2ray需重启时，面板会自动运行此命令来重启v2ray，�
 msgid "Statistical traffic interval time"
 msgstr "统计流量间隔"
 
-#: templates/v2ray/setting.html:176
+#: templates/v2ray/setting.html:142
+msgid "v2ctl command location"
+msgstr "v2ctl 命令位置"
+
+#: templates/v2ray/setting.html:143
+msgid "Usually do not have to modify."
+msgstr "通常不用修改。"
+
+#: templates/v2ray/setting.html:180
 msgid "current panel version"
 msgstr "当前面板版本"
 
-#: templates/v2ray/setting.html:185
+#: templates/v2ray/setting.html:189
 msgid "not supported type"
 msgstr "不支持的类型"
 
-#: templates/v2ray/setting.html:222
+#: templates/v2ray/setting.html:226
 msgid "please input old username"
 msgstr "请输入原用户名"
 
-#: templates/v2ray/setting.html:224
+#: templates/v2ray/setting.html:228
 msgid "please input old password"
 msgstr "请输入原密码"
 
-#: templates/v2ray/setting.html:226
+#: templates/v2ray/setting.html:230
 msgid "please input new username"
 msgstr "请输入新用户名"
 
-#: templates/v2ray/setting.html:228
+#: templates/v2ray/setting.html:232
 msgid "please input new password"
 msgstr "请输入新密码"
 
-#: templates/v2ray/setting.html:247
+#: templates/v2ray/setting.html:251
 msgid "NOTICE"
 msgstr "用户须知"
 
-#: templates/v2ray/setting.html:249
+#: templates/v2ray/setting.html:253
 msgid ""
 "Most of the configuration items on this page are directly related to the "
 "survival of the panel and v2ray."
 msgstr "此页的大多数配置项都关乎面板与v2ray的存亡"
 
-#: templates/v2ray/setting.html:250
+#: templates/v2ray/setting.html:254
 msgid ""
 "Modifying the wrong value will cause the panel to fail to start, then you"
 " must reset all values."
 msgstr "修改不慎会导致面板无法启动，然后你必须要重置所有设置"
 
-#: templates/v2ray/setting.html:251
+#: templates/v2ray/setting.html:255
 msgid ""
 "Please make a backup yourself. If the data is lost, I will not be "
 "responsible for it."
 msgstr "请自行备份，造成数据丢失概不负责"
 
-#: templates/v2ray/setting.html:253
+#: templates/v2ray/setting.html:257
 msgid "understood"
 msgstr "我已明白"
 
-#: templates/v2ray/setting.html:254
+#: templates/v2ray/setting.html:258
 msgid "not remind"
 msgstr "不再提醒"
 
