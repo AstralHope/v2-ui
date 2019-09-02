@@ -1,7 +1,7 @@
 ---
 name: BUG反馈
 about: 反馈面板使用中出现的bug
-title: "[BUG]建议填写一个标题，不要删除前面的[BUG]标签"
+title: "[BUG]在此填写一个标题"
 labels: ''
 assignees: ''
 
