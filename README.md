@@ -1,5 +1,8 @@
 中文 | [English](README.en.md)
 
+# 支持面板发展
+<a href="https://blog.sprov.xyz/go/support-paypal" target="_blank">PayPal</a>
+
 # v2-ui
 支持多协议多用户的 v2ray 面板，Support multi-protocol multi-user v2ray panel
 
