@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-08-23 22:29+0800\n"
+"POT-Creation-Date: 2019-09-08 23:03+0800\n"
 "PO-Revision-Date: 2019-08-14 12:55+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -42,15 +42,15 @@ msgstr ""
 msgid "update success"
 msgstr ""
 
-#: templates/index.html:47 templates/v2ray/accounts.html:230
-#: templates/v2ray/accounts.html:247 templates/v2ray/inbound_modal.html:276
+#: templates/index.html:47 templates/v2ray/accounts.html:233
+#: templates/v2ray/accounts.html:250 templates/v2ray/inbound_modal.html:276
 #: templates/v2ray/inbound_modal.html:295
 msgid "username"
 msgstr ""
 
-#: templates/index.html:54 templates/v2ray/accounts.html:164
-#: templates/v2ray/accounts.html:198 templates/v2ray/accounts.html:234
-#: templates/v2ray/accounts.html:251 templates/v2ray/inbound_modal.html:214
+#: templates/index.html:54 templates/v2ray/accounts.html:167
+#: templates/v2ray/accounts.html:201 templates/v2ray/accounts.html:237
+#: templates/v2ray/accounts.html:254 templates/v2ray/inbound_modal.html:214
 #: templates/v2ray/inbound_modal.html:238
 #: templates/v2ray/inbound_modal.html:279
 #: templates/v2ray/inbound_modal.html:298
@@ -78,20 +78,20 @@ msgstr ""
 msgid "days"
 msgstr ""
 
-#: templates/common/prompt_modal.html:3 templates/v2ray/accounts.html:36
-#: templates/v2ray/accounts.html:86 templates/v2ray/accounts.html:357
+#: templates/common/prompt_modal.html:3 templates/v2ray/accounts.html:39
+#: templates/v2ray/accounts.html:89 templates/v2ray/accounts.html:375
 msgid "cancel"
 msgstr ""
 
 #: templates/common/prompt_modal.html:17 templates/common/prompt_modal.html:40
-#: templates/v2ray/accounts.html:36 templates/v2ray/accounts.html:86
+#: templates/v2ray/accounts.html:39 templates/v2ray/accounts.html:89
 #: templates/v2ray/inbound_modal.html:361
 #: templates/v2ray/inbound_modal.html:367
 msgid "confirm"
 msgstr ""
 
 #: templates/common/qrcode_modal.html:3 templates/common/text_modal.html:2
-#: templates/v2ray/accounts.html:176 templates/v2ray/accounts.html:241
+#: templates/v2ray/accounts.html:179 templates/v2ray/accounts.html:244
 #: templates/v2ray/inbound_modal.html:3
 msgid "close"
 msgstr ""
@@ -104,8 +104,8 @@ msgstr ""
 msgid "copied"
 msgstr ""
 
-#: templates/common/text_modal.html:6 templates/v2ray/accounts.html:29
-#: templates/v2ray/accounts.html:79
+#: templates/common/text_modal.html:6 templates/v2ray/accounts.html:32
+#: templates/v2ray/accounts.html:82
 msgid "download"
 msgstr ""
 
@@ -119,152 +119,156 @@ msgstr ""
 msgid "loading"
 msgstr ""
 
-#: templates/v2ray/accounts.html:29 templates/v2ray/accounts.html:79
+#: templates/v2ray/accounts.html:28
+msgid "search"
+msgstr ""
+
+#: templates/v2ray/accounts.html:32 templates/v2ray/accounts.html:82
 msgid "upload"
 msgstr ""
 
-#: templates/v2ray/accounts.html:33 templates/v2ray/accounts.html:83
+#: templates/v2ray/accounts.html:36 templates/v2ray/accounts.html:86
 msgid "total traffic"
 msgstr ""
 
-#: templates/v2ray/accounts.html:34 templates/v2ray/accounts.html:84
+#: templates/v2ray/accounts.html:37 templates/v2ray/accounts.html:87
 msgid "Are you sure you want to reset all traffic to 0? It's unrecoverable"
 msgstr ""
 
-#: templates/v2ray/accounts.html:44
+#: templates/v2ray/accounts.html:47
 msgid "No account, please add an account first"
 msgstr ""
 
-#: templates/v2ray/accounts.html:53
+#: templates/v2ray/accounts.html:56
 msgid "qrcode"
 msgstr ""
 
-#: templates/v2ray/accounts.html:55
+#: templates/v2ray/accounts.html:58
 msgid "copy link"
 msgstr ""
 
-#: templates/v2ray/accounts.html:62 templates/v2ray/inbound_modal.html:13
+#: templates/v2ray/accounts.html:65 templates/v2ray/inbound_modal.html:13
 msgid "protocol"
 msgstr ""
 
-#: templates/v2ray/accounts.html:66 templates/v2ray/inbound_modal.html:7
+#: templates/v2ray/accounts.html:69 templates/v2ray/inbound_modal.html:7
 msgid "remark"
 msgstr ""
 
-#: templates/v2ray/accounts.html:67 templates/v2ray/accounts.html:154
-#: templates/v2ray/accounts.html:165 templates/v2ray/accounts.html:182
+#: templates/v2ray/accounts.html:70 templates/v2ray/accounts.html:157
+#: templates/v2ray/accounts.html:168 templates/v2ray/accounts.html:185
 msgid "none"
 msgstr ""
 
-#: templates/v2ray/accounts.html:70 templates/v2ray/inbound_modal.html:10
+#: templates/v2ray/accounts.html:73 templates/v2ray/inbound_modal.html:10
 #: templates/v2ray/inbound_modal.html:283
 msgid "enable"
 msgstr ""
 
-#: templates/v2ray/accounts.html:71
+#: templates/v2ray/accounts.html:74
 msgid "Whether to disable"
 msgstr ""
 
-#: templates/v2ray/accounts.html:71
+#: templates/v2ray/accounts.html:74
 msgid "Whether to enable"
 msgstr ""
 
-#: templates/v2ray/accounts.html:73 templates/v2ray/accounts.html:74
-#: templates/v2ray/accounts.html:186 templates/v2ray/accounts.html:225
+#: templates/v2ray/accounts.html:76 templates/v2ray/accounts.html:77
+#: templates/v2ray/accounts.html:189 templates/v2ray/accounts.html:228
 msgid "yes"
 msgstr ""
 
-#: templates/v2ray/accounts.html:73 templates/v2ray/accounts.html:75
-#: templates/v2ray/accounts.html:187 templates/v2ray/accounts.html:226
+#: templates/v2ray/accounts.html:76 templates/v2ray/accounts.html:78
+#: templates/v2ray/accounts.html:190 templates/v2ray/accounts.html:229
 msgid "no"
 msgstr ""
 
-#: templates/v2ray/accounts.html:95 templates/v2ray/inbound_modal.html:22
+#: templates/v2ray/accounts.html:98 templates/v2ray/inbound_modal.html:22
 msgid "port"
 msgstr ""
 
-#: templates/v2ray/accounts.html:105 templates/v2ray/inbound_modal.html:33
+#: templates/v2ray/accounts.html:108 templates/v2ray/inbound_modal.html:33
 msgid "alter id"
 msgstr ""
 
-#: templates/v2ray/accounts.html:109 templates/v2ray/accounts.html:160
-#: templates/v2ray/accounts.html:194 templates/v2ray/inbound_modal.html:207
+#: templates/v2ray/accounts.html:112 templates/v2ray/accounts.html:163
+#: templates/v2ray/accounts.html:197 templates/v2ray/inbound_modal.html:207
 #: templates/v2ray/inbound_modal.html:233
 msgid "method"
 msgstr ""
 
-#: templates/v2ray/accounts.html:116 templates/v2ray/inbound_modal.html:46
+#: templates/v2ray/accounts.html:119 templates/v2ray/inbound_modal.html:46
 msgid "transport"
 msgstr ""
 
-#: templates/v2ray/accounts.html:122 templates/v2ray/accounts.html:135
-#: templates/v2ray/accounts.html:168 templates/v2ray/inbound_modal.html:62
+#: templates/v2ray/accounts.html:125 templates/v2ray/accounts.html:138
+#: templates/v2ray/accounts.html:171 templates/v2ray/inbound_modal.html:62
 #: templates/v2ray/inbound_modal.html:146
 #: templates/v2ray/inbound_modal.html:217
 msgid "camouflage"
 msgstr ""
 
-#: templates/v2ray/accounts.html:127 templates/v2ray/accounts.html:142
-#: templates/v2ray/accounts.html:149 templates/v2ray/inbound_modal.html:182
+#: templates/v2ray/accounts.html:130 templates/v2ray/accounts.html:145
+#: templates/v2ray/accounts.html:152 templates/v2ray/inbound_modal.html:182
 #: templates/v2ray/inbound_modal.html:194
 msgid "path"
 msgstr ""
 
-#: templates/v2ray/accounts.html:175 templates/v2ray/accounts.html:240
+#: templates/v2ray/accounts.html:178 templates/v2ray/accounts.html:243
 msgid "open"
 msgstr ""
 
-#: templates/v2ray/accounts.html:181 templates/v2ray/inbound_modal.html:321
+#: templates/v2ray/accounts.html:184 templates/v2ray/inbound_modal.html:321
 msgid "domain"
 msgstr ""
 
-#: templates/v2ray/accounts.html:185 templates/v2ray/inbound_modal.html:324
+#: templates/v2ray/accounts.html:188 templates/v2ray/inbound_modal.html:324
 msgid "allow insecure"
 msgstr ""
 
-#: templates/v2ray/accounts.html:202 templates/v2ray/accounts.html:217
+#: templates/v2ray/accounts.html:205 templates/v2ray/accounts.html:220
 #: templates/v2ray/inbound_modal.html:241
 msgid "network"
 msgstr ""
 
-#: templates/v2ray/accounts.html:209 templates/v2ray/inbound_modal.html:253
+#: templates/v2ray/accounts.html:212 templates/v2ray/inbound_modal.html:253
 msgid "forward address"
 msgstr ""
 
-#: templates/v2ray/accounts.html:213 templates/v2ray/inbound_modal.html:256
+#: templates/v2ray/accounts.html:216 templates/v2ray/inbound_modal.html:256
 msgid "forward port"
 msgstr ""
 
-#: templates/v2ray/accounts.html:224 templates/v2ray/inbound_modal.html:271
+#: templates/v2ray/accounts.html:227 templates/v2ray/inbound_modal.html:271
 msgid "password auth"
 msgstr ""
 
-#: templates/v2ray/accounts.html:305
+#: templates/v2ray/accounts.html:323
 msgid "add account"
 msgstr ""
 
-#: templates/v2ray/accounts.html:306
+#: templates/v2ray/accounts.html:324
 msgid "add"
 msgstr ""
 
-#: templates/v2ray/accounts.html:315
+#: templates/v2ray/accounts.html:333
 msgid "update account"
 msgstr ""
 
-#: templates/v2ray/accounts.html:316 templates/v2ray/setting.html:37
+#: templates/v2ray/accounts.html:334 templates/v2ray/setting.html:37
 #: templates/v2ray/setting.html:203
 msgid "update"
 msgstr ""
 
-#: templates/v2ray/accounts.html:354
+#: templates/v2ray/accounts.html:372
 msgid "delete account"
 msgstr ""
 
-#: templates/v2ray/accounts.html:355
+#: templates/v2ray/accounts.html:373
 msgid "Cannot be restored after deletion, confirm deletion?"
 msgstr ""
 
-#: templates/v2ray/accounts.html:356
+#: templates/v2ray/accounts.html:374
 msgid "delete"
 msgstr ""
 
@@ -500,7 +504,8 @@ msgstr ""
 msgid ""
 "Be careful modifying it! ! ! If you are using software such as nginx, you"
 " can set this to 127.0.0.1 so that the outside world cannot access the "
-"panel directly. Don't change it if you don't understand."
+"panel directly. Or set to empty to listen to all IPv4 and IPv6 addresses."
+" Don't change it if you don't understand."
 msgstr ""
 
 #: templates/v2ray/setting.html:102

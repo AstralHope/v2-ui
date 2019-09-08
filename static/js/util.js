@@ -180,3 +180,22 @@ window.docCookies = {
         return aKeys;
     }
 };
+
+window.deepSearch = (obj, key) => {
+    if (obj instanceof Array) {
+        for (let i = 0; i < obj.length; ++i) {
+            if (deepSearch(obj[i], key)) {
+                return true;
+            }
+        }
+    } else if (obj instanceof Object) {
+        for (let name in obj) {
+            if (deepSearch(obj[name], key)) {
+                return true;
+            }
+        }
+    } else {
+        return obj.toString().indexOf(key) >= 0;
+    }
+    return false;
+};

@@ -25,6 +25,9 @@
                                 <a-button type="primary" icon="plus" @click="openAddInbound"></a-button>
                             </div>
                             <a-row>
+                                <a-input v-model="searchKey" placeholder="{{ _('search') }}" autofocus></a-input>
+                            </a-row>
+                            <a-row>
                                 <a-col :xs="24" :sm="24" :lg="12">
                                     {{ _('upload') }} / {{ _('download') }}：
                                     <a-tag color="green">[[ sizeFormat(total.up) ]] / [[ sizeFormat(total.down) ]]</a-tag>
@@ -44,7 +47,7 @@
                         {{ _('No account, please add an account first') }}
                     </a-card>
                     <transition-group tag="div" name="list">
-                        <a-card v-for="inbound in inbounds" :key="inbound.id" hoverable>
+                        <a-card v-for="inbound in searchedInbounds" :key="inbound.id" hoverable>
                             <div slot="title">
                                 <a-tag class="hidden-sm-and-down" color="green">[[ inbound.protocol ]]</a-tag>
                                 <a-button v-if="[Protocols.VMESS, Protocols.SHADOWSOCKS].indexOf(inbound.protocol) >= 0"
@@ -273,6 +276,8 @@
                 ip: location.hostname,
                 spinning: false,
                 inbounds: [],
+                searchedInbounds: [],
+                searchKey: '',
             },
             methods: {
                 loading(spinning=true) {
@@ -299,6 +304,19 @@
                         inb.down = inbound.down;
                         return inb;
                     }).reverse();
+                    this.searchInbounds(this.searchKey);
+                },
+                searchInbounds(key) {
+                    if (isEmpty(key)) {
+                        this.searchedInbounds = this.inbounds.slice();
+                    } else {
+                        this.searchedInbounds.splice(0, this.searchedInbounds.length);
+                        this.inbounds.forEach(inbound => {
+                            if (deepSearch(inbound, key)) {
+                                this.searchedInbounds.push(inbound);
+                            }
+                        });
+                    }
                 },
                 openAddInbound() {
                     inModal.show({
@@ -384,6 +402,11 @@
                         error: error,
                     });
                 },
+            },
+            watch: {
+                searchKey(value) {
+                    this.searchInbounds(value);
+                }
             },
             mounted() {
                 this.setInbounds({{ inbounds | safe }});

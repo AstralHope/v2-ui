@@ -109,7 +109,7 @@ def get_secret_key():
 
 
 def get_current_version():
-    return '4.4.3'
+    return '4.5.0'
 
 
 def add_if_not_exist(setting, update=False):
@@ -129,7 +129,7 @@ def reset_config():
 
 
 def init_db(update=False):
-    add_if_not_exist(Setting('address', 'address', '0.0.0.0', 'text', '', True), update)
+    add_if_not_exist(Setting('address', 'address', '', 'text', '', True), update)
     add_if_not_exist(Setting('port', 'port', '65432', 'int', '', True), update)
     add_if_not_exist(Setting('base_path', 'base_path', '', 'text', '', True), update)
     add_if_not_exist(Setting('cert_file', 'cert_file', '', 'text', '', True), update)
