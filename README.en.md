@@ -1,5 +1,8 @@
 [中文](README.md) | English
 
+# Donate
+<a href="https://blog.sprov.xyz/go/support-paypal" target="_blank">PayPal</a>
+
 # v2-ui
 Support multi-protocol multi-user v2ray panel
 
