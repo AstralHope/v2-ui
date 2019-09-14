@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-09-08 23:03+0800\n"
+"POT-Creation-Date: 2019-09-14 21:33+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,7 +109,7 @@ msgid "download"
 msgstr ""
 
 #: templates/v2ray/accounts.html:2 templates/v2ray/common_sider.html:10
-#: templates/v2ray/common_sider.html:54
+#: templates/v2ray/common_sider.html:58
 msgid "accounts"
 msgstr ""
 
@@ -271,29 +271,34 @@ msgstr ""
 msgid "delete"
 msgstr ""
 
-#: templates/v2ray/clients.html:2
+#: templates/v2ray/clients.html:2 templates/v2ray/common_sider.html:18
+#: templates/v2ray/common_sider.html:66
 msgid "clients"
 msgstr ""
 
-#: templates/v2ray/common_sider.html:6 templates/v2ray/common_sider.html:50
+#: templates/v2ray/common_sider.html:6 templates/v2ray/common_sider.html:54
 #: templates/v2ray/index.html:2
 msgid "system status"
 msgstr ""
 
-#: templates/v2ray/common_sider.html:14 templates/v2ray/common_sider.html:58
+#: templates/v2ray/common_sider.html:14 templates/v2ray/common_sider.html:62
 #: templates/v2ray/setting.html:2 templates/v2ray/setting.html:43
 msgid "panel settings"
 msgstr ""
 
-#: templates/v2ray/common_sider.html:19 templates/v2ray/common_sider.html:63
+#: templates/v2ray/common_sider.html:23 templates/v2ray/common_sider.html:71
 msgid "other"
 msgstr ""
 
-#: templates/v2ray/common_sider.html:27 templates/v2ray/common_sider.html:71
+#: templates/v2ray/common_sider.html:31 templates/v2ray/common_sider.html:79
 msgid "report issue"
 msgstr ""
 
-#: templates/v2ray/common_sider.html:36 templates/v2ray/common_sider.html:80
+#: templates/v2ray/common_sider.html:36 templates/v2ray/common_sider.html:84
+msgid "donate"
+msgstr ""
+
+#: templates/v2ray/common_sider.html:40 templates/v2ray/common_sider.html:88
 msgid "logout"
 msgstr ""
 

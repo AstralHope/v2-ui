@@ -569,9 +569,9 @@ class Inbound extends V2CommonClass {
             if (type === 'http') {
                 let request = tcp.request;
                 path = request.path.join(',');
-                let h = propIgnoreCase(request.headers, 'host');
-                if (!isEmpty(h)) {
-                    host = h.join(',');
+                let index = request.headers.findIndex(header => header.name.toLowerCase() === 'host');
+                if (index >= 0) {
+                    host = request.headers[index].value;
                 }
             }
         } else if (network === 'kcp') {
@@ -580,9 +580,9 @@ class Inbound extends V2CommonClass {
         } else if (network === 'ws') {
             let ws = this.stream.ws;
             path = ws.path;
-            let h = propIgnoreCase(ws.headers, 'host');
-            if (!isEmpty(h)) {
-                host = h.join(',');
+            let index = ws.headers.findIndex(header => header.name.toLowerCase() === 'host');
+            if (index >= 0) {
+                host = ws.headers[index].value;
             }
         } else if (network === 'http') {
             network = 'h2';

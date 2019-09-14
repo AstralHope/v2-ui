@@ -1,7 +1,16 @@
-{% extends 'common/base.html' %}
+{% extends 'v2ray/base.html' %}
 {% block title %}{{ _('clients') }}{% endblock %}
 {% block head %}
     {{ super() }}
+    <style>
+        .ant-divider-horizontal {
+            margin: 12px 0;
+        }
+
+        .ant-card:last-of-type {
+            margin-bottom: 20px;
+        }
+    </style>
 {% endblock %}
 {% block body %}
 
@@ -10,6 +19,59 @@
         <a-layout id="content-layout">
             <a-layout-content>
                 <a-card>
+                    <div>
+                        <a-tag color="green">v2rayN（Windows）</a-tag>
+                        <a href="https://github.com/2dust/v2rayN/releases" target="_blank">Github</a>
+                    </div>
+                    <a-divider></a-divider>
+                    <div>
+                        <a-tag color="green">v2rayX（Mac）</a-tag>
+                        <a href="https://github.com/Cenmrev/V2RayX/releases" target="_blank">Github</a>
+                    </div>
+                    <a-divider></a-divider>
+                    <div>
+                        <a-tag color="green">v2rayNG（Android）</a-tag>
+                        <a href="https://github.com/2dust/v2rayNG/releases" target="_blank">Github</a>
+                        <a-divider type="vertical"></a-divider>
+                        <a href="https://play.google.com/store/apps/details?id=com.v2ray.ang" target="_blank">Play Store</a>
+                    </div>
+                    <a-divider></a-divider>
+                    <div>
+                        <a-tag color="green">Kitsunebi（Android）</a-tag>
+                        <a href="https://github.com/eycorsican/kitsunebi-android/releases" target="_blank">Github</a>
+                        <a-divider type="vertical"></a-divider>
+                        <a href="https://play.google.com/store/apps/details?id=fun.kitsunebi.kitsunebi4android" target="_blank">Play Store</a>
+                    </div>
+                    <a-divider></a-divider>
+                    <div>
+                        <a-tag color="green">BifrostV（Android）</a-tag>
+                        <a href="https://play.google.com/store/apps/details?id=com.github.dawndiy.bifrostv" target="_blank">Play Store</a>
+                    </div>
+                    <a-divider></a-divider>
+                    <div>
+                        <a-tag color="green">Kitsunebi（iOS）</a-tag>
+                        <a href="https://itunes.apple.com/us/app/kitsunebi-proxy-utility/id1446584073?mt=8" target="_blank">iTunes</a>
+                    </div>
+                    <a-divider></a-divider>
+                    <div>
+                        <a-tag color="green">i2Ray（iOS）</a-tag>
+                        <a href="https://itunes.apple.com/us/app/i2ray/id1445270056?mt=8" target="_blank">iTunes</a>
+                    </div>
+                    <a-divider></a-divider>
+                    <div>
+                        <a-tag color="green">Shadowrocket（iOS）</a-tag>
+                        <a href="https://itunes.apple.com/us/app/shadowrocket/id932747118?mt=8" target="_blank">iTunes</a>
+                    </div>
+                    <a-divider></a-divider>
+                    <div>
+                        <a-tag color="green">Pepi（iOS）</a-tag>
+                        <a href="https://itunes.apple.com/us/app/pepi/id1283082051?mt=8" target="_blank">iTunes</a>
+                    </div>
+                    <a-divider></a-divider>
+                    <div>
+                        <a-tag color="green">Quantumult（iOS）</a-tag>
+                        <a href="https://itunes.apple.com/us/app/quantumult/id1252015438?mt=8" target="_blank">iTunes</a>
+                    </div>
                 </a-card>
             </a-layout-content>
         </a-layout>

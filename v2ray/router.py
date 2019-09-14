@@ -28,10 +28,10 @@ def accounts():
     return render_template('v2ray/accounts.html', **common_context, inbounds=inbs)
 
 
-# @v2ray_bp.route('/clients/', methods=['GET'])
-# def clients():
-#     from init import common_context
-#     return render_template('v2ray/clients.html', **common_context)
+@v2ray_bp.route('/clients/', methods=['GET'])
+def clients():
+    from init import common_context
+    return render_template('v2ray/clients.html', **common_context)
 
 
 @v2ray_bp.route('/setting/', methods=['GET'])

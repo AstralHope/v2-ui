@@ -182,10 +182,27 @@
             <a-form-item label="{{ _('path') }}">
                 <a-input v-model.trim="inModal.inbound.stream.ws.path"></a-input>
             </a-form-item>
-            <!-- TODO -->
-            <!--<a-form-item label="请求头">-->
-            <!--<a-input v-model.trim="inModal.inbound.stream.ws.headers" clearable></a-input>-->
-            <!--</a-form-item>-->
+            <a-form-item label="{{ _('request header') }}">
+                <a-row>
+                    <a-button size="small"
+                              @click="inModal.inbound.stream.ws.addHeader('Host', '')">
+                        +
+                    </a-button>
+                </a-row>
+                <a-input-group v-for="(header, index) in inModal.inbound.stream.ws.headers">
+                    <a-input style="width: 50%" v-model.trim="header.name"
+                             addon-before="{{ _('name') }}"></a-input>
+                    <a-input style="width: 50%" v-model.trim="header.value"
+                             addon-before="{{ _('value') }}">
+                        <template slot="addonAfter">
+                            <a-button size="small"
+                                      @click="inModal.inbound.stream.ws.removeHeader(index)">
+                                -
+                            </a-button>
+                        </template>
+                    </a-input>
+                </a-input-group>
+            </a-form-item>
         </a-form>
 
         <!-- vmess http -->
