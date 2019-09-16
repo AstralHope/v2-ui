@@ -100,3 +100,7 @@ Refer to v2ray official sentence:
 >VMess depends on system time. Please ensure that your system time is in sync with UTC time. Timezone doesn't matter. One may install ntp service on Linux to automatically adjust system time.
 
 So don't think about modifying the time zone. Because if the method of modifying the time zone is wrong, the panel will not start.
+
+# Telegram
+群组：https://t.me/sprov_blog
+频道：https://t.me/sprov_channel
