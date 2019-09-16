@@ -104,3 +104,7 @@ systemctl daemon-reload
 引用 v2ray 官方的一句话：VMess 依赖于系统时间，请确保使用 V2Ray 的系统 UTC 时间误差在 90 秒之内，***时区无关***。在 Linux 系统中可以安装ntp服务来自动同步系统时间。
 
 所以不要老想着修改时区了，总有人修改时区的方法错误导致面板无法启动。
+
+# Telegram
+群组：https://t.me/sprov_blog
+频道：https://t.me/sprov_channel
