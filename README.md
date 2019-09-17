@@ -1,7 +1,7 @@
 中文 | [English](README.en.md)
 
 # 捐赠支持
-[点击捐赠](https://blog.sprov.xyz/go/support-paypal)
+如果你觉得面板好用的话，可以考虑一下捐赠支持，金额随意，感谢支持。[点我](https://blog.sprov.xyz/go/support-paypal)
 
 # v2-ui
 支持多协议多用户的 v2ray 面板，Support multi-protocol multi-user v2ray panel
