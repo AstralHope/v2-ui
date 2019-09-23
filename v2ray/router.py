@@ -6,6 +6,7 @@ from flask_babel import gettext
 from base.models import Msg
 from init import db
 from util import config, server_info
+from util.v2_jobs import v2_config_change
 from v2ray.models import Inbound
 
 v2ray_bp = Blueprint('v2ray', __name__, url_prefix='/v2ray')
@@ -42,12 +43,19 @@ def setting():
     return render_template('v2ray/setting.html', **common_context, settings=settings)
 
 
+@v2ray_bp.route('/tutorial/', methods=['GET'])
+def tutorial():
+    from init import common_context
+    return render_template('v2ray/tutorial.html', **common_context)
+
+
 @v2ray_bp.route('/inbounds', methods=['GET'])
 def inbounds():
     return jsonify([inb.to_json() for inb in Inbound.query.all()])
 
 
 @v2ray_bp.route('inbound/add', methods=['POST'])
+@v2_config_change
 def add_inbound():
     port = int(request.form['port'])
     if Inbound.query.filter_by(port=port).count() > 0:
@@ -69,6 +77,7 @@ def add_inbound():
 
 
 @v2ray_bp.route('inbound/update/<int:in_id>', methods=['POST'])
+@v2_config_change
 def update_inbound(in_id):
     update = {}
     port = request.form.get('port')
@@ -92,6 +101,7 @@ def update_inbound(in_id):
 
 
 @v2ray_bp.route('inbound/del/<int:in_id>', methods=['POST'])
+@v2_config_change
 def del_inbound(in_id):
     Inbound.query.filter_by(id=in_id).delete()
     db.session.commit()

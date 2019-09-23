@@ -50,11 +50,11 @@ def write_v2_config(v2_config):
         logging.error('An error occurred while writing the v2ray configuration file: ' + str(e))
 
 
-def __get_api_port():
+def __get_api_address_port():
     template_config = json.loads(config.get_v2_template_config(), encoding='utf-8')
     inbounds = template_config['inbounds']
     api_inbound = list_util.get(inbounds, 'tag', 'api')
-    return api_inbound['port']
+    return api_inbound['listen'], api_inbound['port']
 
 
 def __get_stat_code():
@@ -93,7 +93,9 @@ def stop():
 
 
 try:
-    __api_port = __get_api_port()
+    __api_address, __api_port = __get_api_address_port()
+    if not __api_address or __api_address == '0.0.0.0':
+        __api_address = '127.0.0.1'
 except Exception as e:
     logging.error('Failed to open v2ray api, please reset all panel settings.')
     logging.error(str(e))
@@ -105,9 +107,9 @@ __traffic_pattern = re.compile('stat:\s*<\s*name:\s*"inbound>>>'
 __v2ctl_cmd = config.get_v2ctl_cmd_path()
 
 
-def __get_v2ray_api_cmd(service, method, pattern, reset):
-    cmd = '%s api --server=127.0.0.1:%d %s.%s \'pattern: "%s" reset: %s\''\
-          % (__v2ctl_cmd, __api_port, service, method, pattern, reset)
+def __get_v2ray_api_cmd(address, service, method, pattern, reset):
+    cmd = '%s api --server=%s:%d %s.%s \'pattern: "%s" reset: %s\''\
+          % (__v2ctl_cmd, address, __api_port, service, method, pattern, reset)
     return cmd
 
 
@@ -115,7 +117,7 @@ def get_inbounds_traffic(reset=True):
     if __api_port < 0:
         logging.warning('v2ray api port is not configured')
         return None
-    cmd = __get_v2ray_api_cmd('StatsService', 'QueryStats', '', 'true' if reset else 'false')
+    cmd = __get_v2ray_api_cmd('', 'StatsService', 'QueryStats', '', 'true' if reset else 'false')
     result, code = cmd_util.exec_cmd(cmd)
     if code != 0:
         logging.warning('v2ray api code %d' % code)

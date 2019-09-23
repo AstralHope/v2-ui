@@ -42,11 +42,19 @@ def refresh_status():
 
 def v2_status():
     result, code = cmd_util.exec_cmd('systemctl is-active v2ray')
-    if result.startswith('active'):
-        code = 0
-    elif result.startswith('inactive'):
-        code = 1
-    else:
+    results = result.split('\n')
+    has_result = False
+    for result in results:
+        if result.startswith('active'):
+            code = 0
+            has_result = True
+            break
+        elif result.startswith('inactive'):
+            code = 1
+            has_result = True
+            break
+
+    if not has_result:
         code = 2
     __status['v2'] = {
         'code': code

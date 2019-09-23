@@ -85,7 +85,7 @@ def get_v2_start_cmd():
 
 
 def get_v2_config_check_interval():
-    return __get('v2_config_check_interval', 60)
+    return __get('v2_config_check_interval', 10)
 
 
 def get_v2_template_config():
@@ -93,7 +93,7 @@ def get_v2_template_config():
 
 
 def get_traffic_job_interval():
-    return __get('traffic_job_interval', 60)
+    return __get('traffic_job_interval', 30)
 
 
 def get_base_path():
@@ -109,7 +109,7 @@ def get_secret_key():
 
 
 def get_current_version():
-    return '4.6.0'
+    return '4.7.0'
 
 
 def add_if_not_exist(setting, update=False):
@@ -137,9 +137,9 @@ def init_db(update=False):
     add_if_not_exist(Setting('login_title', 'login_title', 'Sign in', 'text', '', False), update)
     add_if_not_exist(Setting('v2_config_path', 'v2_config_path', '/etc/v2ray/config.json', 'text', '', False), update)
     add_if_not_exist(Setting('v2_template_config', 'v2_template_config', __read_v2_template_config(), 'textarea', '', False), update)
-    add_if_not_exist(Setting('v2_config_check_interval', 'v2_config_check_interval', '60', 'int', '', True), update)
+    add_if_not_exist(Setting('v2_config_check_interval', 'v2_config_check_interval', '10', 'int', '', True), update)
     add_if_not_exist(Setting('v2_restart_cmd', 'v2_restart_cmd', 'systemctl restart v2ray', 'text', '', False), update)
-    add_if_not_exist(Setting('traffic_job_interval', 'traffic_job_interval', '60', 'int', '', True), update)
+    add_if_not_exist(Setting('traffic_job_interval', 'traffic_job_interval', '30', 'int', '', True), update)
     add_if_not_exist(Setting('v2ctl_cmd_path', 'v2ctl_cmd_path', '/usr/bin/v2ray/v2ctl', 'text', '', True), update)
     add_if_not_exist(Setting('secret_key', '', os.urandom(24), 'text', '', True), False)
     db.session.commit()

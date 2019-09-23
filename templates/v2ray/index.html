@@ -155,7 +155,8 @@
                     status.uptime = formatSecond(status.uptime);
                     status.cpu.percent = status.cpu.percent.toFixed(2);
                     status.memory.percent = (status.memory.used / status.memory.total * 100).toFixed(2);
-                    status.swap.percent = (status.swap.used / status.swap.total * 100).toFixed(2);
+                    const swapPercent = status.swap.used / status.swap.total * 100;
+                    status.swap.percent = isNaN(swapPercent) ? 0 : swapPercent.toFixed(2);
                     status.disk.percent = (status.disk.used / status.disk.total * 100).toFixed(2);
                     status.cpu.color = this.computeColor(status.cpu.percent);
                     status.memory.color = this.computeColor(status.memory.percent);
