@@ -111,6 +111,12 @@ systemctl daemon-reload
 
 电脑版 Chrome 设置方法：设置 - 高级 - 语言 - 展开语言设置 -  根据您的偏好设置对语言进行排序 - 将中文排在第一位。
 
+## 怎么让面板的账号 IP 显示为我的域名
+ - 将域名解析到你的 VPS 的 IP
+ - 使用域名访问面板，如：http://blog.sprov.xyz:65432，具体域名和端口号以你的实际域名和端口号为准
+ - 如果面板设置里正确配置了域名证书和密钥，那么就使用：https://blog.sprov.xyz:65432 访问面板
+>使用 CDN 的同志们注意了，CDN 通常只支持常见的 http 和 https 端口，所以使用 65432 是访问不了的，建议将面板端口设置为 CDN 商家支持的端口，肯定受支持的端口号是 80（http）和 443（https）
+
 # Telegram
 群组：https://t.me/sprov_blog
 
