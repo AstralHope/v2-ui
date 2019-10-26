@@ -1,0 +1,434 @@
+{% extends 'v2ray/base.html' %}
+{% block title %}{{ _('accounts') }}{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style>
+        .ant-card {
+            margin-bottom: 20px;
+        }
+
+        div[class*=ant-col] {
+            margin-top: 10px;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+
+    <a-layout id="app" v-cloak>
+        {% include 'v2ray/common_sider.html' %}
+        <a-layout id="content-layout">
+            <a-layout-content>
+                <a-spin :spinning="spinning" :delay="500" tip="{{ _('loading') }}">
+                    <transition name="list" appear>
+                        <a-card hoverable style="margin-bottom: 20px;">
+                            <div slot="title">
+                                <a-button type="primary" icon="plus" @click="openAddInbound"></a-button>
+                            </div>
+                            <a-row>
+                                <a-input v-model="searchKey" placeholder="{{ _('search') }}" autofocus></a-input>
+                            </a-row>
+                            <a-row>
+                                <a-col :xs="24" :sm="24" :lg="12">
+                                    {{ _('upload') }} / {{ _('download') }}：
+                                    <a-tag color="green">[[ sizeFormat(total.up) ]] / [[ sizeFormat(total.down) ]]</a-tag>
+                                </a-col>
+                                <a-col :xs="24" :sm="24" :lg="12">
+                                    {{ _('total traffic') }}：
+                                    <a-popconfirm title="{{ _('Are you sure you want to reset all traffic to 0? It\'s unrecoverable') }}"
+                                                  @confirm="resetAllTraffic()"
+                                                  ok-text="{{ _('confirm') }}" cancel-text="{{ _('cancel') }}">
+                                        <a-tag color="green">[[ sizeFormat(total.up + total.down) ]]</a-tag>
+                                    </a-popconfirm>
+                                </a-col>
+                            </a-row>
+                        </a-card>
+                    </transition>
+                    <a-card v-if="inbounds.length === 0">
+                        {{ _('No account, please add an account first') }}
+                    </a-card>
+                    <transition-group tag="div" name="list">
+                        <a-card v-for="inbound in searchedInbounds" :key="inbound.id" hoverable>
+                            <div slot="title">
+                                <a-tag class="hidden-sm-and-down" color="green">[[ inbound.protocol ]]</a-tag>
+                                <a-button v-if="[Protocols.VMESS, Protocols.SHADOWSOCKS].indexOf(inbound.protocol) >= 0"
+                                          type="primary" icon="qrcode"
+                                          @click="qrModal.show(
+                                                    '{{ _('qrcode') }}',
+                                                    inbound.genLink(inbound.listen === '0.0.0.0' ? ip : inbound.listen),
+                                                    '{{ _('copy link') }}')"></a-button>
+                                <a-button icon="edit" @click="openEditInbound(inbound)"></a-button>
+                                <a-button style="float: right;" type="danger" icon="delete" @click="delInbound(inbound)"></a-button>
+                            </div>
+                            <div>
+                                <a-row>
+                                    <a-col class="hidden-md-and-up" :xs="24" :sm="24" :lg="12">
+                                        {{ _('protocol') }}：
+                                        <a-tag color="green">[[ inbound.protocol ]]</a-tag>
+                                    </a-col>
+                                    <a-col :xs="24" :sm="24" :lg="12">
+                                        {{ _('remark') }}：
+                                        <a-tag color="blue">[[ empDefault(inbound.remark, '{{ _('none') }}') ]]</a-tag>
+                                    </a-col>
+                                    <a-col :xs="24" :sm="24" :lg="12">
+                                        {{ _('enable') }}：
+                                        <a-popconfirm :title="inbound.enable ? '{{ _('Whether to disable') }}' : '{{ _('Whether to enable') }}'"
+                                                      @confirm="setEnable(inbound, !inbound.enable)"
+                                                      ok-text="{{ _('yes') }}" cancel-text="{{ _('no') }}">
+                                            <a-tag v-if="inbound.enable" color="green">{{ _('yes') }}</a-tag>
+                                            <a-tag v-else color="red">{{ _('no') }}</a-tag>
+                                        </a-popconfirm>
+                                    </a-col>
+                                    <a-col :xs="24" :sm="24" :lg="12">
+                                        {{ _('upload') }} / {{ _('download') }}：
+                                        <a-tag color="green">[[ sizeFormat(inbound.up) ]] / [[ sizeFormat(inbound.down) ]]</a-tag>
+                                    </a-col>
+                                    <a-col :xs="24" :sm="24" :lg="12">
+                                        {{ _('total traffic') }}：
+                                        <a-popconfirm title="{{ _('Are you sure you want to reset all traffic to 0? It\'s unrecoverable') }}"
+                                                      @confirm="resetTraffic(inbound)"
+                                                      ok-text="{{ _('confirm') }}" cancel-text="{{ _('cancel') }}">
+                                            <a-tag color="green">[[ sizeFormat(inbound.up + inbound.down) ]]</a-tag>
+                                        </a-popconfirm>
+                                    </a-col>
+                                    <a-col :xs="24" :sm="24" :lg="12">
+                                        IP：
+                                        <a-tag color="green">[[ inbound.listen === '0.0.0.0' ? ip : inbound.listen ]]</a-tag>
+                                    </a-col>
+                                    <a-col :xs="24" :sm="24" :lg="12">
+                                        {{ _('port') }}：
+                                        <a-tag color="green">[[ inbound.port ]]</a-tag>
+                                    </a-col>
+                                    <!-- vmess -->
+                                    <template v-if="inbound.protocol === Protocols.VMESS">
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            id：
+                                            <a-tag color="green">[[ inbound.settings.vmesses[0].id ]]</a-tag>
+                                        </a-col>
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            {{ _('alter id') }}：
+                                            <a-tag color="green">[[ inbound.settings.vmesses[0].alterId ]]</a-tag>
+                                        </a-col>
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            {{ _('method') }}：
+                                            <a-tag v-if="inbound.settings.disableInsecure" color="green">
+                                                [[ VmessMethods.AES_128_GCM ]]、[[ VmessMethods.CHACHA20_POLY1305 ]]
+                                            </a-tag>
+                                            <a-tag v-else color="green">auto</a-tag>
+                                        </a-col>
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            {{ _('transport') }}：
+                                            <a-tag color="green">[[ inbound.stream.network ]]</a-tag>
+                                        </a-col>
+                                        <!-- vmess tcp -->
+                                        <template v-if="inbound.stream.network === 'tcp'">
+                                            <a-col :xs="24" :sm="24" :lg="12">
+                                                {{ _('camouflage') }}：
+                                                <a-tag color="green">[[ inbound.stream.tcp.type ]]</a-tag>
+                                            </a-col>
+                                            <template v-if="inbound.stream.tcp.type === 'http'">
+                                                <a-col :xs="24" :sm="24" :lg="12">
+                                                    {{ _('path') }}：
+                                                    <a-tag color="green">[[ inbound.stream.tcp.request.path[0] ]]</a-tag>
+                                                </a-col>
+                                            </template>
+                                        </template>
+                                        <!-- vmess kcp -->
+                                        <template v-if="inbound.stream.network === 'kcp'">
+                                            <a-col :xs="24" :sm="24" :lg="12">
+                                                {{ _('camouflage') }}：
+                                                <a-tag color="green">[[ inbound.stream.kcp.type ]]</a-tag>
+                                            </a-col>
+                                        </template>
+                                        <!-- vmess ws -->
+                                        <template v-if="inbound.stream.network === 'ws'">
+                                            <a-col :xs="24" :sm="24" :lg="12">
+                                                {{ _('path') }}：
+                                                <a-tag color="green">[[ inbound.stream.ws.path ]]</a-tag>
+                                            </a-col>
+                                        </template>
+                                        <!-- vmess http -->
+                                        <template v-if="inbound.stream.network === 'http'">
+                                            <a-col :xs="24" :sm="24" :lg="12">
+                                                {{ _('path') }}：
+                                                <a-tag color="green">[[ inbound.stream.http.path ]]</a-tag>
+                                            </a-col>
+                                            <a-col :xs="24" :sm="24" :lg="12">
+                                                host：
+                                                <a-tag color="green">[[ empDefault(inbound.stream.http.host[0], '{{ _('none') }}') ]]</a-tag>
+                                            </a-col>
+                                        </template>
+                                        <!-- vmess quic -->
+                                        <template v-if="inbound.stream.network === 'quic'">
+                                            <a-col :xs="24" :sm="24" :lg="12">
+                                                QUIC {{ _('method') }}：
+                                                <a-tag color="green">[[ inbound.stream.quic.security ]]</a-tag>
+                                            </a-col>
+                                            <a-col :xs="24" :sm="24" :lg="12">
+                                                {{ _('password') }}：
+                                                <a-tag color="green">[[ empDefault(inbound.stream.quic.key, '{{ _('none') }}') ]]</a-tag>
+                                            </a-col>
+                                            <a-col :xs="24" :sm="24" :lg="12">
+                                                {{ _('camouflage') }}：
+                                                <a-tag color="green">[[ inbound.stream.quic.type ]]</a-tag>
+                                            </a-col>
+                                        </template>
+                                        <!-- tls enable -->
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            tls：
+                                            <a-tag v-if="inbound.stream.security == 'tls'" color="green">{{ _('open') }}</a-tag>
+                                            <a-tag v-else color="orange">{{ _('close') }}</a-tag>
+                                        </a-col>
+                                        <!-- tls -->
+                                        <template v-if="inbound.stream.security == 'tls'">
+                                            <a-col :xs="24" :sm="24" :lg="12">
+                                                {{ _('domain') }}：
+                                                <a-tag color="green">[[ empDefault(inbound.stream.tls.server, '{{ _('none') }}') ]]</a-tag>
+                                            </a-col>
+                                            <a-col :xs="24" :sm="24" :lg="12">
+                                                {{ _('allow insecure') }}：
+                                                <a-tag v-if="inbound.stream.tls.allowInsecure" color="green">{{ _('yes') }}</a-tag>
+                                                <a-tag v-else color="green">{{ _('no') }}</a-tag>
+                                            </a-col>
+                                        </template>
+                                    </template>
+                                    <!-- shadowsocks -->
+                                    <template v-if="inbound.protocol === Protocols.SHADOWSOCKS">
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            {{ _('method') }}：
+                                            <a-tag color="green">[[ inbound.settings.method ]]</a-tag>
+                                        </a-col>
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            {{ _('password') }}：
+                                            <a-tag color="green">[[ inbound.settings.password ]]</a-tag>
+                                        </a-col>
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            {{ _('network') }}：
+                                            <a-tag color="green">[[ inbound.settings.network ]]</a-tag>
+                                        </a-col>
+                                    </template>
+                                    <!-- dokodemo-door -->
+                                    <template v-if="inbound.protocol === Protocols.DOKODEMO">
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            {{ _('forward address') }}：
+                                            <a-tag color="green">[[ inbound.settings.address ]]</a-tag>
+                                        </a-col>
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            {{ _('forward port') }}：
+                                            <a-tag color="green">[[ inbound.settings.port ]]</a-tag>
+                                        </a-col>
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            {{ _('network') }}：
+                                            <a-tag color="green">[[ inbound.settings.network ]]</a-tag>
+                                        </a-col>
+                                    </template>
+                                    <!-- socks -->
+                                    <template v-if="inbound.protocol === Protocols.SOCKS">
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            {{ _('password auth') }}：
+                                            <a-tag v-if="inbound.settings.auth === 'password'" color="green">{{ _('yes') }}</a-tag>
+                                            <a-tag v-else color="orange">{{ _('no') }}</a-tag>
+                                        </a-col>
+                                        <template v-if="inbound.settings.auth === 'password'">
+                                            <a-col :xs="24" :sm="24" :lg="12">
+                                                {{ _('username') }}：
+                                                <a-tag color="green">[[ inbound.settings.accounts[0].user ]]</a-tag>
+                                            </a-col>
+                                            <a-col :xs="24" :sm="24" :lg="12">
+                                                {{ _('password') }}：
+                                                <a-tag color="green">[[ inbound.settings.accounts[0].pass ]]</a-tag>
+                                            </a-col>
+                                        </template>
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            udp：
+                                            <a-tag v-if="inbound.settings.udp" color="green">{{ _('open') }}</a-tag>
+                                            <a-tag v-else color="orange">{{ _('close') }}</a-tag>
+                                        </a-col>
+                                    </template>
+                                    <!-- http -->
+                                    <template v-if="inbound.protocol === Protocols.HTTP">
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            {{ _('username') }}：
+                                            <a-tag color="green">[[ inbound.settings.accounts[0].user ]]</a-tag>
+                                        </a-col>
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            {{ _('password') }}：
+                                            <a-tag color="green">[[ inbound.settings.accounts[0].pass ]]</a-tag>
+                                        </a-col>
+                                    </template>
+                                </a-row>
+                            </div>
+                        </a-card>
+                    </transition-group>
+                </a-spin>
+            </a-layout-content>
+        </a-layout>
+    </a-layout>
+
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script>
+
+        let app = new Vue({
+            delimiters: ['[[', ']]'],
+            el: '#app',
+            data: {
+                ip: location.hostname,
+                spinning: false,
+                inbounds: [],
+                searchedInbounds: [],
+                searchKey: '',
+            },
+            methods: {
+                loading(spinning=true) {
+                    this.spinning = spinning;
+                },
+                empDefault(o, defaultValue='') {return isEmpty(o) ? defaultValue : o},
+                getInbounds() {
+                    this.loading();
+                    get({
+                        url: '/v2ray/inbounds',
+                        success: data => {
+                            this.setInbounds(data);
+                            this.loading(false);
+                        },
+                        error: () => this.loading(false)
+                    });
+                },
+                setInbounds(inbounds) {
+                    this.inbounds = inbounds.map(inbound => {
+                        inbound.streamSettings = inbound.stream_settings;
+                        let inb = Inbound.fromJson(inbound);
+                        inb.id = inbound.id;
+                        inb.up = inbound.up;
+                        inb.down = inbound.down;
+                        return inb;
+                    }).reverse();
+                    this.searchInbounds(this.searchKey);
+                },
+                searchInbounds(key) {
+                    if (isEmpty(key)) {
+                        this.searchedInbounds = this.inbounds.slice();
+                    } else {
+                        this.searchedInbounds.splice(0, this.searchedInbounds.length);
+                        this.inbounds.forEach(inbound => {
+                            if (deepSearch(inbound, key)) {
+                                this.searchedInbounds.push(inbound);
+                            }
+                        });
+                    }
+                },
+                openAddInbound() {
+                    inModal.show({
+                        title: '{{ _('add account') }}',
+                        okText: '{{ _('add') }}',
+                        confirm: () => {
+                            inModal.loading();
+                            this.addInbound(inModal.inbound, () => inModal.closeLoading());
+                        }
+                    });
+                },
+                openEditInbound(inbound) {
+                    inModal.show({
+                        title: '{{ _('update account') }}',
+                        okText: '{{ _('update') }}',
+                        inbound: inbound,
+                        confirm: () => {
+                            inModal.loading();
+                            inModal.inbound.id = inbound.id;
+                            this.updateInbound(inModal.inbound, () => inModal.closeLoading());
+                        }
+                    });
+                },
+                addInbound(inbound, callback) {
+                    let data = {
+                        port: inbound.port,
+                        listen: inbound.listen,
+                        protocol: inbound.protocol,
+                        settings: inbound.settings.toString(false),
+                        stream_settings: inbound.stream.toString(false),
+                        sniffing: [Protocols.VMESS, Protocols.SHADOWSOCKS].indexOf(inbound.protocol) >= 0 ?
+                            inbound.sniffing.toString(false) : '{}',
+                        remark: inbound.remark,
+                    };
+                    this.submit('/v2ray/inbound/add', data, inModal, callback, callback);
+                },
+                updateInbound(inbound, callback) {
+                    let data = {
+                        port: inbound.port,
+                        listen: inbound.listen,
+                        protocol: inbound.protocol,
+                        settings: inbound.settings.toString(false),
+                        stream_settings: inbound.stream.toString(false),
+                        sniffing: [Protocols.VMESS, Protocols.SHADOWSOCKS].indexOf(inbound.protocol) >= 0 ?
+                            inbound.sniffing.toString(false) : '{}',
+                        remark: inbound.remark,
+                        enable: inbound.enable,
+                    };
+                    this.submit('/v2ray/inbound/update/' + inbound.id, data, inModal, callback, callback);
+                },
+                delInbound(inbound) {
+                    this.$confirm({
+                        title: '{{ _('delete account') }}',
+                        content: '{{ _('Cannot be restored after deletion, confirm deletion?') }}',
+                        okText: '{{ _('delete') }}',
+                        cancelText: '{{ _('cancel') }}',
+                        onOk: () => this.submit('/v2ray/inbound/del/' + inbound.id)
+                    });
+                },
+                resetTraffic(inbound) {
+                    this.submit('/v2ray/reset_traffic/' + inbound.id);
+                },
+                resetAllTraffic() {
+                    this.submit('/v2ray/reset_all_traffic');
+                },
+                setEnable(inbound, enable) {
+                    let data = {enable: enable};
+                    this.submit('/v2ray/inbound/update/' + inbound.id, data);
+                },
+                submit(url, data, modal, success, error) {
+                    post({
+                        url: url,
+                        data: data,
+                        success: data => {
+                            if (data.success) {
+                                this.getInbounds();
+                                if (modal) {
+                                    modal.close();
+                                }
+                            }
+                            execute(success, data);
+                        },
+                        error: error,
+                    });
+                },
+            },
+            watch: {
+                searchKey(value) {
+                    this.searchInbounds(value);
+                }
+            },
+            mounted() {
+                this.setInbounds({{ inbounds | safe }});
+            },
+            computed: {
+                total() {
+                    let down = 0, up = 0;
+                    for (let i = 0; i < this.inbounds.length; ++i) {
+                        down += this.inbounds[i].down;
+                        up += this.inbounds[i].up;
+                    }
+                    return {
+                        down: down,
+                        up: up,
+                    };
+                }
+            },
+        });
+
+    </script>
+    {% include 'v2ray/inbound_modal.html' %}
+    {% include 'common/text_modal.html' %}
+    {% include 'common/qrcode_modal.html' %}
+    {% include 'common/prompt_modal.html' %}
+{% endblock %}

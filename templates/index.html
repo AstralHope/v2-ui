@@ -1,0 +1,103 @@
+{% extends 'common/base.html' %}
+{% block title %}{{ login_title }}{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style>
+
+        #app {
+            padding-top: 100px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+            margin: 20px 0 50px 0;
+        }
+
+        .ant-btn, .ant-input {
+            height: 50px;
+            border-radius: 30px;
+        }
+
+        .ant-input-affix-wrapper .ant-input-prefix {
+            left: 23px;
+        }
+
+        .ant-input-affix-wrapper .ant-input:not(:first-child) {
+            padding-left: 50px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <a-layout id="app" v-cloak>
+        <transition name="list" appear>
+            <a-layout-content>
+                <a-row type="flex" justify="center">
+                    <a-col :xs="22" :sm="20" :md="16" :lg="12" :xl="8">
+                        <h1>{{ login_title }}</h1>
+                    </a-col>
+                </a-row>
+                <a-row type="flex" justify="center">
+                    <a-col :xs="22" :sm="20" :md="16" :lg="12" :xl="8">
+                        <a-form>
+                            <a-form-item>
+                                <a-input v-model.trim="user.username" placeholder="{{ _('username') }}"
+                                         @keydown.enter.native="login" autofocus>
+                                    <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)"/>
+                                </a-input>
+                            </a-form-item>
+                            <a-form-item>
+                                <a-input type="password" v-model.trim="user.password"
+                                         placeholder="{{ _('password') }}" @keydown.enter.native="login">
+                                    <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)"/>
+                                </a-input>
+                            </a-form-item>
+                            <a-form-item>
+                                <a-button block @click="login" :loading="loading">{{ _('login') }}</a-button>
+                            </a-form-item>
+                        </a-form>
+                    </a-col>
+                </a-row>
+            </a-layout-content>
+        </transition>
+    </a-layout>
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+        let leftColor = randomIntRange(0x222222, 0xFFFFFF / 2).toString(16);
+        let rightColor = randomIntRange(0xFFFFFF / 2, 0xDDDDDD).toString(16);
+        let deg = randomIntRange(0, 360);
+        let background = 'linear-gradient(' + deg + 'deg, #' + leftColor + ' 10%, #' + rightColor + ' 100%)';
+        document.querySelector('#app').style.background = background;
+        let app = new Vue({
+            delimiters: ['[[', ']]'],
+            el: '#app',
+            data: {
+                loading: false,
+                user: {username: '', password: ''},
+            },
+            methods: {
+                login() {
+                    this.loading = true;
+                    post({
+                        url: '/login',
+                        data: this.user,
+                        success: data => {
+                            this.loading = false;
+                            if (data.success) {
+                                location.href = '{{ url_for('v2ray.index') }}';
+                            }
+                        },
+                        error: () => this.loading = false
+                    });
+                }
+            }
+        });
+    </script>
+{% endblock %}

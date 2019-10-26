@@ -1,0 +1,72 @@
+{% extends 'v2ray/base.html' %}
+{% block title %}{{ _('clients') }}{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style>
+        .ant-divider-horizontal {
+            margin: 12px 0;
+        }
+
+        .ant-card:last-of-type {
+            margin-bottom: 20px;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+
+    <a-layout id="app" v-cloak>
+        {% include 'v2ray/common_sider.html' %}
+        <a-layout id="content-layout">
+            <a-layout-content>
+                <a-card>
+                    <div>
+                        <a href="https://blog.sprov.xyz/" target="_blank">
+                            {{ _('blog') }}
+                        </a>
+                    </div>
+                    <a-divider></a-divider>
+                    <div>
+                        <a href="https://blog.sprov.xyz/2019/08/03/v2-ui/" target="_blank">
+                            v2-ui {{ _('tutorial') }}
+                        </a>
+                    </div>
+                    <a-divider></a-divider>
+                    <div>
+                        <a href="https://blog.sprov.xyz/2019/04/27/v2ray-wstls-or-http2tls-tutorial/" target="_blank">
+                            ws + tls & http2 + tls {{ _('tutorial') }}
+                        </a>
+                    </div>
+                    <a-divider></a-divider>
+                    <div>
+                        <a href="https://blog.sprov.xyz/2019/03/11/cdn-v2ray-safe-proxy/" target="_blank">
+                            CDN + v2ray {{ _('tutorial') }}
+                        </a>
+                    </div>
+                    <a-divider></a-divider>
+                    <div>
+                        <a href="https://blog.sprov.xyz/2019/04/09/what-is-cn2-vps/" target="_blank">
+                            CN2 线路是什么，有哪些 CN2 线路的 VPS
+                        </a>
+                    </div>
+                    <a-divider></a-divider>
+                </a-card>
+            </a-layout-content>
+        </a-layout>
+    </a-layout>
+
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script>
+
+        let app = new Vue({
+            delimiters: ['[[', ']]'],
+            el: '#app',
+            data: {
+            },
+            methods: {
+            },
+        });
+
+    </script>
+{% endblock %}

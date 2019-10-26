@@ -1,0 +1,188 @@
+{% extends 'v2ray/base.html' %}
+{% block title %}{{ _('system status') }}{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style>
+        .ant-col-sm-24 {
+            margin-top: 10px;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+
+    <a-layout id="app" v-cloak>
+        {% include 'v2ray/common_sider.html' %}
+        <a-layout id="content-layout">
+            <a-layout-content>
+                <transition name="list" appear>
+                <a-row>
+                    <a-card hoverable>
+                        <a-row>
+                            <a-col :sm="24" :md="12">
+                                <a-row>
+                                    <a-col :span="12" style="text-align: center">
+                                        <a-progress type="dashboard" status="normal"
+                                                    :stroke-color="status.cpu.color"
+                                                    :percent="status.cpu.percent"></a-progress>
+                                        <div>CPU</div>
+                                    </a-col>
+                                    <a-col :span="12" style="text-align: center">
+                                        <a-progress type="dashboard" status="normal"
+                                                    :stroke-color="status.memory.color"
+                                                    :percent="status.memory.percent"></a-progress>
+                                        <div>{{ _('memory') }}：[[ sizeFormat(status.memory.used) ]] /
+                                            [[ sizeFormat(status.memory.total) ]]</div>
+                                    </a-col>
+                                </a-row>
+                            </a-col>
+                            <a-col :sm="24" :md="12">
+                                <a-row>
+                                    <a-col :span="12" style="text-align: center">
+                                        <a-progress type="dashboard" status="normal"
+                                                    :stroke-color="status.swap.color"
+                                                    :percent="status.swap.percent"></a-progress>
+                                        <div>swap：[[ sizeFormat(status.swap.used) ]] /
+                                            [[ sizeFormat(status.swap.total) ]]</div>
+                                    </a-col>
+                                    <a-col :span="12" style="text-align: center">
+                                        <a-progress type="dashboard" status="normal"
+                                                    :stroke-color="status.disk.color"
+                                                    :percent="status.disk.percent"></a-progress>
+                                        <div>{{ _('disk') }}：[[ sizeFormat(status.disk.used) ]] /
+                                            [[ sizeFormat(status.disk.total) ]]</div>
+                                    </a-col>
+                                </a-row>
+                            </a-col>
+                        </a-row>
+                    </a-card>
+                </a-row>
+                </transition>
+                <transition name="list" appear>
+                <a-row>
+                    <a-col :sm="24" :md="12">
+                        <a-card hoverable>
+                            v2ray {{ _('status') }}：<a-tag :color="status.v2.color">[[ status.v2.stat ]]</a-tag>
+                        </a-card>
+                    </a-col>
+                    <a-col :sm="24" :md="12">
+                        <a-card hoverable>
+                            {{ _('uptime') }}：<a-tag color="#87d068">[[ status.uptime ]]</a-tag>
+                        </a-card>
+                    </a-col>
+                    <a-col :sm="24" :md="12">
+                        <a-card hoverable>
+                            {{ _('loads') }}：[[ status.loads[0] ]] | [[ status.loads[1] ]] | [[ status.loads[2] ]]
+                        </a-card>
+                    </a-col>
+                    <a-col :sm="24" :md="12">
+                        <a-card hoverable>
+                            tcp / udp {{ _('connections') }}：[[ status.tcp_count ]] / [[ status.udp_count ]]
+                        </a-card>
+                    </a-col>
+                    <a-col :sm="24" :md="12">
+                        <a-card hoverable>
+                            <a-row>
+                                <a-col :span="12">
+                                    <a-icon type="arrow-up"></a-icon> [[ status.net_io.up ]] / S
+                                </a-col>
+                                <a-col :span="12">
+                                    <a-icon type="arrow-down"></a-icon> [[ status.net_io.down ]] / S
+                                </a-col>
+                            </a-row>
+                        </a-card>
+                    </a-col>
+                    <a-col :sm="24" :md="12">
+                        <a-card hoverable>
+                            <a-row>
+                                <a-col :span="12">
+                                    <a-icon type="cloud-upload"></a-icon> [[ status.net_traffic.sent ]]
+                                </a-col>
+                                <a-col :span="12">
+                                    <a-icon type="cloud-download"></a-icon> [[ status.net_traffic.recv ]]
+                                </a-col>
+                            </a-row>
+                        </a-card>
+                    </a-col>
+                </a-row>
+                </transition>
+            </a-layout-content>
+        </a-layout>
+    </a-layout>
+
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script>
+
+        let status = {
+            v2: {
+                color: '',
+                stat: '{{ _('loading') }}',
+            },
+            uptime: '{{ _('loading') }}',
+            cpu: { percent: 0 },
+            memory: { percent: 0 },
+            swap: { percent: 0 },
+            disk: { percent: 0 },
+            net_io: { up: '..', down: '..' },
+            net_traffic: { sent: '..', recv: '..' },
+            loads: ['..', '..', '..'],
+            tcp_count: '..',
+            udp_count: '..',
+        };
+
+        let app = new Vue({
+            delimiters: ['[[', ']]'],
+            el: '#app',
+            data: {
+                status: status,
+            },
+            methods: {
+                getStatus() {
+                    get({
+                        url: '/server/status',
+                        success: data => {
+                            this.setStatus(data);
+                        }
+                    });
+                },
+                setStatus(status) {
+                    switch (status.v2.code) {
+                        case 0: status.v2.stat = '{{ _('running') }}'; status.v2.color = '#67C23A'; break;
+                        case 1: status.v2.stat = '{{ _('not running') }}'; status.v2.color = '#E6A23C'; break;
+                        default: status.v2.stat = '{{ _('error') }}'; status.v2.color = '#F56C6C';
+                    }
+                    status.uptime = formatSecond(status.uptime);
+                    status.cpu.percent = status.cpu.percent.toFixed(2);
+                    status.memory.percent = (status.memory.used / status.memory.total * 100).toFixed(2);
+                    const swapPercent = status.swap.used / status.swap.total * 100;
+                    status.swap.percent = isNaN(swapPercent) ? 0 : swapPercent.toFixed(2);
+                    status.disk.percent = (status.disk.used / status.disk.total * 100).toFixed(2);
+                    status.cpu.color = this.computeColor(status.cpu.percent);
+                    status.memory.color = this.computeColor(status.memory.percent);
+                    status.swap.color = this.computeColor(status.swap.percent);
+                    status.disk.color = this.computeColor(status.disk.percent);
+                    status.net_io.up = sizeFormat(status.net_io.up);
+                    status.net_io.down = sizeFormat(status.net_io.down);
+                    status.net_traffic.sent = sizeFormat(status.net_traffic.sent);
+                    status.net_traffic.recv = sizeFormat(status.net_traffic.recv);
+                    this.status = status;
+                },
+                computeColor(percent) {
+                    if (percent < 80) {
+                        return '#67C23A';
+                    } else if (percent < 90) {
+                        return '#E6A23C';
+                    } else {
+                        return '#F56C6C';
+                    }
+                },
+            },
+            mounted() {
+                this.setStatus({{ status | safe }});
+                setInterval(this.getStatus, 2000);
+            },
+        });
+
+    </script>
+{% endblock %}

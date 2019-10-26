@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ant-design-vue@1.3.10/dist/antd.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-ui@2.11.1/lib/theme-chalk/display.css">
+    <link rel="stylesheet" href="{{ base_path }}{{ url_for('static', filename='css/custom.css') }}?{{ cur_ver }}">
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+    {% block head %}
+    <title>{% block title %}{% endblock %}</title>
+    {% endblock %}
+</head>
+<body>
+{% block body %}{% endblock %}
+{% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ant-design-vue@1.3.10/dist/antd.min.js"></script>
+    <script src="{{ base_path }}{{ url_for('static', filename='base64/base64.min.js') }}"></script>
+    <script src="{{ base_path }}{{ url_for('static', filename='axios/axios.min.js') }}"></script>
+    <script src="{{ base_path }}{{ url_for('static', filename='qs/qs.min.js') }}"></script>
+    <script src="{{ base_path }}{{ url_for('static', filename='qrcode/qrious.min.js') }}"></script>
+    <script src="{{ base_path }}{{ url_for('static', filename='clipboard/clipboard.min.js') }}"></script>
+    <script src="{{ base_path }}{{ url_for('static', filename='js/util.js') }}?{{ cur_ver }}"></script>
+    <script src="{{ base_path }}{{ url_for('static', filename='js/axios-init.js') }}?{{ cur_ver }}"></script>
+    <script src="{{ base_path }}{{ url_for('static', filename='js/v2_classes.js') }}?{{ cur_ver }}"></script>
+    <script>
+        const basePath = '{{ base_path }}';
+        axios.defaults.baseURL = basePath;
+        Vue.prototype.$message.config({
+            duration: 10,
+            maxCount: 5,
+        });
+
+        window.formatSecond = second => {
+            if (second < 60) {
+                return second.toFixed(0) + ' {{ _('seconds') }}';
+            } else if (second < 3600) {
+                return (second / 60).toFixed(0) + ' {{ _('minutes') }}'
+            } else if (second < 3600 * 24) {
+                return (second / 3600).toFixed(0) + ' {{ _('hours') }}'
+            } else {
+                return (second / 3600 / 24).toFixed(0) + ' {{ _('days') }}'
+            }
+        };
+
+        console.log('   _____ _____  _____   ______      __          __      _____        _    _ _____ \n' +
+            '  / ____|  __ \\|  __ \\ / __ \\ \\    / /          \\ \\    / /__ \\      | |  | |_   _|\n' +
+            ' | (___ | |__) | |__) | |  | \\ \\  / /   ______   \\ \\  / /   ) |_____| |  | | | |  \n' +
+            '  \\___ \\|  ___/|  _  /| |  | |\\ \\/ /   |______|   \\ \\/ /   / /______| |  | | | |  \n' +
+            '  ____) | |    | | \\ \\| |__| | \\  /                \\  /   / /_      | |__| |_| |_ \n' +
+            ' |_____/|_|    |_|  \\_\\\\____/   \\/                  \\/   |____|      \\____/|_____|\n\n');
+        console.log('  ____  _      ____   _____        _____ _____  _____   ______      __     __   ____     ________\n' +
+            ' |  _ \\| |    / __ \\ / ____|      / ____|  __ \\|  __ \\ / __ \\ \\    / /     \\ \\ / /\\ \\   / /___  /\n' +
+            ' | |_) | |   | |  | | |  __      | (___ | |__) | |__) | |  | \\ \\  / /       \\ V /  \\ \\_/ /   / / \n' +
+            ' |  _ <| |   | |  | | | |_ |      \\___ \\|  ___/|  _  /| |  | |\\ \\/ /         > <    \\   /   / /  \n' +
+            ' | |_) | |___| |__| | |__| |  _   ____) | |    | | \\ \\| |__| | \\  /     _   / . \\    | |   / /__ \n' +
+            ' |____/|______\\____/ \\_____| (_) |_____/|_|    |_|  \\_\\\\____/   \\/     (_) /_/ \\_\\   |_|  /_____|\n\n');
+        console.log('恭喜你发现了这个彩蛋！！！');
+    </script>
+{% endblock %}
+</body>
+</html>

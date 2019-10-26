@@ -1,0 +1,25 @@
+{% extends 'common/base.html' %}
+{% block head %}
+    {{ super() }}
+    <style>
+        .ant-layout-content {
+            margin: 24px 16px;
+        }
+    </style>
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script>
+        {#let leftColor = randomIntRange(0x222222, 0xFFFFFF / 2).toString(16);#}
+        {#let rightColor = randomIntRange(0xFFFFFF / 2, 0xDDDDDD).toString(16);#}
+        {#let deg = randomIntRange(0, 360);#}
+        {#let background = 'linear-gradient(' + deg + 'deg, #' + leftColor + ' 10%, #' + rightColor + ' 100%)';#}
+        {#document.querySelector('#content-layout').style.background = background;#}
+        let siderDrawerApp = new Vue({
+            el: '#sider-drawer',
+            data: {
+                siderDrawer
+            }
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,272 @@
+{% extends 'v2ray/base.html' %}
+{% block title %}{{ _('panel settings') }}{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style>
+        .ant-card + .ant-card {
+            margin-top: 20px;
+        }
+
+        .ant-card:last-of-type {
+            margin-bottom: 20px;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+
+    <a-layout id="app" v-cloak>
+        {% include 'v2ray/common_sider.html' %}
+        <a-layout id="content-layout">
+            <a-layout-content>
+                <transition name="list" appear>
+                <a-card title="{{ _('update login username & password') }}" hoverable>
+                    <a-form layout="inline">
+                        <a-form-item label="{{ _('old username') }}">
+                            <a-input v-model.trim="user.old_username"></a-input>
+                        </a-form-item>
+                        <a-form-item label="{{ _('old password') }}">
+                            <a-input v-model.trim="user.old_password" type="password"></a-input>
+                        </a-form-item>
+                        <a-form-item label="{{ _('new username') }}">
+                            <a-input v-model.trim="user.username"></a-input>
+                        </a-form-item>
+                        <a-form-item label="{{ _('new password') }}">
+                            <a-input v-model.trim="user.password" type="password"></a-input>
+                        </a-form-item>
+                        <a-form-item>
+                            <a-button type="primary" @click="updateUser()">{{ _('update') }}</a-button>
+                        </a-form-item>
+                    </a-form>
+                </a-card>
+                </transition>
+                <transition name="list" appear>
+                <a-card title="{{ _('panel settings') }}" hoverable>
+                    <a-table :data-source="settings" :columns="columns"
+                             :pagination="false" bordered>
+                        <template slot="name" slot-scope="text, setting">
+                            [[ text ]]
+                            <a-tooltip v-if="!isEmpty(setting.tip)">
+                                <template slot="title">
+                                    [[ setting.tip ]]
+                                    <template v-if="setting.need_restart">
+                                        {{ _('Restart the panel after updated') }}
+                                    </template>
+                                </template>
+                                <a-icon type="question-circle" theme="filled"></a-icon>
+                            </a-tooltip>
+                        </template>
+                        <template slot="value" slot-scope="text">
+                            [[ text.length > 50 ? text.substr(0, 50) + ' ...' : text ]]
+                        </template>
+                        <template slot="action" slot-scope="text, record">
+                            <a-button v-if="!isEmpty(record.value_type)" type="primary" icon="edit"
+                                      @click="openEdit(record)"></a-button>
+                        </template>
+                    </a-table>
+                </a-card>
+                </transition>
+            </a-layout-content>
+        </a-layout>
+    </a-layout>
+
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script>
+
+        const columns = [{
+            title: '{{ _('name') }}',
+            dataIndex: 'name',
+            align: 'center',
+            width: '30%',
+            scopedSlots: { 'customRender': 'name' },
+        }, {
+            title: '{{ _('value') }}',
+            dataIndex: 'value',
+            align: 'center',
+            width: '70%',
+            scopedSlots: { 'customRender': 'value' },
+        }, {
+            title: '{{ _('action') }}',
+            dataIndex: 'action',
+            align: 'center',
+            scopedSlots: { 'customRender': 'action' },
+        }];
+
+        const settings_translate = {
+            address: {
+                name: '{{ _('Listening IP') }}',
+                tip: "{{ _('Be careful modifying it! ! ! If you are using software such as nginx, you can set this to 127.0.0.1 so that the outside world cannot access the panel directly. Or set to empty to listen to all IPv4 and IPv6 addresses. Don\'t change it if you don\'t understand.') }}",
+            },
+            port: {
+                name: '{{ _('Panel port') }}',
+                tip: '',
+            },
+            base_path: {
+                name: '{{ _('Web root path') }}',
+                tip: "{{ _('Be careful modifying it! ! ! You can fill in the root path of your personality page, such as /v2-ui, which is empty by default. If the fill-in must start with / and cannot end with /, the error will result in inaccessible panels.') }}",
+            },
+            cert_file: {
+                name: '{{ _('SSL cert file path') }}',
+                tip: "{{ _('Be careful modifying it! ! ! An absolute path is required, and a modification error will prevent the panel from starting.') }}",
+            },
+            key_file: {
+                name: '{{ _('SSL key file path') }}',
+                tip: "{{ _('Be careful modifying it! ! ! An absolute path is required, and a modification error will prevent the panel from starting.') }}",
+            },
+            login_title: {
+                name: '{{ _('Login page title') }}',
+                tip: '',
+            },
+            v2_config_path: {
+                name: '{{ _('v2ray config.json path') }}',
+                tip: '{{ _('Be careful modifying it! ! ! The resulting v2ray configuration is written to the file of this configuration and generally does not need to be modified.') }}',
+            },
+            v2_template_config: {
+                name: '{{ _('v2ray config template') }}',
+                tip: '{{ _('Be careful modifying it! ! ! Make sure you are very familiar with the configuration of v2ray, please do not delete the configuration about api.') }}',
+            },
+            v2_config_check_interval: {
+                name: '{{ _('Change Effective Time') }} ({{ _('seconds') }})',
+                tip: '{{ _('Too small number can lead to increased CPU usage, fill 0 or negative at your own risk.') }}',
+            },
+            v2_restart_cmd: {
+                name: '{{ _('Command to restart v2ray') }}',
+                tip: '{{ _('When v2ray needs to be restarted, the panel will automatically run this command to restart v2ray, generally without modification.') }}',
+            },
+            traffic_job_interval: {
+                name: '{{ _('Statistical traffic interval time') }} ({{ _('seconds') }})',
+                tip: '{{ _('Too small number can lead to increased CPU usage, fill 0 or negative at your own risk.') }}',
+            },
+            v2ctl_cmd_path: {
+                name: '{{ _('v2ctl command location') }}',
+                tip: '{{ _('Usually do not have to modify.') }}',
+            },
+        };
+
+        let app = new Vue({
+            delimiters: ['[[', ']]'],
+            el: '#app',
+            data: {
+                tableLoading: false,
+                columns: columns,
+                settings: [],
+                user: {},
+            },
+            methods: {
+                loading(tableLoading=true) {
+                    this.tableLoading = tableLoading;
+                },
+                getSettings() {
+                    this.loading();
+                    get({
+                        url: '/server/settings',
+                        success: data => {
+                            this.loading(false);
+                            this.setSettings(data);
+                        },
+                        error: () => this.loading(false)
+                    });
+                },
+                setSettings(settings) {
+                    for (let i = 0; i < settings.length; ++i) {
+                        let setting = settings[i];
+                        let key = setting.key;
+                        if (settings_translate[key]) {
+                            setting.name = settings_translate[key].name;
+                            setting.tip = settings_translate[key].tip;
+                        }
+                    }
+                    settings.unshift({name: '{{ _('current panel version') }}', value: '{{ cur_ver }}'});
+                    this.settings = settings;
+                },
+                openEdit(setting) {
+                    switch (setting.value_type) {
+                        case 'int': this.openEditInt(setting); break;
+                        case 'text':
+                        case 'textarea': this.openEditText(setting); break;
+                        case 'bool': this.openEditBool(setting); break;
+                        default: this.$error({title: '{{ _('error') }}', content: '{{ _('not supported type') }}'});
+                    }
+                },
+                openEditInt(setting) {
+                    this.openEditPrompt(setting, 'number');
+                },
+                openEditText(setting) {
+                    this.openEditPrompt(setting, setting.value_type);
+                },
+                openEditBool(setting) {
+
+                },
+                openEditPrompt(setting, promptType) {
+                    promptModal.open({
+                        title: '{{ _('update') }} - ' + setting.name,
+                        type: promptType,
+                        value: setting.value,
+                        confirm: value => {
+                            this.edit(setting, value.toString());
+                        },
+                    });
+                },
+                edit(setting, value) {
+                    let data = clone(setting);
+                    data.value = value;
+                    post({
+                        url: '/server/setting/update/' + setting.id,
+                        data: data,
+                        success: data => {
+                            if (data.success) {
+                                this.getSettings();
+                            }
+                        }
+                    });
+                },
+                updateUser() {
+                    if (isEmpty(this.user.old_username)) {
+                        this.$message.warning('{{ _('please input old username') }}');
+                    } else if (isEmpty(this.user.old_password)) {
+                        this.$message.warning('{{ _('please input old password') }}');
+                    } else if (isEmpty(this.user.username)) {
+                        this.$message.warning('{{ _('please input new username') }}');
+                    } else if (isEmpty(this.user.password)) {
+                        this.$message.warning('{{ _('please input new password') }}');
+                    } else {
+                        post({
+                            url: '/server/user/update',
+                            data: this.user,
+                            success: data => {
+                                if (data.success) {
+                                    this.user = {};
+                                }
+                            },
+                        });
+                    }
+                }
+            },
+            mounted() {
+                this.setSettings({{ settings | safe }});
+                if (!docCookies.getItem('close_setting_tip')) {
+                    const h = this.$createElement;
+                    this.$confirm({
+                        title: '{{ _('NOTICE') }}',
+                        content: h('div', {}, [
+                            h('p', '{{ _('Most of the configuration items on this page are directly related to the survival of the panel and v2ray.') }}'),
+                            h('p', '{{ _('Modifying the wrong value will cause the panel to fail to start, then you must reset all values.') }}'),
+                            h('p', '{{ _('Please make a backup yourself. If the data is lost, I will not be responsible for it.') }}'),
+                        ]),
+                        okText: '{{ _('understood') }}',
+                        cancelText: '{{ _('not remind') }}',
+                        closable: true,
+                        onCancel: () => {
+                            let vEnd = new Date().getTime() + 1000 * 3600 * 24 * 365;
+                            vEnd = new Date(vEnd);
+                            docCookies.setItem('close_setting_tip', true, vEnd, '/');
+                        },
+                    });
+                }
+            }
+        });
+
+    </script>
+    {% include 'common/prompt_modal.html' %}
+{% endblock %}
