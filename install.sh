@@ -108,8 +108,8 @@ close_firewall() {
 }
 
 install_v2-ui() {
-  if [[ -e /usr/local/v2-ui/ ]]; then
-    rm /usr/local/v2-ui/ -rf
+  if [[ -e /usr/local/v2-ui/v2-ui ]]; then
+    rm /usr/local/v2-ui/v2-ui -rf
   fi
 
   if [[ ! -e /usr/local/v2-ui/ ]]; then
@@ -128,6 +128,7 @@ install_v2-ui() {
   fi
   tar zxvf v2-ui.tar.gz
   rm v2-ui.tar.gz -f
+  mv v2-ui-${last_version} v2-ui
   cd v2-ui
   pip3 install -r requirements.txt
   if [[ $? -ne 0 ]]; then
