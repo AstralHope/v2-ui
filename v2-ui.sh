@@ -15,7 +15,7 @@ plain='\033[0m'
 
 version="v1.0.0"
 py_cmd="/usr/local/v2-ui/bin/python"
-v2_ui_cmd = "${py_cmd} /usr/local/v2-ui/v2-ui/v2-ui.py"
+v2_ui_cmd="${py_cmd} /usr/local/v2-ui/v2-ui/v2-ui.py"
 
 # check root
 [[ $EUID -ne 0 ]] && echo -e "${red}错误: ${plain} 必须使用root用户运行此脚本！\n" && exit 1
