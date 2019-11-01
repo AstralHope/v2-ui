@@ -108,13 +108,11 @@ close_firewall() {
 }
 
 install_v2-ui() {
-  if [[ -e /usr/local/v2-ui/v2-ui ]]; then
-    rm /usr/local/v2-ui/v2-ui -rf
+  if [[ -e /usr/local/v2-ui/ ]]; then
+    rm /usr/local/v2-ui/ -rf
   fi
 
-  if [[ ! -e /usr/local/v2-ui/ ]]; then
-    /usr/local/bin/virtualenv -p python3 /usr/local/v2-ui/
-  fi
+  /usr/local/bin/virtualenv -p python3 /usr/local/v2-ui/
   source /usr/local/v2-ui/bin/activate
 
   systemctl stop v2-ui
@@ -130,7 +128,8 @@ install_v2-ui() {
   rm v2-ui.tar.gz -f
   mv v2-ui-${last_version} v2-ui
   cd v2-ui
-  pip3 install -r requirements.txt
+  pip install --upgrade pip
+  pip install -r requirements.txt
   if [[ $? -ne 0 ]]; then
     echo -e "${red}安装 python 依赖库失败，请检查错误信息${plain}"
     exit 1
