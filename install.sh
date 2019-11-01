@@ -114,8 +114,8 @@ install_v2-ui() {
 
   if [[ ! -e /usr/local/v2-ui/ ]]; then
     /usr/local/bin/virtualenv -p python3 /usr/local/v2-ui/
-    source /usr/local/v2-ui/bin/activate
   fi
+  source /usr/local/v2-ui/bin/activate
 
   systemctl stop v2-ui
   cd /usr/local/v2-ui/
