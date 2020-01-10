@@ -65,7 +65,7 @@ def get_key_file():
 
 
 def get_login_title():
-    return __get('login_title', '登录')
+    return __get('login_title', 'Sign in')
 
 
 def get_v2_config_path():
