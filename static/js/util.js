@@ -16,10 +16,10 @@ window.copyArr = (dest, src) => {
 window.clone = obj => {
     let newObj;
     if (obj instanceof Array) {
-        const newObj = [];
+        newObj = [];
         copyArr(newObj, obj);
     } else if (obj instanceof Object) {
-        const newObj = {};
+        newObj = {};
         for (const key of Object.keys(obj)) {
             newObj[key] = obj[key];
         }

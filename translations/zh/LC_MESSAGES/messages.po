@@ -33,7 +33,7 @@ msgstr "用户名或密码错误"
 #: server/router.py:32
 #, python-format
 msgid "File <%(file)s> does not exist."
-msgstr ""
+msgstr "文件 <%(file)s> 不存在"
 
 #: server/router.py:36
 msgid "update success, please determine if you need to restart the panel."

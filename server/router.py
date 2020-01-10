@@ -28,7 +28,7 @@ def update_setting(setting_id):
     value = request.form['value']
     value_type = request.form['value_type']
     if key == 'cert_file' or key == 'key_file':
-        if not value and not file_util.is_file(value):
+        if value and not file_util.is_file(value):
             return jsonify(Msg(False, gettext(u'File <%(file)s> does not exist.', file=value)))
     config.update_setting(setting_id, key, name, value, value_type)
     if key == 'v2_template_config':
