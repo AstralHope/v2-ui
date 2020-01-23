@@ -479,7 +479,7 @@ show_menu() {
         ;;
         15) update_v2ray
         ;;
-        *) echo -e "${red}请输入正确的数字 [0-14]${plain}"
+        *) echo -e "${red}请输入正确的数字 [0-15]${plain}"
         ;;
     esac
 }
