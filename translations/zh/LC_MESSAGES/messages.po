@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-01-09 13:08+0800\n"
+"POT-Creation-Date: 2020-01-23 14:02+0800\n"
 "PO-Revision-Date: 2019-08-14 14:37+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh\n"
@@ -90,7 +90,7 @@ msgstr "取消"
 
 #: templates/common/prompt_modal.html:17 templates/common/prompt_modal.html:40
 #: templates/v2ray/accounts.html:39 templates/v2ray/accounts.html:93
-#: templates/v2ray/inbound_modal.html:385
+#: templates/v2ray/donate.html:47 templates/v2ray/inbound_modal.html:385
 #: templates/v2ray/inbound_modal.html:391
 msgid "confirm"
 msgstr "确定"
@@ -115,7 +115,7 @@ msgid "download"
 msgstr "下载"
 
 #: templates/v2ray/accounts.html:2 templates/v2ray/common_sider.html:10
-#: templates/v2ray/common_sider.html:58
+#: templates/v2ray/common_sider.html:62
 msgid "accounts"
 msgstr "账号列表"
 
@@ -282,41 +282,51 @@ msgid "delete"
 msgstr "删除"
 
 #: templates/v2ray/clients.html:2 templates/v2ray/common_sider.html:18
-#: templates/v2ray/common_sider.html:66 templates/v2ray/tutorial.html:2
+#: templates/v2ray/common_sider.html:70 templates/v2ray/donate.html:2
+#: templates/v2ray/tutorial.html:2
 msgid "clients"
 msgstr "客户端"
 
-#: templates/v2ray/common_sider.html:6 templates/v2ray/common_sider.html:54
+#: templates/v2ray/common_sider.html:6 templates/v2ray/common_sider.html:58
 #: templates/v2ray/index.html:2
 msgid "system status"
 msgstr "系统状态"
 
-#: templates/v2ray/common_sider.html:14 templates/v2ray/common_sider.html:62
+#: templates/v2ray/common_sider.html:14 templates/v2ray/common_sider.html:66
 #: templates/v2ray/setting.html:2 templates/v2ray/setting.html:43
 msgid "panel settings"
 msgstr "面板设置"
 
-#: templates/v2ray/common_sider.html:23 templates/v2ray/common_sider.html:71
+#: templates/v2ray/common_sider.html:23 templates/v2ray/common_sider.html:75
 msgid "other"
 msgstr "其它"
 
-#: templates/v2ray/common_sider.html:31 templates/v2ray/common_sider.html:83
+#: templates/v2ray/common_sider.html:35 templates/v2ray/common_sider.html:87
 #: templates/v2ray/tutorial.html:30 templates/v2ray/tutorial.html:36
 #: templates/v2ray/tutorial.html:42
 msgid "tutorial"
 msgstr "教程"
 
-#: templates/v2ray/common_sider.html:36 templates/v2ray/common_sider.html:88
+#: templates/v2ray/common_sider.html:40 templates/v2ray/common_sider.html:92
+#: templates/v2ray/donate.html:27
 msgid "donate"
 msgstr "捐赠支持"
 
-#: templates/v2ray/common_sider.html:40 templates/v2ray/common_sider.html:92
+#: templates/v2ray/common_sider.html:44 templates/v2ray/common_sider.html:96
 msgid "logout"
 msgstr "退出登录"
 
-#: templates/v2ray/common_sider.html:79
-msgid "report issue"
-msgstr "反馈问题"
+#: templates/v2ray/donate.html:44
+msgid "custom"
+msgstr "自定义"
+
+#: templates/v2ray/donate.html:54 templates/v2ray/donate.html:62
+msgid "show"
+msgstr "显示"
+
+#: templates/v2ray/donate.html:85
+msgid "please input a number"
+msgstr "请输入数字"
 
 #: templates/v2ray/inbound_modal.html:21
 msgid "listening IP"
@@ -723,30 +733,30 @@ msgstr "不再提醒"
 msgid "blog"
 msgstr "博客"
 
-#: v2ray/router.py:63 v2ray/router.py:88
+#: v2ray/router.py:69 v2ray/router.py:94
 msgid "port exists"
 msgstr "端口已存在"
 
-#: v2ray/router.py:75
+#: v2ray/router.py:81
 #, python-format
 msgid "Successfully added, will take effect within %(seconds)d seconds"
 msgstr "添加成功，会在 %(seconds)d 秒内自动生效"
 
-#: v2ray/router.py:101
+#: v2ray/router.py:107
 #, python-format
 msgid "Successfully updated, will take effect within %(seconds)d seconds"
 msgstr "修改成功，会在 %(seconds)d 秒内自动生效"
 
-#: v2ray/router.py:113
+#: v2ray/router.py:119
 #, python-format
 msgid "Successfully deleted, will take effect within %(seconds)d seconds"
 msgstr "删除成功，会在 %(seconds)d 秒内自动生效"
 
-#: v2ray/router.py:122
+#: v2ray/router.py:128
 msgid "Reset traffic successfully"
 msgstr "重置流量成功"
 
-#: v2ray/router.py:129
+#: v2ray/router.py:135
 msgid "Reset add traffic successfully"
 msgstr "重置所有流量成功"
 
