@@ -8,8 +8,8 @@ window.isArrEmpty = arr => {
 
 window.copyArr = (dest, src) => {
     dest.splice(0);
-    for (const i of src) {
-        dest.push(src[i]);
+    for (const item of src) {
+        dest.push(item);
     }
 };
 
