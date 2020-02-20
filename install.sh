@@ -116,6 +116,7 @@ install_v2-ui() {
     echo -e ""
     echo -e "如果是全新安装，默认网页端口为 ${green}65432${plain}，用户名和密码默认都是 ${green}admin${plain}"
     echo -e "请自行确保此端口没有被其他程序占用，${yellow}并且确保 65432 端口已放行${plain}"
+    echo -e "若想将 65432 修改为其它端口，输入 v2-ui 命令进行修改，同样也要确保你修改的端口也是放行的"
     echo -e ""
     echo -e "如果是更新面板，则按你之前的方式访问面板"
     echo -e ""
