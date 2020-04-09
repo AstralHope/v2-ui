@@ -2,8 +2,11 @@
 
 # 捐赠支持
 如果你觉得面板好用的话，可以考虑一下捐赠支持，金额随意，感谢支持。[点我](https://blog.sprov.xyz/go/support-paypal)
+
 USDT：0xa77579db35ad766844d41aca541d658349268012
+
 以太坊 (ETH)：0xa77579db35ad766844d41aca541d658349268012
+
 比特币 (BTC)：bc1qemdf5vdz8cq07cdcqzhvzewy35994cxt7gnrpegaz8txwxfp2ysqtfw6hh
 
 # v2-ui
