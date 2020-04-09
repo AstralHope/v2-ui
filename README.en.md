@@ -1,7 +1,11 @@
 [中文](README.md) | English
 
 # Donate
-If you think the panel is easy to use, you can consider donation support, the amount is arbitrary, thank you for your support. [PayPal](https://blog.sprov.xyz/go/support-paypal)
+If you think the panel is easy to use, you can consider donation support, the amount is arbitrary, thank you for your support.
+ - [Paypal](https://blog.sprov.xyz/go/support-paypal)
+ - USDT：0xa77579db35ad766844d41aca541d658349268012
+ - ETH：0xa77579db35ad766844d41aca541d658349268012
+ - BTC：bc1qemdf5vdz8cq07cdcqzhvzewy35994cxt7gnrpegaz8txwxfp2ysqtfw6hh
 
 # v2-ui
 Support multi-protocol multi-user v2ray panel
