@@ -1,24 +1,24 @@
-# Chinese translations for PROJECT.
-# Copyright (C) 2019 ORGANIZATION
+# Chinese (Simplified) translations for PROJECT.
+# Copyright (C) 2020 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-01-23 14:02+0800\n"
-"PO-Revision-Date: 2019-08-14 14:37+0800\n"
+"POT-Creation-Date: 2020-04-26 13:11+0800\n"
+"PO-Revision-Date: 2020-02-26 21:50+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh\n"
-"Language-Team: zh <LL@li.org>\n"
+"Language: zh_Hans\n"
+"Language-Team: zh_Hans <LL@li.org>\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
 
-#: init.py:95
+#: init.py:92
 msgid "You has been logout, please refresh this page and login again"
 msgstr "你已退出登录，请刷新页面重新登录"
 
@@ -90,8 +90,8 @@ msgstr "取消"
 
 #: templates/common/prompt_modal.html:17 templates/common/prompt_modal.html:40
 #: templates/v2ray/accounts.html:39 templates/v2ray/accounts.html:93
-#: templates/v2ray/donate.html:47 templates/v2ray/inbound_modal.html:385
-#: templates/v2ray/inbound_modal.html:391
+#: templates/v2ray/donate.html:47 templates/v2ray/inbound_modal.html:401
+#: templates/v2ray/inbound_modal.html:407
 msgid "confirm"
 msgstr "确定"
 
@@ -101,11 +101,12 @@ msgstr "确定"
 msgid "close"
 msgstr "关闭"
 
-#: templates/common/qrcode_modal.html:16 templates/common/text_modal.html:2
+#: templates/common/qrcode_modal.html:17 templates/common/text_modal.html:2
+#: templates/v2ray/donate.html:105
 msgid "copy"
 msgstr "复制"
 
-#: templates/common/qrcode_modal.html:26 templates/common/text_modal.html:31
+#: templates/common/qrcode_modal.html:32 templates/common/text_modal.html:31
 msgid "copied"
 msgstr "复制成功"
 
@@ -320,11 +321,12 @@ msgstr "退出登录"
 msgid "custom"
 msgstr "自定义"
 
-#: templates/v2ray/donate.html:54 templates/v2ray/donate.html:62
+#: templates/v2ray/donate.html:56 templates/v2ray/donate.html:66
+#: templates/v2ray/donate.html:76
 msgid "show"
 msgstr "显示"
 
-#: templates/v2ray/donate.html:85
+#: templates/v2ray/donate.html:99
 msgid "please input a number"
 msgstr "请输入数字"
 
@@ -334,7 +336,7 @@ msgstr "监听IP"
 
 #: templates/v2ray/inbound_modal.html:24
 msgid "If you don't fully understand its purpose, leave it at the default."
-msgstr "如果你不能完全理解这个的用途，那么保持默认即可。"
+msgstr "没事真的不要瞎改这个监听IP，保持默认就行了。"
 
 #: templates/v2ray/inbound_modal.html:45
 msgid "disable insecure encryption"
@@ -468,6 +470,14 @@ msgstr "密钥文件路径"
 #: templates/v2ray/inbound_modal.html:371
 msgid "key file content"
 msgstr "密钥文件内容"
+
+#: templates/v2ray/inbound_modal.html:383
+msgid "sniffing"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:386
+msgid "If there are no special needs, just keep the default."
+msgstr "如果没有特殊需求，保持默认即可"
 
 #: templates/v2ray/index.html:33
 msgid "memory"

@@ -375,6 +375,22 @@
             </template>
         </a-form>
     </template>
+
+    <!-- sniffing -->
+    <a-form layout="inline">
+        <a-form-item>
+            <span slot="label">
+                {{ _('sniffing') }}
+                <a-tooltip>
+                    <template slot="title">
+                        {{ _('If there are no special needs, just keep the default.') }}
+                    </template>
+                    <a-icon type="question-circle" theme="filled"></a-icon>
+                </a-tooltip>
+            </span>
+            <a-switch v-model="inModal.inbound.sniffing.enabled"></a-switch>
+        </a-form-item>
+    </a-form>
 </a-modal>
 <script>
 

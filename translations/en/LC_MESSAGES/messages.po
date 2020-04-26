@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-01-23 14:02+0800\n"
+"POT-Creation-Date: 2020-04-26 13:11+0800\n"
 "PO-Revision-Date: 2019-08-14 12:55+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
 
-#: init.py:95
+#: init.py:92
 msgid "You has been logout, please refresh this page and login again"
 msgstr ""
 
@@ -90,8 +90,8 @@ msgstr ""
 
 #: templates/common/prompt_modal.html:17 templates/common/prompt_modal.html:40
 #: templates/v2ray/accounts.html:39 templates/v2ray/accounts.html:93
-#: templates/v2ray/donate.html:47 templates/v2ray/inbound_modal.html:385
-#: templates/v2ray/inbound_modal.html:391
+#: templates/v2ray/donate.html:47 templates/v2ray/inbound_modal.html:401
+#: templates/v2ray/inbound_modal.html:407
 msgid "confirm"
 msgstr ""
 
@@ -101,11 +101,12 @@ msgstr ""
 msgid "close"
 msgstr ""
 
-#: templates/common/qrcode_modal.html:16 templates/common/text_modal.html:2
+#: templates/common/qrcode_modal.html:17 templates/common/text_modal.html:2
+#: templates/v2ray/donate.html:105
 msgid "copy"
 msgstr ""
 
-#: templates/common/qrcode_modal.html:26 templates/common/text_modal.html:31
+#: templates/common/qrcode_modal.html:32 templates/common/text_modal.html:31
 msgid "copied"
 msgstr ""
 
@@ -320,11 +321,12 @@ msgstr ""
 msgid "custom"
 msgstr ""
 
-#: templates/v2ray/donate.html:54 templates/v2ray/donate.html:62
+#: templates/v2ray/donate.html:56 templates/v2ray/donate.html:66
+#: templates/v2ray/donate.html:76
 msgid "show"
 msgstr ""
 
-#: templates/v2ray/donate.html:85
+#: templates/v2ray/donate.html:99
 msgid "please input a number"
 msgstr ""
 
@@ -467,6 +469,14 @@ msgstr ""
 
 #: templates/v2ray/inbound_modal.html:371
 msgid "key file content"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:383
+msgid "sniffing"
+msgstr ""
+
+#: templates/v2ray/inbound_modal.html:386
+msgid "If there are no special needs, just keep the default."
 msgstr ""
 
 #: templates/v2ray/index.html:33

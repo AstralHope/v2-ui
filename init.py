@@ -19,18 +19,15 @@ db = SQLAlchemy(app)
 need_login_bps = []
 common_context = {}
 
-LANGUAGES = {
-    'zh': '中文',
-    'zh_CN': '中文',
-    'en': 'English',
-    'en_US': 'English',
-    'es': 'Español',
-}
-
 
 @babel.localeselector
 def get_locale():
-    return request.accept_languages.best_match(LANGUAGES.keys())
+    match = request.accept_languages.best_match(['zh-TW', 'zh-HK', 'zh-CN', 'zh', 'en'])
+    if 'TW' in match or 'HK' in match:
+        return 'zh_Hant'
+    if 'zh' in match:
+        return 'zh_Hans'
+    return 'en'
 
 
 def init_db():
