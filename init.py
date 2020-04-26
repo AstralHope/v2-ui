@@ -22,7 +22,7 @@ common_context = {}
 
 @babel.localeselector
 def get_locale():
-    match = request.accept_languages.best_match(['zh-TW', 'zh-HK', 'zh-CN', 'zh', 'en'])
+    match = request.accept_languages.best_match(['zh-TW', 'zh-HK', 'zh-CN', 'zh', 'en'], 'en')
     if 'TW' in match or 'HK' in match:
         return 'zh_Hant'
     if 'zh' in match:
@@ -97,8 +97,8 @@ def before():
 @app.errorhandler(500)
 def error_handle(e):
     from base.models import Msg
-    logging.warning(e.__str__())
-    response = jsonify(Msg(False, e.msg))
+    logging.warning(e)
+    response = jsonify(Msg(False, str(e)))
     response.status_code = 200
     return response
 
