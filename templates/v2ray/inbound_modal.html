@@ -73,7 +73,7 @@
         <!-- select stream network -->
         <a-form layout="inline">
             <a-form-item label="{{ _('transport') }}">
-                <a-select v-model="inModal.inbound.stream.network">
+                <a-select v-model="inModal.inbound.stream.network" @change="streamNetworkChange">
                     <a-select-option value="tcp">tcp</a-select-option>
                     <a-select-option value="kcp">kcp</a-select-option>
                     <a-select-option value="ws">ws</a-select-option>
@@ -442,6 +442,13 @@
             inModal: inModal,
             Protocols: protocols,
             SSMethods: SSMethods,
+        },
+        methods: {
+            streamNetworkChange(oldValue) {
+                if (oldValue === 'kcp') {
+                    this.inModal.inbound.stream.security = 'none';
+                }
+            }
         }
     });
 

@@ -4,6 +4,7 @@ import logging
 import os
 import sys
 
+import tornado
 import tornado.log
 import tornado.options
 from tornado import web, wsgi

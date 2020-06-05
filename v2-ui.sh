@@ -280,7 +280,7 @@ disable() {
 
 show_log() {
     echo && echo -n -e "面板使用过程中可能会输出许多 WARNING 日志，如果面板使用没有什么问题的话，那就没有问题，按回车继续: " && read temp
-    tail -f /etc/v2-ui/v2-ui.log
+    tail -500f /etc/v2-ui/v2-ui.log
     if [[ $# == 0 ]]; then
         before_show_menu
     fi
