@@ -684,6 +684,10 @@ msgstr "當v2ray需重新開啟時，面板會自動執行此指令來重開v2ra
 msgid "Statistical traffic interval time"
 msgstr "統計流量間隔"
 
+#: templates/v2ray/setting.html:138
+msgid "Reset traffic interval days"
+msgstr "重置流量間隔"
+
 #: templates/v2ray/setting.html:142
 msgid "v2ctl command location"
 msgstr "v2ctl 指令位置"

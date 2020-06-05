@@ -96,6 +96,12 @@ def get_traffic_job_interval():
     return __get('traffic_job_interval', 30)
 
 
+def get_reset_traffic_job_days():
+    days = __get('reset_traffic_job_days', 30)
+    days = days if days > 31 else 31
+    return days
+
+
 def get_base_path():
     return __get('base_path', '')
 
@@ -140,6 +146,7 @@ def init_db(update=False):
     add_if_not_exist(Setting('v2_config_check_interval', 'v2_config_check_interval', '10', 'int', '', True), update)
     add_if_not_exist(Setting('v2_restart_cmd', 'v2_restart_cmd', 'systemctl restart v2ray', 'text', '', False), update)
     add_if_not_exist(Setting('traffic_job_interval', 'traffic_job_interval', '30', 'int', '', True), update)
+    add_if_not_exist(Setting('reset_traffic_job_days', 'reset_traffic_job_days', '30', 'int', '', True), update)
     add_if_not_exist(Setting('v2ctl_cmd_path', 'v2ctl_cmd_path', '/usr/bin/v2ray/v2ctl', 'text', '', True), update)
     add_if_not_exist(Setting('secret_key', '', os.urandom(24), 'text', '', True), False)
     db.session.commit()
