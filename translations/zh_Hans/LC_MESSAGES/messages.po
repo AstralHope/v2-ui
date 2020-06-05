@@ -686,7 +686,7 @@ msgstr "统计流量间隔"
 
 #: templates/v2ray/setting.html:138
 msgid "Reset traffic interval days"
-msgstr "重置流量間隔"
+msgstr "重置流量间隔"
 
 #: templates/v2ray/setting.html:142
 msgid "v2ctl command location"
