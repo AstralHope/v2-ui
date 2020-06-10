@@ -1,6 +1,7 @@
 import threading
 import time
 import calendar
+import logging
 
 from init import db
 from util import config, v2_util
@@ -64,4 +65,4 @@ def reset_traffic_job():
 def init():
     schedule_job(check_v2_config_job, config.get_v2_config_check_interval())
     schedule_job(traffic_job, config.get_traffic_job_interval())
-    schedule_job(reset_traffic_job, 24 * 60 * 60)
+    schedule_job(reset_traffic_job, 12 * 60 * 60)

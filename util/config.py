@@ -97,9 +97,7 @@ def get_traffic_job_interval():
 
 
 def get_reset_traffic_job_days():
-    days = __get('reset_traffic_job_days', 30)
-    days = days if days > 31 else 31
-    return days
+    return __get('reset_traffic_job_days', 30)
 
 
 def get_base_path():
