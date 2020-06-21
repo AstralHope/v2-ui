@@ -1,4 +1,7 @@
 import threading
+import time
+import calendar
+import logging
 
 from init import db
 from util import config, v2_util
@@ -43,6 +46,23 @@ def traffic_job():
         db.session.commit()
 
 
+def reset_traffic_job():
+    with __lock:
+        if not v2_util.is_running():
+            return
+        year = time.strftime('%Y', time.localtime())
+        month = time.strftime('%m', time.localtime())
+        day = time.strftime('%d', time.localtime())
+        end_day = calendar.monthrange(int(year), int(month))[1]
+        days = config.get_reset_traffic_job_days()
+        if end_day < days:
+            days = end_day
+        if int(day) == days:
+            Inbound.query.update({'up': 0, 'down': 0})
+            db.session.commit()
+
+
 def init():
     schedule_job(check_v2_config_job, config.get_v2_config_check_interval())
     schedule_job(traffic_job, config.get_traffic_job_interval())
+    schedule_job(reset_traffic_job, 12 * 60 * 60)
