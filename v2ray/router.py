@@ -5,11 +5,11 @@ from flask_babel import gettext
 from sqlalchemy import and_
 
 from base.models import Msg
+from base.models import User
 from init import db
 from util import config, server_info
 from util.v2_jobs import v2_config_change
 from v2ray.models import Inbound
-from base.models import User
 
 v2ray_bp = Blueprint('v2ray', __name__, url_prefix='/v2ray')
 

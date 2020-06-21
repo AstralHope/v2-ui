@@ -47,36 +47,6 @@
                         <a-button type="primary" size="small" @click="payPalCustom()">{{ _('confirm') }}</a-button>
                     </div>
                     <a-divider></a-divider>
-                    <div>
-                        以太坊 (ETH) :
-                        <a href="javascript:void(0)"
-                           @click="qrcode('以太坊 (ETH)',
-                           '0xa77579db35ad766844d41aca541d658349268012',
-                           '0xa77579db35ad766844d41aca541d658349268012')">
-                            {{ _('show') }}
-                        </a>
-                    </div>
-                    <a-divider></a-divider>
-                    <div>
-                        比特币 (BTC) :
-                        <a href="javascript:void(0)"
-                           @click="qrcode('比特币 (BTC)',
-                           'bitcoin:bc1qemdf5vdz8cq07cdcqzhvzewy35994cxt7gnrpegaz8txwxfp2ysqtfw6hh',
-                           'bc1qemdf5vdz8cq07cdcqzhvzewy35994cxt7gnrpegaz8txwxfp2ysqtfw6hh')">
-                            {{ _('show') }}
-                        </a>
-                    </div>
-                    <a-divider></a-divider>
-                    <div>
-                        USDT(TRC20)：
-                        <a href="javascript:void(0)"
-                           @click="qrcode('USDT(TRC20)',
-                           'TN9Q85uH2hLsAGZVQ1TKSPDvXqXvrLG7nK',
-                           'TN9Q85uH2hLsAGZVQ1TKSPDvXqXvrLG7nK')">
-                            {{ _('show') }}
-                        </a>
-                    </div>
-                    <a-divider></a-divider>
                 </a-card>
             </a-layout-content>
         </a-layout>

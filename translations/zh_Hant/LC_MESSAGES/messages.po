@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-05-31 13:36+0800\n"
+"POT-Creation-Date: 2020-06-21 21:31+0800\n"
 "PO-Revision-Date: 2020-02-26 21:50+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hant\n"
@@ -102,7 +102,7 @@ msgid "close"
 msgstr "關閉"
 
 #: templates/common/qrcode_modal.html:17 templates/common/text_modal.html:2
-#: templates/v2ray/donate.html:105
+#: templates/v2ray/donate.html:75
 msgid "copy"
 msgstr "複製"
 
@@ -273,7 +273,7 @@ msgid "update account"
 msgstr "修改帳號"
 
 #: templates/v2ray/accounts.html:341 templates/v2ray/setting.html:37
-#: templates/v2ray/setting.html:203
+#: templates/v2ray/setting.html:207
 msgid "update"
 msgstr "修改"
 
@@ -328,12 +328,7 @@ msgstr "登出"
 msgid "custom"
 msgstr "自訂"
 
-#: templates/v2ray/donate.html:56 templates/v2ray/donate.html:66
-#: templates/v2ray/donate.html:76
-msgid "show"
-msgstr "顯示"
-
-#: templates/v2ray/donate.html:99
+#: templates/v2ray/donate.html:69
 msgid "please input a number"
 msgstr "請輸入數字"
 
@@ -499,7 +494,7 @@ msgid "status"
 msgstr "狀態"
 
 #: templates/v2ray/index.html:65 templates/v2ray/index.html:197
-#: templates/v2ray/setting.html:189
+#: templates/v2ray/setting.html:193
 msgid "error"
 msgstr "錯誤"
 
@@ -684,69 +679,75 @@ msgstr "當v2ray需重新開啟時，面板會自動執行此指令來重開v2ra
 msgid "Statistical traffic interval time"
 msgstr "統計流量間隔"
 
-#: templates/v2ray/setting.html:138
-msgid "Reset traffic interval days"
-msgstr "重置流量間隔"
-
 #: templates/v2ray/setting.html:142
+msgid "Reset traffic day"
+msgstr "重置流量日"
+
+#: templates/v2ray/setting.html:143
+msgid ""
+"0 means no reset, greater than 0 will reset all users traffic every month"
+" on the set date, time depends on server time zone."
+msgstr "0表示不重置，大於0則在每月指定的日期0點重置流量，時間取決於服務器的時區"
+
+#: templates/v2ray/setting.html:146
 msgid "v2ctl command location"
 msgstr "v2ctl 指令位置"
 
-#: templates/v2ray/setting.html:143
+#: templates/v2ray/setting.html:147
 msgid "Usually do not have to modify."
 msgstr "通常不用修改。"
 
-#: templates/v2ray/setting.html:180
+#: templates/v2ray/setting.html:184
 msgid "current panel version"
 msgstr "目前面板版本"
 
-#: templates/v2ray/setting.html:189
+#: templates/v2ray/setting.html:193
 msgid "not supported type"
 msgstr "不支援的類型"
 
-#: templates/v2ray/setting.html:226
+#: templates/v2ray/setting.html:230
 msgid "please input old username"
 msgstr "請輸入原帳號名稱"
 
-#: templates/v2ray/setting.html:228
+#: templates/v2ray/setting.html:232
 msgid "please input old password"
 msgstr "請輸入原密碼"
 
-#: templates/v2ray/setting.html:230
+#: templates/v2ray/setting.html:234
 msgid "please input new username"
 msgstr "請輸入新帳號名稱"
 
-#: templates/v2ray/setting.html:232
+#: templates/v2ray/setting.html:236
 msgid "please input new password"
 msgstr "請輸入新密碼"
 
-#: templates/v2ray/setting.html:251
+#: templates/v2ray/setting.html:255
 msgid "NOTICE"
 msgstr "用戶須知"
 
-#: templates/v2ray/setting.html:253
+#: templates/v2ray/setting.html:257
 msgid ""
 "Most of the configuration items on this page are directly related to the "
 "survival of the panel and v2ray."
 msgstr "此頁的大多數設定欄位都攸關面板與v2ray的存亡"
 
-#: templates/v2ray/setting.html:254
+#: templates/v2ray/setting.html:258
 msgid ""
 "Modifying the wrong value will cause the panel to fail to start, then you"
 " must reset all values."
 msgstr "修改不慎會導致面板無法啟動，之後你必須要重置所有設定"
 
-#: templates/v2ray/setting.html:255
+#: templates/v2ray/setting.html:259
 msgid ""
 "Please make a backup yourself. If the data is lost, I will not be "
 "responsible for it."
 msgstr "請自行備份，造成數據資料遺失概不負責"
 
-#: templates/v2ray/setting.html:257
+#: templates/v2ray/setting.html:261
 msgid "understood"
 msgstr "我已了解"
 
-#: templates/v2ray/setting.html:258
+#: templates/v2ray/setting.html:262
 msgid "not remind"
 msgstr "不再提醒"
 
@@ -780,4 +781,10 @@ msgstr "重置流量成功"
 #: v2ray/router.py:139
 msgid "Reset add traffic successfully"
 msgstr "重置所有流量成功"
+
+#~ msgid "show"
+#~ msgstr "顯示"
+
+#~ msgid "Reset traffic interval days"
+#~ msgstr "重置流量間隔"
 

@@ -13,8 +13,6 @@ green='\033[0;32m'
 yellow='\033[0;33m'
 plain='\033[0m'
 
-version="v1.0.1"
-
 # check root
 [[ $EUID -ne 0 ]] && echo -e "${red}错误: ${plain} 必须使用root用户运行此脚本！\n" && exit 1
 
@@ -419,7 +417,7 @@ show_usage() {
 
 show_menu() {
     echo -e "
-  ${green}v2-ui 面板管理脚本${plain} ${red}${version}${plain}
+  ${green}v2-ui 面板管理脚本${plain}
 --- https://blog.sprov.xyz/v2-ui ---
   ${green}0.${plain} 退出脚本
 ————————————————
