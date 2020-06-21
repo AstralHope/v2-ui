@@ -687,7 +687,7 @@ msgstr "重置流量日"
 msgid ""
 "0 means no reset, greater than 0 will reset all users traffic every month"
 " on the set date, time depends on server time zone."
-msgstr "0表示不重置，大於0則在每月指定的日期0點重置流量，時間取決於服務器的時區"
+msgstr "0表示不重置，大於0則在每月指定的日期0點重置流量，時間取決於服務器的時區。"
 
 #: templates/v2ray/setting.html:146
 msgid "v2ctl command location"
