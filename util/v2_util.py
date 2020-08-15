@@ -70,6 +70,8 @@ def write_v2_config(v2_config: dict):
                 if conf_key in file_name:
                     try:
                         content: str = json_util.dumps(v2_config[conf_key])
+                        if content.startswith('[') and content.endswith(']'):
+                            content = content[1:len(content) - 1]
                         file_util.write_file(f'{conf_path}{file_name}', content)
                     except Exception as e:
                         logging.error(f'An error occurred while writing the v2ray configuration file({file_name}): {e}')
