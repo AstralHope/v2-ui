@@ -87,7 +87,7 @@ uninstall_old_v2ray() {
         confirm "检测到旧版 v2ray，是否卸载，将删除 ${red}/usr/bin/v2ray/${plain} ${red}/etc/systemd/systen/v2ray.service${plain}" "Y"
         echo "开始卸载旧版 v2ray"
         rm /usr/bin/v2ray/ -rf
-        rm /etc/systemd/systen/v2ray.service -f
+        rm /etc/systemd/system/v2ray.service -f
     fi
 }
 

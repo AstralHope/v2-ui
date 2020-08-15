@@ -135,7 +135,7 @@ except Exception as e:
 __traffic_pattern = re.compile('stat:\s*<\s*name:\s*"inbound>>>'
                                '(?P<tag>[^>]+)>>>traffic>>>(?P<type>uplink|downlink)"(\s*value:\s*(?P<value>\d+))?')
 
-__v2ctl_cmd = config.get_v2ctl_cmd_path()
+__v2ctl_cmd = '/usr/local/bin/v2ctl'  # config.get_v2ctl_cmd_path()
 
 
 def __get_v2ray_api_cmd(address, service, method, pattern, reset):
