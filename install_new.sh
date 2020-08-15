@@ -88,6 +88,7 @@ uninstall_old_v2ray() {
         if [[ $? != 0 ]]; then
             echo "不卸载则无法安装v2-ui"
             exit 1
+        fi
         echo "开始卸载旧版 v2ray"
         rm /usr/bin/v2ray/ -rf
         rm /etc/systemd/system/v2ray.service -f
