@@ -84,7 +84,10 @@ install_base() {
 
 uninstall_old_v2ray() {
     if [[ -f /usr/bin/v2ray/v2ray ]]; then
-        confirm "检测到旧版 v2ray，是否卸载，将删除 ${red}/usr/bin/v2ray/${plain} ${red}/etc/systemd/systen/v2ray.service${plain}" "Y"
+        confirm "检测到旧版 v2ray，是否卸载，将删除 ${red} /usr/bin/v2ray/ ${plain} ${red} /etc/systemd/system/v2ray.service ${plain}" "Y"
+        if [[ $? != 0 ]]; then
+            echo "不卸载则无法安装v2-ui"
+            exit 1
         echo "开始卸载旧版 v2ray"
         rm /usr/bin/v2ray/ -rf
         rm /etc/systemd/system/v2ray.service -f
@@ -100,6 +103,7 @@ install_v2ray() {
         echo -e "${yellow}大多数原因可能是因为你当前服务器所在的地区无法下载 v2ray 安装包导致的，这在国内的机器上较常见，解决方式是手动安装 v2ray，具体原因还是请看上面的错误信息${plain}"
         exit 1
     fi
+    systemctl daemon-reload
     systemctl enable v2ray
     systemctl start v2ray
 }
