@@ -145,6 +145,6 @@ install_v2-ui() {
 #close_firewall
 #install_v2-ui
 
-echo "v2-ui 正在开发支持最新版 v2ray，暂无法更新与安装，如有需要，请使用测试版（${read}仅临时测试，此脚本会尽快恢复${plain}）"
+echo "v2-ui 正在开发支持最新版 v2ray，暂无法更新与安装，如有需要，请使用测试版（${red}仅临时测试，此脚本会尽快恢复${plain}）"
 echo "测试版安装命令："
 echo "bash <(curl -Ls https://raw.githubusercontent.com/sprov065/v2-ui/master/install_new.sh) 5.3.0"
