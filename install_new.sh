@@ -84,7 +84,7 @@ install_base() {
 
 uninstall_old_v2ray() {
     if [[ -f /usr/bin/v2ray/v2ray ]]; then
-        confirm "检测到旧版 v2ray，是否卸载，将删除 ${red} /usr/bin/v2ray/ ${plain} ${red} /etc/systemd/system/v2ray.service ${plain}" "Y"
+        confirm "检测到旧版 v2ray，是否卸载，将删除 /usr/bin/v2ray/ /etc/systemd/system/v2ray.service" "Y"
         if [[ $? != 0 ]]; then
             echo "不卸载则无法安装v2-ui"
             exit 1

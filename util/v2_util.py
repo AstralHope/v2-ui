@@ -48,6 +48,8 @@ def read_v2_config() -> Optional[dict]:
             content: str = file_util.read_file(f'{conf_path}{file_name}')
             for conf_key in V2_CONF_KEYS:
                 if conf_key in file_name:
+                    if conf_key in ['inbounds', 'outbounds']:
+                        content = f'[{content}]'
                     v2_config[conf_key] = json.loads(content)
                     break
         return v2_config
