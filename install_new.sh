@@ -90,6 +90,7 @@ uninstall_old_v2ray() {
             exit 1
         fi
         echo "开始卸载旧版 v2ray"
+        systemctl stop v2ray
         rm /usr/bin/v2ray/ -rf
         rm /etc/systemd/system/v2ray.service -f
     fi
