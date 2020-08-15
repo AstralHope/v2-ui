@@ -47,6 +47,14 @@
         </a-form-item>
     </a-form>
 
+    <!-- vmess settings -->
+    <a-form v-if="inModal.inbound.protocol === Protocols.VLESS"
+            layout="inline">
+        <a-form-item label="id">
+            <a-input v-model.trim="inModal.inbound.settings.vlesses[0].id"></a-input>
+        </a-form-item>
+    </a-form>
+
     <!-- shadowsocks -->
     <a-form v-if="inModal.inbound.protocol === Protocols.SHADOWSOCKS"
             layout="inline">
@@ -68,7 +76,7 @@
     </a-form>
 
     <!-- stream settings -->
-    <template v-if="inModal.inbound.protocol === Protocols.VMESS">
+    <template v-if="inModal.inbound.protocol === Protocols.VMESS || inModal.inbound.protocol === Protocols.VLESS">
 
         <!-- select stream network -->
         <a-form layout="inline">
@@ -326,7 +334,7 @@
     </a-form>
 
     <!-- tls settings -->
-    <template v-if="inModal.inbound.protocol === Protocols.VMESS
+    <template v-if="(inModal.inbound.protocol === Protocols.VMESS || inModal.inbound.protocol === Protocols.VLESS)
                     && ['tcp', 'ws', 'http', 'quic'].indexOf(inModal.inbound.stream.network) >= 0">
 
         <!-- tls enable -->
@@ -429,6 +437,7 @@
 
     let protocols = {
         VMESS: Protocols.VMESS,
+        VLESS: Protocols.VLESS,
         SHADOWSOCKS: Protocols.SHADOWSOCKS,
         DOKODEMO: Protocols.DOKODEMO,
         SOCKS: Protocols.SOCKS,

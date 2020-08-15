@@ -5,10 +5,15 @@ import re
 import sys
 from enum import Enum
 from threading import Timer
+from typing import Optional, List
 
-from util import config, list_util, cmd_util, server_info, file_util
+from util import config, list_util, cmd_util, server_info, file_util, json_util
 from v2ray.exceptions import V2rayException
 from v2ray.models import Inbound
+
+
+V2_CONF_KEYS = ['log', 'api', 'dns', 'routing', 'policy', 'inbounds', 'outbounds', 'transport',
+                'stats', 'reverse']
 
 
 class Protocols(Enum):
@@ -24,27 +29,51 @@ def gen_v2_config_from_db():
     inbounds = [inbound.to_v2_json() for inbound in inbounds]
     v2_config = json.loads(config.get_v2_template_config())
     v2_config['inbounds'] += inbounds
+    for conf_key in V2_CONF_KEYS:
+        if conf_key not in v2_config:
+            v2_config[conf_key] = {}
     return v2_config
 
 
-def read_v2_config():
+def read_v2_config() -> Optional[dict]:
     try:
-        path = config.get_v2_config_path()
-        file_util.touch(path)
-        with open(path, encoding='utf-8') as f:
-            return f.read()
+        # path = config.get_v2_config_path()
+        # file_util.touch(path)
+        # with open(path, encoding='utf-8') as f:
+        #     return f.read()
+        conf_path = '/usr/local/etc/v2ray/'
+        files: List[str] = file_util.list_files(conf_path)
+        v2_config: dict = {}
+        for file_name in files:
+            content: str = file_util.read_file(f'{conf_path}{file_name}')
+            for conf_key in V2_CONF_KEYS:
+                if conf_key in file_name:
+                    v2_config[conf_key] = json.loads(content)
+                    break
+        return v2_config
     except Exception as e:
         logging.error('An error occurred while reading the v2ray configuration file: ' + str(e))
         return None
 
 
-def write_v2_config(v2_config):
-    v2_config = json.dumps(v2_config, ensure_ascii=False, sort_keys=True, indent=2, separators=(',', ': '))
+def write_v2_config(v2_config: dict):
+    # v2_config: str = json.dumps(v2_config, ensure_ascii=False, sort_keys=True, indent=2, separators=(',', ': '))
     if read_v2_config() == v2_config:
         return
     try:
-        with open(config.get_v2_config_path(), 'w', encoding='utf-8') as f:
-            f.write(v2_config)
+        # with open(config.get_v2_config_path(), 'w', encoding='utf-8') as f:
+        #     f.write(v2_config)
+        conf_path = '/usr/local/etc/v2ray/'
+        files: List[str] = file_util.list_files(conf_path)
+        for file_name in files:
+            for conf_key in V2_CONF_KEYS:
+                if conf_key in file_name:
+                    try:
+                        content: str = json_util.dumps(v2_config[conf_key])
+                        file_util.write_file(f'{conf_path}{file_name}', content)
+                    except Exception as e:
+                        logging.error(f'An error occurred while writing the v2ray configuration file({file_name}): {e}')
+                    break
         restart(True)
     except Exception as e:
         logging.error('An error occurred while writing the v2ray configuration file: ' + str(e))
@@ -68,6 +97,7 @@ def is_running():
 def restart(now=False):
     def f():
         cmd_util.exec_cmd(config.get_v2_restart_cmd())
+
     if now:
         f()
     else:
@@ -80,6 +110,7 @@ def start():
 
     def f():
         cmd_util.exec_cmd(config.get_v2_start_cmd())
+
     Timer(3, f).start()
 
 
@@ -89,6 +120,7 @@ def stop():
 
     def f():
         cmd_util.exec_cmd(config.get_v2_stop_cmd())
+
     Timer(3, f).start()
 
 
@@ -103,12 +135,11 @@ except Exception as e:
 __traffic_pattern = re.compile('stat:\s*<\s*name:\s*"inbound>>>'
                                '(?P<tag>[^>]+)>>>traffic>>>(?P<type>uplink|downlink)"(\s*value:\s*(?P<value>\d+))?')
 
-
 __v2ctl_cmd = config.get_v2ctl_cmd_path()
 
 
 def __get_v2ray_api_cmd(address, service, method, pattern, reset):
-    cmd = '%s api --server=%s:%d %s.%s \'pattern: "%s" reset: %s\''\
+    cmd = '%s api --server=%s:%d %s.%s \'pattern: "%s" reset: %s\'' \
           % (__v2ctl_cmd, address, __api_port, service, method, pattern, reset)
     return cmd
 

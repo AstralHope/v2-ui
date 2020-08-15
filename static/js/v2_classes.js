@@ -1,5 +1,6 @@
 const Protocols = {
     VMESS: 'vmess',
+    VLESS: 'vless',
     SHADOWSOCKS: 'shadowsocks',
     DOKODEMO: 'dokodemo-door',
     MTPROTO: 'mtproto',
@@ -652,7 +653,7 @@ class Inbound extends V2CommonClass {
 
     toJson() {
         let streamSettings;
-        if (this.protocol === Protocols.VMESS) {
+        if (this.protocol === Protocols.VMESS || this.protocol === Protocols.VLESS) {
             streamSettings = this.stream.toJson();
         }
         return {
@@ -678,6 +679,7 @@ Inbound.Settings = class extends V2CommonClass {
     static getSettings(protocol) {
         switch (protocol) {
             case Protocols.VMESS: return new Inbound.VmessSettings(protocol);
+            case Protocols.VLESS: return new Inbound.VLESSSettings(protocol);
             case Protocols.SHADOWSOCKS: return new Inbound.ShadowsocksSettings(protocol);
             case Protocols.DOKODEMO: return new Inbound.DokodemoSettings(protocol);
             case Protocols.MTPROTO: return new Inbound.MtprotoSettings(protocol);
@@ -690,6 +692,7 @@ Inbound.Settings = class extends V2CommonClass {
     static fromJson(protocol, json) {
         switch (protocol) {
             case Protocols.VMESS: return Inbound.VmessSettings.fromJson(json);
+            case Protocols.VLESS: return Inbound.VLESSSettings.fromJson(json);
             case Protocols.SHADOWSOCKS: return Inbound.ShadowsocksSettings.fromJson(json);
             case Protocols.DOKODEMO: return Inbound.DokodemoSettings.fromJson(json);
             case Protocols.MTPROTO: return Inbound.MtprotoSettings.fromJson(json);
@@ -758,6 +761,108 @@ Inbound.VmessSettings.Vmess = class extends V2CommonClass {
             json.id,
             json.alterId,
         );
+    }
+};
+
+Inbound.VLESSSettings = class extends Inbound.Settings {
+    constructor(protocol,
+                vlesses=[new Inbound.VLESSSettings.VLESS()],
+                decryption='none',
+                fallback=new Inbound.VLESSSettings.Fallback(),
+                fallbackH2=new Inbound.VLESSSettings.FallbackH2()) {
+        super(protocol);
+        this.vlesses = vlesses;
+        this.decryption = decryption;
+        this.fallback = fallback;
+        this.fallbackH2 = fallbackH2;
+    }
+
+    static fromJson(json={}) {
+        return new Inbound.VLESSSettings(
+            Protocols.VLESS,
+            json.clients.map(client => Inbound.VLESSSettings.VLESS.fromJson(client)),
+            json.decryption,
+            Inbound.VLESSSettings.Fallback.fromJson(json.fallback),
+            Inbound.VLESSSettings.FallbackH2.fromJson(json.fallbackH2),
+        );
+    }
+
+    toJson() {
+        return {
+            clients: Inbound.VLESSSettings.toJsonArray(this.vlesses),
+            decryption: this.decryption,
+            fallback: this.fallback.toJson(),
+            fallbackH2: this.fallbackH2.toJson(),
+        };
+    }
+};
+Inbound.VLESSSettings.VLESS = class extends V2CommonClass {
+
+    constructor(id=randomUUID(), encryption='none') {
+        super();
+        this.id = id;
+        this.encryption = encryption;
+    }
+
+    static fromJson(json={}) {
+        return new Inbound.VmessSettings.Vmess(
+            json.id,
+            json.encryption,
+        );
+    }
+};
+Inbound.VLESSSettings.Fallback = class extends V2CommonClass {
+    constructor(addr='127.0.0.1', port=80, unix='', xver=0) {
+        super();
+        this.addr = addr;
+        this.port = port;
+        this.unix = unix;
+        this.xver = xver;
+    }
+
+    toJson() {
+        return {
+            addr: this.addr,
+            port: this.port,
+            unix: this.unix,
+            xver: this.xver,
+        }
+    }
+
+    static fromJson(json={}) {
+        return new Inbound.VLESSSettings.Fallback(
+            json.addr,
+            json.port,
+            json.unix,
+            json.xver,
+        )
+    }
+};
+Inbound.VLESSSettings.FallbackH2 = class extends V2CommonClass {
+    constructor(addr='127.0.0.1', port=80, unix='', xver=0) {
+        super();
+        this.addr = addr;
+        this.port = port;
+        this.unix = unix;
+        this.xver = xver;
+    }
+
+    toJson() {
+        return {
+            addr: this.addr,
+            port: this.port,
+            unix: this.unix,
+            xver: this.xver,
+        }
+    }
+
+    static fromJson(json={}) {
+        return new Inbound.VLESSSettings.Fallback(
+            json.addr,
+            json.port,
+            json.unix,
+            json.xver,
+        )
     }
 };
 
