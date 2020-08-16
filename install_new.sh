@@ -93,8 +93,10 @@ uninstall_old_v2ray() {
         systemctl stop v2ray
         rm /usr/bin/v2ray/ -rf
         rm /etc/systemd/system/v2ray.service -f
+        systemctl daemon-reload
     fi
     bash <(curl https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh) --remove
+    systemctl daemon-reload
 }
 
 install_v2ray() {
