@@ -48,9 +48,12 @@ def read_v2_config() -> Optional[dict]:
             content: str = file_util.read_file(f'{conf_path}{file_name}')
             for conf_key in V2_CONF_KEYS:
                 if conf_key in file_name:
+                    conf: dict = json.loads(content)
                     if conf_key in ['inbounds', 'outbounds']:
-                        content = f'[{content}]'
-                    v2_config[conf_key] = json.loads(content)
+                        conf.setdefault(conf_key, [])
+                    else:
+                        conf.setdefault(conf_key, {})
+                    v2_config[conf_key] = conf[conf_key]
                     break
         return v2_config
     except Exception as e:
@@ -71,9 +74,10 @@ def write_v2_config(v2_config: dict):
             for conf_key in V2_CONF_KEYS:
                 if conf_key in file_name:
                     try:
-                        content: str = json_util.dumps(v2_config[conf_key])
-                        if content.startswith('[') and content.endswith(']'):
-                            content = content[1:len(content) - 1]
+                        conf: dict = {
+                            conf_key: v2_config[conf_key]
+                        }
+                        content: str = json_util.dumps(conf)
                         file_util.write_file(f'{conf_path}{file_name}', content)
                     except Exception as e:
                         logging.error(f'An error occurred while writing the v2ray configuration file({file_name}): {e}')

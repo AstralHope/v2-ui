@@ -116,11 +116,11 @@ close_firewall() {
         systemctl disable firewalld
     elif [[ x"${release}" == x"ubuntu" ]]; then
         ufw disable
-    elif [[ x"${release}" == x"debian" ]]; then
-        iptables -P INPUT ACCEPT
-        iptables -P OUTPUT ACCEPT
-        iptables -P FORWARD ACCEPT
-        iptables -F
+#    elif [[ x"${release}" == x"debian" ]]; then
+#        iptables -P INPUT ACCEPT
+#        iptables -P OUTPUT ACCEPT
+#        iptables -P FORWARD ACCEPT
+#        iptables -F
     fi
 }
 
