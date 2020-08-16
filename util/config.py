@@ -117,7 +117,7 @@ def get_secret_key():
 
 
 def get_current_version():
-    return '5.3.0'
+    return '5.3.0-2'
 
 
 def add_if_not_exist(setting, update=False):
