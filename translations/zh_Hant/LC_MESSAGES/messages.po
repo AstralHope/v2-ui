@@ -130,7 +130,7 @@ msgid ""
 "Please go to the panel settings as soon as possible to modify the "
 "username and password, otherwise there may be a risk of leaking account "
 "information"
-msgstr "請盡快前往面板設置更改用戶名和密碼，否則會有洩露賬號信息的風險"
+msgstr "請盡快前往面板設定更改用戶名和密碼，否則會有洩露帳號資訊的風險"
 
 #: templates/v2ray/accounts.html:31
 msgid "search"
@@ -146,7 +146,7 @@ msgstr "總流量"
 
 #: templates/v2ray/accounts.html:40 templates/v2ray/accounts.html:94
 msgid "Are you sure you want to reset all traffic to 0? It's unrecoverable"
-msgstr "確定要重置流量為0嗎？無法復原喔！"
+msgstr "確定要把流量重設為0嗎？無法復原喔！"
 
 #: templates/v2ray/accounts.html:47
 msgid "number of accounts"
@@ -184,7 +184,7 @@ msgstr "啟用"
 
 #: templates/v2ray/accounts.html:81
 msgid "Whether to disable"
-msgstr "是否禁用"
+msgstr "是否停用"
 
 #: templates/v2ray/accounts.html:81
 msgid "Whether to enable"
@@ -270,12 +270,12 @@ msgstr "新增"
 
 #: templates/v2ray/accounts.html:340
 msgid "update account"
-msgstr "修改帳號"
+msgstr "更新帳號"
 
 #: templates/v2ray/accounts.html:341 templates/v2ray/setting.html:37
 #: templates/v2ray/setting.html:207
 msgid "update"
-msgstr "修改"
+msgstr "更新"
 
 #: templates/v2ray/accounts.html:379
 msgid "delete account"
@@ -338,7 +338,7 @@ msgstr "監聽IP"
 
 #: templates/v2ray/inbound_modal.html:24
 msgid "If you don't fully understand its purpose, leave it at the default."
-msgstr "如果你不能完全理解這個的用途，那麼維持預設即可。"
+msgstr "如果你沒有完全瞭解這個的用途，那麼維持預設即可。"
 
 #: templates/v2ray/inbound_modal.html:45
 msgid "disable insecure encryption"
@@ -359,7 +359,7 @@ msgstr "請求路徑"
 #: templates/v2ray/inbound_modal.html:112
 #: templates/v2ray/inbound_modal.html:213
 msgid "request header"
-msgstr "請求頭(header)"
+msgstr "請求標頭(header)"
 
 #: templates/v2ray/inbound_modal.html:121
 #: templates/v2ray/inbound_modal.html:156
@@ -387,7 +387,7 @@ msgstr "回應狀態說明(reason)"
 
 #: templates/v2ray/inbound_modal.html:147
 msgid "response header"
-msgstr "回應頭(header)"
+msgstr "回應標頭(header)"
 
 #: templates/v2ray/inbound_modal.html:176
 #: templates/v2ray/inbound_modal.html:264
@@ -475,11 +475,11 @@ msgstr "私鑰檔案內容(文字)"
 
 #: templates/v2ray/inbound_modal.html:383
 msgid "sniffing"
-msgstr ""
+msgstr "嗅探"
 
 #: templates/v2ray/inbound_modal.html:386
 msgid "If there are no special needs, just keep the default."
-msgstr "如果沒有特殊需求，保持默認即可"
+msgstr "如果沒有特殊需求，保持預設即可"
 
 #: templates/v2ray/index.html:33
 msgid "memory"
@@ -508,7 +508,7 @@ msgstr "可能是由於帳號資訊設定錯誤導致 v2ray 啟動失敗。"
 msgid ""
 "Check the account information and the v2ray configuration template for "
 "errors, or determine the cause based on the v2ray error message."
-msgstr "請檢查帳號資訊和面板設定是否有錯誤，或根據 v2ray 錯誤消息判斷原因。"
+msgstr "請檢查帳號資訊和面板設定是否有錯誤，或根據 v2ray 錯誤訊息判斷原因。"
 
 #: templates/v2ray/index.html:69
 msgid "If v2ray is running and all accounts are available, ignore this error.."
@@ -687,7 +687,7 @@ msgstr "重置流量日"
 msgid ""
 "0 means no reset, greater than 0 will reset all users traffic every month"
 " on the set date, time depends on server time zone."
-msgstr "0表示不重置，大於0則在每月指定的日期0點重置流量，時間取決於服務器的時區。"
+msgstr "0表示不重置，大於0則在每月指定的日期0點重置流量，時間取決於伺服器的時區。"
 
 #: templates/v2ray/setting.html:146
 msgid "v2ctl command location"
@@ -741,7 +741,7 @@ msgstr "修改不慎會導致面板無法啟動，之後你必須要重置所有
 msgid ""
 "Please make a backup yourself. If the data is lost, I will not be "
 "responsible for it."
-msgstr "請自行備份，造成數據資料遺失概不負責"
+msgstr "請自行備份，造成資料遺失概不負責"
 
 #: templates/v2ray/setting.html:261
 msgid "understood"
