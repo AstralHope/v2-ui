@@ -44,7 +44,7 @@ v2-ui 与其它所有关于修改 v2ray 配置文件的工具***完全不兼容*
 bash <(curl -Ls https://blog.sprov.xyz/v2-ui.sh)
 ```
 
-## 手动安装&升级
+## 手动安装&升级（已废弃，待更新）
 ### 手动安装 v2ray
 https://github.com/v2ray/v2ray-core/releases
 
