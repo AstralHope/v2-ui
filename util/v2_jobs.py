@@ -1,4 +1,5 @@
 import calendar
+import logging
 import threading
 from datetime import datetime, timedelta
 from threading import Timer
@@ -35,15 +36,18 @@ def traffic_job():
     with __lock:
         if not v2_util.is_running():
             return
-        traffics = v2_util.get_inbounds_traffic()
-        if not traffics:
-            return
-        for traffic in traffics:
-            upload = int(traffic.get('uplink', 0))
-            download = int(traffic.get('downlink', 0))
-            tag = traffic['tag']
-            Inbound.query.filter_by(tag=tag).update({'up': Inbound.up + upload, 'down': Inbound.down + download})
-        db.session.commit()
+        try:
+            traffics = v2_util.get_inbounds_traffic()
+            if not traffics:
+                return
+            for traffic in traffics:
+                upload = int(traffic.get('uplink', 0))
+                download = int(traffic.get('downlink', 0))
+                tag = traffic['tag']
+                Inbound.query.filter_by(tag=tag).update({'up': Inbound.up + upload, 'down': Inbound.down + download})
+            db.session.commit()
+        except Exception as e:
+            logging.warning(f'traffic job error: {e}')
 
 
 def reset_traffic_job():
@@ -75,7 +79,7 @@ def reset_traffic_job():
 
 def init():
     schedule_job(check_v2_config_job, config.get_v2_config_check_interval())
-    # schedule_job(traffic_job, config.get_traffic_job_interval())
+    schedule_job(traffic_job, config.get_traffic_job_interval())
     # reset_day = config.get_reset_traffic_day()
     # if reset_day <= 0:
     #     return
