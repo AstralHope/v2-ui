@@ -125,6 +125,36 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 " > /etc/systemd/system/v2ray.service
+    if [[ ! -f /usr/local/etc/v2ray/00_log.json ]]; then
+        echo "{}" > /usr/local/etc/v2ray/00_log.json
+    fi
+    if [[ ! -f /usr/local/etc/v2ray/01_api.json ]]; then
+        echo "{}" > /usr/local/etc/v2ray/01_api.json
+    fi
+    if [[ ! -f /usr/local/etc/v2ray/02_dns.json ]]; then
+        echo "{}" > /usr/local/etc/v2ray/02_dns.json
+    fi
+    if [[ ! -f /usr/local/etc/v2ray/03_routing.json ]]; then
+        echo "{}" > /usr/local/etc/v2ray/03_routing.json
+    fi
+    if [[ ! -f /usr/local/etc/v2ray/04_policy.json ]]; then
+        echo "{}" > /usr/local/etc/v2ray/04_policy.json
+    fi
+    if [[ ! -f /usr/local/etc/v2ray/05_inbounds.json ]]; then
+        echo "{}" > /usr/local/etc/v2ray/05_inbounds.json
+    fi
+    if [[ ! -f /usr/local/etc/v2ray/06_outbounds.json ]]; then
+        echo "{}" > /usr/local/etc/v2ray/06_outbounds.json
+    fi
+    if [[ ! -f /usr/local/etc/v2ray/07_transport.json ]]; then
+        echo "{}" > /usr/local/etc/v2ray/07_transport.json
+    fi
+    if [[ ! -f /usr/local/etc/v2ray/08_stats.json ]]; then
+        echo "{}" > /usr/local/etc/v2ray/08_stats.json
+    fi
+    if [[ ! -f /usr/local/etc/v2ray/09_reverse.json ]]; then
+        echo "{}" > /usr/local/etc/v2ray/09_reverse.json
+    fi
     systemctl daemon-reload
     systemctl enable v2ray
     systemctl start v2ray
