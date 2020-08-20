@@ -6,3 +6,7 @@ __pycache__
 /buid
 /dist
 /.github
+/bin/v2ctl.exe
+/bin/v2ray.exe
+/bin/v2ray-win.exe
+/bin/config.json

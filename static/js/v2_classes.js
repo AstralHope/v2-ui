@@ -798,16 +798,14 @@ Inbound.VLESSSettings = class extends Inbound.Settings {
 };
 Inbound.VLESSSettings.VLESS = class extends V2CommonClass {
 
-    constructor(id=randomUUID(), encryption='none') {
+    constructor(id=randomUUID()) {
         super();
         this.id = id;
-        this.encryption = encryption;
     }
 
     static fromJson(json={}) {
         return new Inbound.VmessSettings.Vmess(
             json.id,
-            json.encryption,
         );
     }
 };

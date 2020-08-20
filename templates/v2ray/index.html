@@ -64,9 +64,10 @@
                             v2ray {{ _('status') }}: <a-tag :color="status.v2.color">[[ status.v2.stat ]]</a-tag>
                             <a-tooltip v-if="status.v2.stat === '{{ _('error') }}'">
                                 <template slot="title">
-                                    <p>{{ _('May be due to account information configuration error caused by v2ray startup failure.') }}</p>
-                                    <p>{{ _('Check the account information and the v2ray configuration template for errors, or determine the cause based on the v2ray error message.') }}</p>
-                                    <p>{{ _('If v2ray is running and all accounts are available, ignore this error..') }}</p>
+                                    <p v-for="line in status.v2.error_msg.split('\n')">[[ line ]]</p>
+{#                                    <p>{{ _('May be due to account information configuration error caused by v2ray startup failure.') }}</p>#}
+{#                                    <p>{{ _('Check the account information and the v2ray configuration template for errors, or determine the cause based on the v2ray error message.') }}</p>#}
+{#                                    <p>{{ _('If v2ray is running and all accounts are available, ignore this error..') }}</p>#}
                                 </template>
                                 <a-icon type="question-circle" theme="filled"></a-icon>
                             </a-tooltip>

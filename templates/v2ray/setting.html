@@ -184,6 +184,7 @@
                             --i;
                         }
                     }
+                    settings.unshift({name: '{{ _('V2ray core version') }}', value: '{{ v2ray_version }}'});
                     settings.unshift({name: '{{ _('current panel version') }}', value: '{{ cur_ver }}'});
                     this.settings = settings;
                 },
