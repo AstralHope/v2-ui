@@ -479,7 +479,7 @@ show_menu() {
         ;;
         14) install_bbr
         ;;
-        *) echo -e "${red}请输入正确的数字 [0-15]${plain}"
+        *) echo -e "${red}请输入正确的数字 [0-14]${plain}"
         ;;
     esac
 }
