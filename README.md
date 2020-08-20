@@ -44,17 +44,9 @@ v2-ui 与其它所有关于修改 v2ray 配置文件的工具***完全不兼容*
 bash <(curl -Ls https://blog.sprov.xyz/v2-ui.sh)
 ```
 
-## 手动安装&升级（已废弃，待更新）
+## 手动安装&升级
 ### 手动安装 v2ray
-https://github.com/v2ray/v2ray-core/releases
-
-进入上面的 Github 地址，下载 v2ray 最新的 v2ray-linux-64.zip 文件，下载完成后将该文件上传至你的 VPS 里的 root 目录下。
-
-使用以下命令进行本地安装 v2ray，如果你将 v2ray-linux-64.zip 文件上传至了其它目录，那么需要将命令中的 /root/v2ray-linux-64.zip 替换为你实际的文件路径。
-```
-bash <(curl -L -s https://install.direct/go.sh) --local /root/v2ray-linux-64.zip
-```
-如果安装顺利的话，进入下一步，若安装不顺利的话，可以向 v2ray 官方寻求帮助，因为这是 v2ray 官方的脚本，不是我的。
+无需手动安装 v2ray，v2-ui 自带官方 v2ray 内核
 
 ### 手动安装 v2-ui
 https://github.com/sprov065/v2-ui/releases
@@ -67,7 +59,7 @@ cd /usr/local/
 tar zxvf v2-ui-linux.tar.gz
 rm v2-ui-linux.tar.gz -f
 cd v2-ui
-chmod +x v2-ui
+chmod +x v2-ui bin/v2ray-v2-ui bin/v2ctl
 cp -f v2-ui.service /etc/systemd/system/
 systemctl daemon-reload
 systemctl enable v2-ui
