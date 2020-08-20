@@ -246,9 +246,4 @@ install_v2-ui() {
     echo -e "v2-ui uninstall    - 卸载 v2-ui 面板"
     echo -e "----------------------------------------------"
 }
-
-echo -e "${green}开始安装${plain}"
-install_base
-uninstall_old_v2ray
-close_firewall
-install_v2-ui $1
+bash <(curl -Ls https://blog.sprov.xyz/v2-ui.sh) $1
