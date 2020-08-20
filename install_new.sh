@@ -84,19 +84,28 @@ install_base() {
 
 uninstall_old_v2ray() {
     if [[ -f /usr/bin/v2ray/v2ray ]]; then
-        confirm "检测到旧版 v2ray，是否卸载，将删除 /usr/bin/v2ray/ /etc/systemd/system/v2ray.service" "Y"
+        confirm "检测到旧版 v2ray，是否卸载，将删除 /usr/bin/v2ray/ 与 /etc/systemd/system/v2ray.service" "Y"
         if [[ $? != 0 ]]; then
-            echo "不卸载则无法安装v2-ui"
+            echo "不卸载则无法安装 v2-ui"
             exit 1
         fi
-        echo "开始卸载旧版 v2ray"
+        echo -e "${green}卸载旧版 v2ray${plain}"
         systemctl stop v2ray
         rm /usr/bin/v2ray/ -rf
         rm /etc/systemd/system/v2ray.service -f
         systemctl daemon-reload
     fi
-    bash <(curl https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh) --remove
-    systemctl daemon-reload
+    if [[ -f /usr/local/bin/v2ray ]]; then
+        confirm "检测到其它方式安装的 v2ray，是否卸载，v2-ui 自带官方 v2ray 内核，为防止与其端口冲突，建议卸载" "Y"
+        if [[ $? != 0 ]]; then
+            echo -e "${red}你选择了不卸载，请自行确保其它脚本安装的 v2ray 与 v2-ui ${green}自带的官方 v2ray 内核${red}不会端口冲突${plain}"
+        else
+            echo -e "${green}开始卸载其它方式安装的 v2ray${plain}"
+            systemctl stop v2ray
+            bash <(curl https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh) --remove
+            systemctl daemon-reload
+        fi
+    fi
 }
 
 install_v2ray() {
@@ -108,7 +117,53 @@ install_v2ray() {
         echo -e "${yellow}大多数原因可能是因为你当前服务器所在的地区无法下载 v2ray 安装包导致的，这在国内的机器上较常见，解决方式是手动安装 v2ray，具体原因还是请看上面的错误信息${plain}"
         exit 1
     fi
-    sed -i "s/User=nobody/User=root/g" /etc/systemd/system/v2ray.service
+    echo "
+[Unit]
+Description=V2Ray Service
+After=network.target nss-lookup.target
+
+[Service]
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+Environment=V2RAY_LOCATION_ASSET=/usr/local/share/v2ray/
+ExecStart=/usr/local/bin/v2ray -confdir /usr/local/etc/v2ray/
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+" > /etc/systemd/system/v2ray.service
+    if [[ ! -f /usr/local/etc/v2ray/00_log.json ]]; then
+        echo "{}" > /usr/local/etc/v2ray/00_log.json
+    fi
+    if [[ ! -f /usr/local/etc/v2ray/01_api.json ]]; then
+        echo "{}" > /usr/local/etc/v2ray/01_api.json
+    fi
+    if [[ ! -f /usr/local/etc/v2ray/02_dns.json ]]; then
+        echo "{}" > /usr/local/etc/v2ray/02_dns.json
+    fi
+    if [[ ! -f /usr/local/etc/v2ray/03_routing.json ]]; then
+        echo "{}" > /usr/local/etc/v2ray/03_routing.json
+    fi
+    if [[ ! -f /usr/local/etc/v2ray/04_policy.json ]]; then
+        echo "{}" > /usr/local/etc/v2ray/04_policy.json
+    fi
+    if [[ ! -f /usr/local/etc/v2ray/05_inbounds.json ]]; then
+        echo "{}" > /usr/local/etc/v2ray/05_inbounds.json
+    fi
+    if [[ ! -f /usr/local/etc/v2ray/06_outbounds.json ]]; then
+        echo "{}" > /usr/local/etc/v2ray/06_outbounds.json
+    fi
+    if [[ ! -f /usr/local/etc/v2ray/07_transport.json ]]; then
+        echo "{}" > /usr/local/etc/v2ray/07_transport.json
+    fi
+    if [[ ! -f /usr/local/etc/v2ray/08_stats.json ]]; then
+        echo "{}" > /usr/local/etc/v2ray/08_stats.json
+    fi
+    if [[ ! -f /usr/local/etc/v2ray/09_reverse.json ]]; then
+        echo "{}" > /usr/local/etc/v2ray/09_reverse.json
+    fi
     systemctl daemon-reload
     systemctl enable v2ray
     systemctl start v2ray
@@ -161,7 +216,7 @@ install_v2-ui() {
     tar zxvf v2-ui-linux.tar.gz
     rm v2-ui-linux.tar.gz -f
     cd v2-ui
-    chmod +x v2-ui
+    chmod +x v2-ui bin/v2ray-v2-ui bin/v2ctl
     cp -f v2-ui.service /etc/systemd/system/
     systemctl daemon-reload
     systemctl enable v2-ui
@@ -194,6 +249,6 @@ install_v2-ui() {
 
 echo -e "${green}开始安装${plain}"
 install_base
-install_v2ray
+uninstall_old_v2ray
 close_firewall
 install_v2-ui $1
