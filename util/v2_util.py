@@ -1,35 +1,34 @@
+import atexit
 import codecs
 import json
 import logging
-import re
-import sys
-from enum import Enum
-from threading import Timer
-import time
 import os
-import psutil
-import asyncio
 import platform
-from typing import Optional, List
-import atexit
+import re
 import subprocess
+import sys
+import time
+from enum import Enum
+from threading import Timer, Lock
+from typing import Optional
 
-from util import config, list_util, cmd_util, server_info, file_util, json_util
-from v2ray.exceptions import V2rayException
+import psutil
+
+from util import config, list_util, cmd_util, file_util, json_util
 from v2ray.models import Inbound
-
 
 V2_CONF_KEYS = ['log', 'api', 'dns', 'routing', 'policy', 'inbounds', 'outbounds', 'transport',
                 'stats', 'reverse']
-__is_windows = platform.system() == 'Windows'
-__v2ray_file_name = 'v2ray-win.exe' if __is_windows else 'v2ray-v2-ui'
-__v2ctl_file_name = 'v2ctl.exe' if __is_windows else 'v2ctl'
+__is_windows: bool = platform.system() == 'Windows'
+__v2ray_file_name: str = 'v2ray-win.exe' if __is_windows else 'v2ray-v2-ui'
+__v2ctl_file_name: str = 'v2ctl.exe' if __is_windows else 'v2ctl'
 __v2ray_cmd: str = os.path.join(config.BASE_DIR, 'bin', __v2ray_file_name)
 __v2ctl_cmd: str = os.path.join(config.BASE_DIR, 'bin', __v2ctl_file_name)
 __v2ray_conf_path: str = os.path.join(config.BASE_DIR, 'bin', 'config.json')
 __v2ray_process: Optional[subprocess.Popen] = None
 __v2ray_error_msg: str = ''
 __v2ray_version: str = ''
+__v2ray_process_lock: Lock = Lock()
 
 
 class Protocols(Enum):
@@ -41,13 +40,12 @@ class Protocols(Enum):
 
 
 def start_v2ray():
-    stop_v2ray()
     global __v2ray_process, __v2ray_error_msg
     encoding = 'gbk' if __is_windows else 'utf-8'
     __v2ray_process = subprocess.Popen([__v2ray_cmd, '-config', __v2ray_conf_path], shell=False,
                                        stderr=subprocess.PIPE, stdout=subprocess.PIPE, encoding=encoding)
     logging.info('start v2ray')
-    time.sleep(3)
+    time.sleep(10)
     if __v2ray_process.poll() is not None:
         logging.error('start v2ray failed')
         lines = __v2ray_process.stdout.readlines()
@@ -75,8 +73,9 @@ def stop_v2ray():
 
 
 def restart_v2ray():
-    stop_v2ray()
-    start_v2ray()
+    with __v2ray_process_lock:
+        stop_v2ray()
+        start_v2ray()
 
 
 def gen_v2_config_from_db():
@@ -194,26 +193,6 @@ def restart(now=False):
         f()
     else:
         Timer(3, f).start()
-
-
-def start():
-    if is_running():
-        raise V2rayException('v2ray already running')
-
-    def f():
-        start_v2ray()
-
-    Timer(3, f).start()
-
-
-def stop():
-    if not is_running():
-        raise V2rayException('v2ray has stopped')
-
-    def f():
-        stop_v2ray()
-
-    Timer(3, f).start()
 
 
 try:
