@@ -4,6 +4,8 @@ import threading
 from datetime import datetime, timedelta
 from threading import Timer
 
+import requests
+
 from init import db
 from util import config, v2_util
 from util.schedule_util import schedule_job
@@ -82,10 +84,15 @@ def check_v2ay_alive_job():
         v2_util.restart(True)
 
 
+def check_v2ray_version_job():
+    requests.get('')
+
+
 def init():
     schedule_job(check_v2_config_job, config.get_v2_config_check_interval())
     schedule_job(traffic_job, config.get_traffic_job_interval())
     schedule_job(check_v2ay_alive_job, 40)
+    schedule_job(check_v2ray_version_job, 1800)
     # reset_day = config.get_reset_traffic_day()
     # if reset_day <= 0:
     #     return

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-08-20 07:45+0800\n"
+"POT-Creation-Date: 2020-09-14 21:53+0800\n"
 "PO-Revision-Date: 2019-08-14 12:55+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -30,21 +30,37 @@ msgstr ""
 msgid "username or password wrong"
 msgstr ""
 
-#: server/router.py:32
+#: server/router.py:41
 #, python-format
 msgid "File <%(file)s> does not exist."
 msgstr ""
 
-#: server/router.py:36
+#: server/router.py:45
 msgid "update success, please determine if you need to restart the panel."
 msgstr ""
 
-#: server/router.py:47
+#: server/router.py:56
 msgid "old username or old password wrong"
 msgstr ""
 
-#: server/router.py:51
+#: server/router.py:60
 msgid "update success"
+msgstr ""
+
+#: server/router.py:73 server/router.py:82
+msgid "Get v2ray version success"
+msgstr ""
+
+#: server/router.py:87
+msgid "Failed to check v2ray version from Github, please try again after a while"
+msgstr ""
+
+#: server/router.py:126
+msgid "Switch v2ray version success"
+msgstr ""
+
+#: server/router.py:131
+msgid "Switch v2ray-core version failed."
 msgstr ""
 
 #: templates/index.html:47 templates/v2ray/accounts.html:250
@@ -85,19 +101,21 @@ msgstr ""
 
 #: templates/common/prompt_modal.html:3 templates/v2ray/accounts.html:44
 #: templates/v2ray/accounts.html:98 templates/v2ray/accounts.html:392
+#: templates/v2ray/index.html:279
 msgid "cancel"
 msgstr ""
 
 #: templates/common/prompt_modal.html:17 templates/common/prompt_modal.html:40
 #: templates/v2ray/accounts.html:44 templates/v2ray/accounts.html:98
 #: templates/v2ray/donate.html:47 templates/v2ray/inbound_modal.html:409
-#: templates/v2ray/inbound_modal.html:415
+#: templates/v2ray/inbound_modal.html:415 templates/v2ray/index.html:159
+#: templates/v2ray/index.html:278
 msgid "confirm"
 msgstr ""
 
 #: templates/common/qrcode_modal.html:3 templates/common/text_modal.html:2
 #: templates/v2ray/accounts.html:196 templates/v2ray/accounts.html:261
-#: templates/v2ray/inbound_modal.html:3
+#: templates/v2ray/inbound_modal.html:3 templates/v2ray/index.html:159
 msgid "close"
 msgstr ""
 
@@ -120,8 +138,9 @@ msgstr ""
 msgid "accounts"
 msgstr ""
 
-#: templates/v2ray/accounts.html:21 templates/v2ray/index.html:165
-#: templates/v2ray/index.html:167
+#: templates/v2ray/accounts.html:21 templates/v2ray/index.html:179
+#: templates/v2ray/index.html:181 templates/v2ray/index.html:212
+#: templates/v2ray/index.html:215
 msgid "loading"
 msgstr ""
 
@@ -291,7 +310,6 @@ msgstr ""
 
 #: templates/v2ray/clients.html:2 templates/v2ray/common_sider.html:18
 #: templates/v2ray/common_sider.html:70 templates/v2ray/donate.html:2
-#: templates/v2ray/tutorial.html:2
 msgid "clients"
 msgstr ""
 
@@ -310,8 +328,8 @@ msgid "other"
 msgstr ""
 
 #: templates/v2ray/common_sider.html:35 templates/v2ray/common_sider.html:87
-#: templates/v2ray/tutorial.html:30 templates/v2ray/tutorial.html:36
-#: templates/v2ray/tutorial.html:42
+#: templates/v2ray/tutorial.html:2 templates/v2ray/tutorial.html:30
+#: templates/v2ray/tutorial.html:36 templates/v2ray/tutorial.html:42
 msgid "tutorial"
 msgstr ""
 
@@ -481,65 +499,91 @@ msgstr ""
 msgid "If there are no special needs, just keep the default."
 msgstr ""
 
-#: templates/v2ray/index.html:33
+#: templates/v2ray/index.html:34
 msgid "memory"
 msgstr ""
 
-#: templates/v2ray/index.html:51
+#: templates/v2ray/index.html:52
 msgid "disk"
 msgstr ""
 
-#: templates/v2ray/index.html:64
+#: templates/v2ray/index.html:65
 msgid "status"
 msgstr ""
 
-#: templates/v2ray/index.html:65 templates/v2ray/index.html:198
+#: templates/v2ray/index.html:66 templates/v2ray/index.html:231
 #: templates/v2ray/setting.html:197
 msgid "error"
 msgstr ""
 
-#: templates/v2ray/index.html:78
+#: templates/v2ray/index.html:75
+msgid "Switch version"
+msgstr ""
+
+#: templates/v2ray/index.html:80
 msgid "uptime"
 msgstr ""
 
-#: templates/v2ray/index.html:81
+#: templates/v2ray/index.html:83
 msgid "The running time of the system since boot."
 msgstr ""
 
-#: templates/v2ray/index.html:89
+#: templates/v2ray/index.html:91
 msgid "loads"
 msgstr ""
 
-#: templates/v2ray/index.html:94
+#: templates/v2ray/index.html:96
 msgid "connections"
 msgstr ""
 
-#: templates/v2ray/index.html:97
+#: templates/v2ray/index.html:99
 msgid "The number of connections for the entire system, not v2ray."
 msgstr ""
 
-#: templates/v2ray/index.html:110
+#: templates/v2ray/index.html:112
 msgid "Total upload speed of all NICs."
 msgstr ""
 
-#: templates/v2ray/index.html:119
+#: templates/v2ray/index.html:121
 msgid "Total download speed of all NICs."
 msgstr ""
 
-#: templates/v2ray/index.html:134
+#: templates/v2ray/index.html:136
 msgid "Total upload traffic for all NICs since boot."
 msgstr ""
 
-#: templates/v2ray/index.html:143
+#: templates/v2ray/index.html:145
 msgid "Total download traffic for all NICs since boot."
 msgstr ""
 
-#: templates/v2ray/index.html:196
+#: templates/v2ray/index.html:157 templates/v2ray/index.html:276
+msgid "Switch v2ray version"
+msgstr ""
+
+#: templates/v2ray/index.html:160
+msgid "Click on the v2ray-core version you want to switch."
+msgstr ""
+
+#: templates/v2ray/index.html:161
+msgid ""
+"Please choose carefully, the old version may be incompatible with the "
+"configuration."
+msgstr ""
+
+#: templates/v2ray/index.html:229
 msgid "running"
 msgstr ""
 
-#: templates/v2ray/index.html:197
+#: templates/v2ray/index.html:230
 msgid "not running"
+msgstr ""
+
+#: templates/v2ray/index.html:277
+msgid "Are you sure you want to switch to v2ray"
+msgstr ""
+
+#: templates/v2ray/index.html:282
+msgid "installing, please do not leave this page."
 msgstr ""
 
 #: templates/v2ray/setting.html:22

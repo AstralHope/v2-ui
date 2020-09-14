@@ -1,5 +1,6 @@
 import atexit
 import codecs
+import collections
 import json
 import logging
 import os
@@ -8,9 +9,11 @@ import re
 import subprocess
 import sys
 import time
+from collections import deque
 from enum import Enum
+from queue import Queue
 from threading import Timer, Lock
-from typing import Optional
+from typing import Optional, List
 
 import psutil
 
@@ -43,17 +46,28 @@ def start_v2ray():
     global __v2ray_process, __v2ray_error_msg
     encoding = 'gbk' if __is_windows else 'utf-8'
     __v2ray_process = subprocess.Popen([__v2ray_cmd, '-config', __v2ray_conf_path], shell=False,
-                                       stderr=subprocess.PIPE, stdout=subprocess.PIPE, encoding=encoding)
+                                       stderr=subprocess.STDOUT, stdout=subprocess.PIPE, encoding=encoding)
     logging.info('start v2ray')
-    time.sleep(10)
-    if __v2ray_process.poll() is not None:
-        logging.error('start v2ray failed')
-        lines = __v2ray_process.stdout.readlines()
-        msg = ''.join(lines)
-        __v2ray_error_msg = msg
-    else:
-        __v2ray_error_msg = ''
-        logging.info('start v2ray success')
+
+    def f():
+        global __v2ray_error_msg
+        p = __v2ray_process
+        last_lines: collections.deque = deque()
+        try:
+            while p.poll() is None:
+                line = p.stdout.readline()
+                if not line:
+                    break
+                if len(last_lines) >= 10:
+                    last_lines.popleft()
+                last_lines.append(line)
+        except Exception as ex:
+            logging.warning(ex)
+        finally:
+            __v2ray_error_msg = '\n'.join(last_lines)
+
+    __v2ray_error_msg = ''
+    Timer(0, f).start()
 
 
 def stop_v2ray():

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-08-20 07:45+0800\n"
+"POT-Creation-Date: 2020-09-14 21:53+0800\n"
 "PO-Revision-Date: 2020-02-26 21:50+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hans\n"
@@ -30,22 +30,38 @@ msgstr "登录成功"
 msgid "username or password wrong"
 msgstr "用户名或密码错误"
 
-#: server/router.py:32
+#: server/router.py:41
 #, python-format
 msgid "File <%(file)s> does not exist."
 msgstr "文件 <%(file)s> 不存在"
 
-#: server/router.py:36
+#: server/router.py:45
 msgid "update success, please determine if you need to restart the panel."
 msgstr "修改成功，请自行确定是否需要重启面板"
 
-#: server/router.py:47
+#: server/router.py:56
 msgid "old username or old password wrong"
 msgstr "旧用户名或旧密码错误"
 
-#: server/router.py:51
+#: server/router.py:60
 msgid "update success"
 msgstr "修改成功"
+
+#: server/router.py:73 server/router.py:82
+msgid "Get v2ray version success"
+msgstr "获取v2ray版本成功"
+
+#: server/router.py:87
+msgid "Failed to check v2ray version from Github, please try again after a while"
+msgstr "从Github检测v2ray版本失败，请稍后再试"
+
+#: server/router.py:126
+msgid "Switch v2ray version success"
+msgstr "切换v2ray版本成功"
+
+#: server/router.py:131
+msgid "Switch v2ray-core version failed."
+msgstr "切换v2ray版本失败"
 
 #: templates/index.html:47 templates/v2ray/accounts.html:250
 #: templates/v2ray/accounts.html:267 templates/v2ray/inbound_modal.html:309
@@ -85,19 +101,21 @@ msgstr "天"
 
 #: templates/common/prompt_modal.html:3 templates/v2ray/accounts.html:44
 #: templates/v2ray/accounts.html:98 templates/v2ray/accounts.html:392
+#: templates/v2ray/index.html:279
 msgid "cancel"
 msgstr "取消"
 
 #: templates/common/prompt_modal.html:17 templates/common/prompt_modal.html:40
 #: templates/v2ray/accounts.html:44 templates/v2ray/accounts.html:98
 #: templates/v2ray/donate.html:47 templates/v2ray/inbound_modal.html:409
-#: templates/v2ray/inbound_modal.html:415
+#: templates/v2ray/inbound_modal.html:415 templates/v2ray/index.html:159
+#: templates/v2ray/index.html:278
 msgid "confirm"
 msgstr "确定"
 
 #: templates/common/qrcode_modal.html:3 templates/common/text_modal.html:2
 #: templates/v2ray/accounts.html:196 templates/v2ray/accounts.html:261
-#: templates/v2ray/inbound_modal.html:3
+#: templates/v2ray/inbound_modal.html:3 templates/v2ray/index.html:159
 msgid "close"
 msgstr "关闭"
 
@@ -120,8 +138,9 @@ msgstr "下载"
 msgid "accounts"
 msgstr "账号列表"
 
-#: templates/v2ray/accounts.html:21 templates/v2ray/index.html:165
-#: templates/v2ray/index.html:167
+#: templates/v2ray/accounts.html:21 templates/v2ray/index.html:179
+#: templates/v2ray/index.html:181 templates/v2ray/index.html:212
+#: templates/v2ray/index.html:215
 msgid "loading"
 msgstr "加载中"
 
@@ -291,7 +310,6 @@ msgstr "删除"
 
 #: templates/v2ray/clients.html:2 templates/v2ray/common_sider.html:18
 #: templates/v2ray/common_sider.html:70 templates/v2ray/donate.html:2
-#: templates/v2ray/tutorial.html:2
 msgid "clients"
 msgstr "客户端"
 
@@ -310,8 +328,8 @@ msgid "other"
 msgstr "其它"
 
 #: templates/v2ray/common_sider.html:35 templates/v2ray/common_sider.html:87
-#: templates/v2ray/tutorial.html:30 templates/v2ray/tutorial.html:36
-#: templates/v2ray/tutorial.html:42
+#: templates/v2ray/tutorial.html:2 templates/v2ray/tutorial.html:30
+#: templates/v2ray/tutorial.html:36 templates/v2ray/tutorial.html:42
 msgid "tutorial"
 msgstr "教程"
 
@@ -481,66 +499,92 @@ msgstr ""
 msgid "If there are no special needs, just keep the default."
 msgstr "如果没有特殊需求，保持默认即可"
 
-#: templates/v2ray/index.html:33
+#: templates/v2ray/index.html:34
 msgid "memory"
 msgstr "内存"
 
-#: templates/v2ray/index.html:51
+#: templates/v2ray/index.html:52
 msgid "disk"
 msgstr "硬盘"
 
-#: templates/v2ray/index.html:64
+#: templates/v2ray/index.html:65
 msgid "status"
 msgstr "状态"
 
-#: templates/v2ray/index.html:65 templates/v2ray/index.html:198
+#: templates/v2ray/index.html:66 templates/v2ray/index.html:231
 #: templates/v2ray/setting.html:197
 msgid "error"
 msgstr "错误"
 
-#: templates/v2ray/index.html:78
+#: templates/v2ray/index.html:75
+msgid "Switch version"
+msgstr "切换版本"
+
+#: templates/v2ray/index.html:80
 msgid "uptime"
 msgstr "运行时间"
 
-#: templates/v2ray/index.html:81
+#: templates/v2ray/index.html:83
 msgid "The running time of the system since boot."
 msgstr "系统启动后的运行时间。"
 
-#: templates/v2ray/index.html:89
+#: templates/v2ray/index.html:91
 msgid "loads"
 msgstr "负载"
 
-#: templates/v2ray/index.html:94
+#: templates/v2ray/index.html:96
 msgid "connections"
 msgstr "连接数"
 
-#: templates/v2ray/index.html:97
+#: templates/v2ray/index.html:99
 msgid "The number of connections for the entire system, not v2ray."
 msgstr "整个系统的连接数，而不是 v2ray 的。"
 
-#: templates/v2ray/index.html:110
+#: templates/v2ray/index.html:112
 msgid "Total upload speed of all NICs."
 msgstr "所有网卡的总上传速度。"
 
-#: templates/v2ray/index.html:119
+#: templates/v2ray/index.html:121
 msgid "Total download speed of all NICs."
 msgstr "所有网卡的总下载速度。"
 
-#: templates/v2ray/index.html:134
+#: templates/v2ray/index.html:136
 msgid "Total upload traffic for all NICs since boot."
 msgstr "系统启动后所有网卡使用的总上传流量。"
 
-#: templates/v2ray/index.html:143
+#: templates/v2ray/index.html:145
 msgid "Total download traffic for all NICs since boot."
 msgstr "系统启动后所有网卡使用的总下载流量。"
 
-#: templates/v2ray/index.html:196
+#: templates/v2ray/index.html:157 templates/v2ray/index.html:276
+msgid "Switch v2ray version"
+msgstr "切换v2ray版本"
+
+#: templates/v2ray/index.html:160
+msgid "Click on the v2ray-core version you want to switch."
+msgstr "点击你想要切换的v2ray-core版本"
+
+#: templates/v2ray/index.html:161
+msgid ""
+"Please choose carefully, the old version may be incompatible with the "
+"configuration."
+msgstr "请谨慎选择，旧版本有可能配置不兼容"
+
+#: templates/v2ray/index.html:229
 msgid "running"
 msgstr "运行"
 
-#: templates/v2ray/index.html:197
+#: templates/v2ray/index.html:230
 msgid "not running"
 msgstr "未运行"
+
+#: templates/v2ray/index.html:277
+msgid "Are you sure you want to switch to v2ray"
+msgstr "确定要切换v2ray版本吗"
+
+#: templates/v2ray/index.html:282
+msgid "installing, please do not leave this page."
+msgstr "安装中，请不要离开此页面"
 
 #: templates/v2ray/setting.html:22
 msgid "update login username & password"

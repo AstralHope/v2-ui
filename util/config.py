@@ -112,12 +112,18 @@ def get_base_path():
 #     return __get('v2ctl_cmd_path', '/usr/bin/v2ray/v2ctl')
 
 
+def get_dir(*paths):
+    if not paths:
+        return BASE_DIR
+    return os.path.join(BASE_DIR, *paths)
+
+
 def get_secret_key():
     return __get('secret_key', os.urandom(24))
 
 
 def get_current_version():
-    return '5.4.1'
+    return '5.4.2'
 
 
 def add_if_not_exist(setting, update=False):

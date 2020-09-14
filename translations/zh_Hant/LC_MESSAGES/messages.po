@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-08-20 07:45+0800\n"
+"POT-Creation-Date: 2020-09-14 21:53+0800\n"
 "PO-Revision-Date: 2020-02-26 21:50+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_Hant\n"
@@ -30,22 +30,38 @@ msgstr "登入成功"
 msgid "username or password wrong"
 msgstr "帳號或密碼錯誤"
 
-#: server/router.py:32
+#: server/router.py:41
 #, python-format
 msgid "File <%(file)s> does not exist."
 msgstr "文件 <%(file)s> 不存在"
 
-#: server/router.py:36
+#: server/router.py:45
 msgid "update success, please determine if you need to restart the panel."
 msgstr "修改成功，請自行確定是否需要重新開啟面板"
 
-#: server/router.py:47
+#: server/router.py:56
 msgid "old username or old password wrong"
 msgstr "舊帳號名稱或舊密碼錯誤"
 
-#: server/router.py:51
+#: server/router.py:60
 msgid "update success"
 msgstr "修改成功"
+
+#: server/router.py:73 server/router.py:82
+msgid "Get v2ray version success"
+msgstr "獲取v2ray版本成功"
+
+#: server/router.py:87
+msgid "Failed to check v2ray version from Github, please try again after a while"
+msgstr "從Github檢測v2ray版本失敗，請稍後再試"
+
+#: server/router.py:126
+msgid "Switch v2ray version success"
+msgstr "切換v2ray版本成功"
+
+#: server/router.py:131
+msgid "Switch v2ray-core version failed."
+msgstr "切換v2ray版本失敗"
 
 #: templates/index.html:47 templates/v2ray/accounts.html:250
 #: templates/v2ray/accounts.html:267 templates/v2ray/inbound_modal.html:309
@@ -85,19 +101,21 @@ msgstr "天"
 
 #: templates/common/prompt_modal.html:3 templates/v2ray/accounts.html:44
 #: templates/v2ray/accounts.html:98 templates/v2ray/accounts.html:392
+#: templates/v2ray/index.html:279
 msgid "cancel"
 msgstr "取消"
 
 #: templates/common/prompt_modal.html:17 templates/common/prompt_modal.html:40
 #: templates/v2ray/accounts.html:44 templates/v2ray/accounts.html:98
 #: templates/v2ray/donate.html:47 templates/v2ray/inbound_modal.html:409
-#: templates/v2ray/inbound_modal.html:415
+#: templates/v2ray/inbound_modal.html:415 templates/v2ray/index.html:159
+#: templates/v2ray/index.html:278
 msgid "confirm"
 msgstr "確定"
 
 #: templates/common/qrcode_modal.html:3 templates/common/text_modal.html:2
 #: templates/v2ray/accounts.html:196 templates/v2ray/accounts.html:261
-#: templates/v2ray/inbound_modal.html:3
+#: templates/v2ray/inbound_modal.html:3 templates/v2ray/index.html:159
 msgid "close"
 msgstr "關閉"
 
@@ -120,8 +138,9 @@ msgstr "下載"
 msgid "accounts"
 msgstr "帳號列表"
 
-#: templates/v2ray/accounts.html:21 templates/v2ray/index.html:165
-#: templates/v2ray/index.html:167
+#: templates/v2ray/accounts.html:21 templates/v2ray/index.html:179
+#: templates/v2ray/index.html:181 templates/v2ray/index.html:212
+#: templates/v2ray/index.html:215
 msgid "loading"
 msgstr "載入中"
 
@@ -291,7 +310,6 @@ msgstr "刪除"
 
 #: templates/v2ray/clients.html:2 templates/v2ray/common_sider.html:18
 #: templates/v2ray/common_sider.html:70 templates/v2ray/donate.html:2
-#: templates/v2ray/tutorial.html:2
 msgid "clients"
 msgstr "各平台用戶端"
 
@@ -310,8 +328,8 @@ msgid "other"
 msgstr "其他"
 
 #: templates/v2ray/common_sider.html:35 templates/v2ray/common_sider.html:87
-#: templates/v2ray/tutorial.html:30 templates/v2ray/tutorial.html:36
-#: templates/v2ray/tutorial.html:42
+#: templates/v2ray/tutorial.html:2 templates/v2ray/tutorial.html:30
+#: templates/v2ray/tutorial.html:36 templates/v2ray/tutorial.html:42
 msgid "tutorial"
 msgstr "教學資源"
 
@@ -481,82 +499,92 @@ msgstr "嗅探"
 msgid "If there are no special needs, just keep the default."
 msgstr "如果沒有特殊需求，保持預設即可"
 
-#: templates/v2ray/index.html:33
+#: templates/v2ray/index.html:34
 msgid "memory"
 msgstr "記憶體"
 
-#: templates/v2ray/index.html:51
+#: templates/v2ray/index.html:52
 msgid "disk"
 msgstr "硬碟"
 
-#: templates/v2ray/index.html:64
+#: templates/v2ray/index.html:65
 msgid "status"
 msgstr "狀態"
 
-#: templates/v2ray/index.html:65 templates/v2ray/index.html:198
+#: templates/v2ray/index.html:66 templates/v2ray/index.html:231
 #: templates/v2ray/setting.html:197
 msgid "error"
 msgstr "錯誤"
 
-#: templates/v2ray/index.html:67
-msgid ""
-"May be due to account information configuration error caused by v2ray "
-"startup failure."
-msgstr "可能是由於帳號資訊設定錯誤導致 v2ray 啟動失敗。"
+#: templates/v2ray/index.html:75
+msgid "Switch version"
+msgstr "切換版本"
 
-#: templates/v2ray/index.html:68
-msgid ""
-"Check the account information and the v2ray configuration template for "
-"errors, or determine the cause based on the v2ray error message."
-msgstr "請檢查帳號資訊和面板設定是否有錯誤，或根據 v2ray 錯誤訊息判斷原因。"
-
-#: templates/v2ray/index.html:69
-msgid "If v2ray is running and all accounts are available, ignore this error.."
-msgstr "如果 v2ray 確實在運行，並且帳號都能使用，那麼忽略這個錯誤。"
-
-#: templates/v2ray/index.html:77
+#: templates/v2ray/index.html:80
 msgid "uptime"
 msgstr "運行時間"
 
-#: templates/v2ray/index.html:81
+#: templates/v2ray/index.html:83
 msgid "The running time of the system since boot."
 msgstr "系統啟動後的運行時間。"
 
-#: templates/v2ray/index.html:89
+#: templates/v2ray/index.html:91
 msgid "loads"
 msgstr "負載"
 
-#: templates/v2ray/index.html:94
+#: templates/v2ray/index.html:96
 msgid "connections"
 msgstr "連接數"
 
-#: templates/v2ray/index.html:97
+#: templates/v2ray/index.html:99
 msgid "The number of connections for the entire system, not v2ray."
 msgstr "整個系統的連接數，而不是 v2ray 的。"
 
-#: templates/v2ray/index.html:110
+#: templates/v2ray/index.html:112
 msgid "Total upload speed of all NICs."
 msgstr "所有網卡的總上傳速度。"
 
-#: templates/v2ray/index.html:119
+#: templates/v2ray/index.html:121
 msgid "Total download speed of all NICs."
 msgstr "所有網卡的總下載速度。"
 
-#: templates/v2ray/index.html:134
+#: templates/v2ray/index.html:136
 msgid "Total upload traffic for all NICs since boot."
 msgstr "系統啟動後所有網卡使用的總上傳流量。"
 
-#: templates/v2ray/index.html:143
+#: templates/v2ray/index.html:145
 msgid "Total download traffic for all NICs since boot."
 msgstr "系統啟動後所有網卡使用的總下載流量。"
 
-#: templates/v2ray/index.html:196
+#: templates/v2ray/index.html:157 templates/v2ray/index.html:276
+msgid "Switch v2ray version"
+msgstr "切換v2ray版本"
+
+#: templates/v2ray/index.html:160
+msgid "Click on the v2ray-core version you want to switch."
+msgstr "點擊你想要切換的v2ray-core版本"
+
+#: templates/v2ray/index.html:161
+msgid ""
+"Please choose carefully, the old version may be incompatible with the "
+"configuration."
+msgstr "請謹慎選擇，舊版本有可能配置不兼容"
+
+#: templates/v2ray/index.html:229
 msgid "running"
 msgstr "運行中"
 
-#: templates/v2ray/index.html:197
+#: templates/v2ray/index.html:230
 msgid "not running"
 msgstr "未運行"
+
+#: templates/v2ray/index.html:277
+msgid "Are you sure you want to switch to v2ray"
+msgstr "確定要切換v2ray版本嗎"
+
+#: templates/v2ray/index.html:282
+msgid "installing, please do not leave this page."
+msgstr "安裝中，請不要離開此頁面"
 
 #: templates/v2ray/setting.html:22
 msgid "update login username & password"
@@ -672,24 +700,6 @@ msgstr "統計流量間隔"
 msgid "V2ray core version"
 msgstr "V2ray 内核版本"
 
-#: templates/v2ray/setting.html:142
-msgid "Reset traffic day"
-msgstr "重置流量日"
-
-#: templates/v2ray/setting.html:143
-msgid ""
-"0 means no reset, greater than 0 will reset all users traffic every month"
-" on the set date, time depends on server time zone."
-msgstr "0表示不重置，大於0則在每月指定的日期0點重置流量，時間取決於伺服器的時區。"
-
-#: templates/v2ray/setting.html:146
-msgid "v2ctl command location"
-msgstr "v2ctl 指令位置"
-
-#: templates/v2ray/setting.html:147
-msgid "Usually do not have to modify."
-msgstr "通常不用修改。"
-
 #: templates/v2ray/setting.html:188
 msgid "current panel version"
 msgstr "目前面板版本"
@@ -792,7 +802,7 @@ msgstr "重置所有流量成功"
 #~ " v2ray configuration template for errors,"
 #~ " or determine the cause based on "
 #~ "the v2ray error message."
-#~ msgstr "請檢查帳號資訊和面板設定是否有錯誤，或根據 v2ray 錯誤消息判斷原因。"
+#~ msgstr "請檢查帳號資訊和面板設定是否有錯誤，或根據 v2ray 錯誤訊息判斷原因。"
 
 #~ msgid "If v2ray is running and all accounts are available, ignore this error.."
 #~ msgstr "如果 v2ray 確實在運行，並且帳號都能使用，那麼忽略這個錯誤。"
@@ -816,7 +826,7 @@ msgstr "重置所有流量成功"
 #~ " will reset all users traffic every"
 #~ " month on the set date, time "
 #~ "depends on server time zone."
-#~ msgstr "0表示不重置，大於0則在每月指定的日期0點重置流量，時間取決於服務器的時區。"
+#~ msgstr "0表示不重置，大於0則在每月指定的日期0點重置流量，時間取決於伺服器的時區。"
 
 #~ msgid "v2ctl command location"
 #~ msgstr "v2ctl 指令位置"
