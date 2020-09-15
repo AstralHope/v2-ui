@@ -76,7 +76,9 @@
     </a-form>
 
     <!-- stream settings -->
-    <template v-if="inModal.inbound.protocol === Protocols.VMESS || inModal.inbound.protocol === Protocols.VLESS">
+    <template v-if="inModal.inbound.protocol === Protocols.VMESS
+                    || inModal.inbound.protocol === Protocols.VLESS
+                    || inModal.inbound.protocol === Protocols.SHADOWSOCKS">
 
         <!-- select stream network -->
         <a-form layout="inline">
@@ -188,6 +190,9 @@
                     <a-select-option value="dtls">dtls（{{ _('camouflage DTLS 1.2 packages') }}）</a-select-option>
                     <a-select-option value="wireguard">wireguard（{{ _('camouflage wireguard packages') }}）</a-select-option>
                 </a-select>
+            </a-form-item>
+            <a-form-item label="{{ _('password') }}">
+                <a-input v-model.number="inModal.inbound.stream.kcp.seed"></a-input>
             </a-form-item>
             <a-form-item label="{{ _('mtu') }}">
                 <a-input type="number" v-model.number="inModal.inbound.stream.kcp.mtu"></a-input>
@@ -334,7 +339,9 @@
     </a-form>
 
     <!-- tls settings -->
-    <template v-if="(inModal.inbound.protocol === Protocols.VMESS || inModal.inbound.protocol === Protocols.VLESS)
+    <template v-if="(inModal.inbound.protocol === Protocols.VMESS
+                    || inModal.inbound.protocol === Protocols.VLESS
+                    || inModal.inbound.protocol === Protocols.SHADOWSOCKS)
                     && ['tcp', 'ws', 'http', 'quic'].indexOf(inModal.inbound.stream.network) >= 0">
 
         <!-- tls enable -->

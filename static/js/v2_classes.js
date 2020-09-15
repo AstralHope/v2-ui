@@ -244,6 +244,7 @@ class KcpStreamSettings extends V2CommonClass {
                 readBufferSize=2,
                 writeBufferSize=2,
                 type='none',
+                seed=randomSeq(10),
                 ) {
         super();
         this.mtu = mtu;
@@ -254,6 +255,7 @@ class KcpStreamSettings extends V2CommonClass {
         this.readBuffer = readBufferSize;
         this.writeBuffer = writeBufferSize;
         this.type = type;
+        this.seed = seed;
     }
 
     static fromJson(json={}) {
@@ -266,6 +268,7 @@ class KcpStreamSettings extends V2CommonClass {
             json.readBufferSize,
             json.writeBufferSize,
             isEmpty(json.header) ? 'none' : json.header.type,
+            json.seed,
         );
     }
 
@@ -281,6 +284,7 @@ class KcpStreamSettings extends V2CommonClass {
             header: {
                 type: this.type,
             },
+            seed: this.seed,
         };
     }
 }
@@ -823,13 +827,17 @@ Inbound.VLESSSettings.Fallback = class extends V2CommonClass {
         }
     }
 
-    static fromJson(json={}) {
-        return new Inbound.VLESSSettings.Fallback(
-            json.alpn,
-            json.path,
-            json.dest,
-            json.xver,
-        )
+    static fromJson(json=[]) {
+        const fallbacks = [];
+        for (let fallback of json) {
+            fallbacks.push(new Inbound.VLESSSettings.Fallback(
+                fallback.alpn,
+                fallback.path,
+                fallback.dest,
+                fallback.xver,
+            ))
+        }
+        return fallbacks;
     }
 };
 
