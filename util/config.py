@@ -123,7 +123,7 @@ def get_secret_key():
 
 
 def get_current_version():
-    return '5.4.4'
+    return '5.4.5'
 
 
 def add_if_not_exist(setting, update=False):

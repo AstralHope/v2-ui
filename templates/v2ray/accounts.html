@@ -59,7 +59,7 @@
                         <a-card v-for="inbound in searchedInbounds" :key="inbound.id" hoverable>
                             <div slot="title">
                                 <a-tag class="hidden-sm-and-down" color="green">[[ inbound.protocol ]]</a-tag>
-                                <a-button v-if="[Protocols.VMESS, Protocols.SHADOWSOCKS].indexOf(inbound.protocol) >= 0"
+                                <a-button v-if="[Protocols.VMESS, Protocols.SHADOWSOCKS, Protocols.TROJAN].indexOf(inbound.protocol) >= 0"
                                           type="primary" icon="qrcode"
                                           @click="qrModal.show(
                                                     '{{ _('qrcode') }}',
@@ -201,12 +201,19 @@
                                                 {{ _('domain') }}：
                                                 <a-tag color="green">[[ empDefault(inbound.stream.tls.server, '{{ _('none') }}') ]]</a-tag>
                                             </a-col>
-                                            <a-col :xs="24" :sm="24" :lg="12">
-                                                {{ _('allow insecure') }}：
-                                                <a-tag v-if="inbound.stream.tls.allowInsecure" color="green">{{ _('yes') }}</a-tag>
-                                                <a-tag v-else color="green">{{ _('no') }}</a-tag>
-                                            </a-col>
+{#                                            <a-col :xs="24" :sm="24" :lg="12">#}
+{#                                                {{ _('allow insecure') }}：#}
+{#                                                <a-tag v-if="inbound.stream.tls.allowInsecure" color="green">{{ _('yes') }}</a-tag>#}
+{#                                                <a-tag v-else color="green">{{ _('no') }}</a-tag>#}
+{#                                            </a-col>#}
                                         </template>
+                                    </template>
+                                    <!-- trojan -->
+                                    <template v-if="inbound.protocol === Protocols.TROJAN">
+                                        <a-col :xs="24" :sm="24" :lg="12">
+                                            {{ _('password') }}：
+                                            <a-tag color="green">[[ inbound.settings.clients[0].password ]]</a-tag>
+                                        </a-col>
                                     </template>
                                     <!-- shadowsocks -->
                                     <template v-if="inbound.protocol === Protocols.SHADOWSOCKS">
