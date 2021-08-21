@@ -1,5 +1,6 @@
 import logging
 import os
+import sys
 
 from flask import Flask, request, redirect, url_for, jsonify
 from flask_babel import Babel, gettext
@@ -19,18 +20,15 @@ db = SQLAlchemy(app)
 need_login_bps = []
 common_context = {}
 
-LANGUAGES = {
-    'zh': '中文',
-    'zh_CN': '中文',
-    'en': 'English',
-    'en_US': 'English',
-    'es': 'Español',
-}
-
 
 @babel.localeselector
 def get_locale():
-    return request.accept_languages.best_match(LANGUAGES.keys())
+    match = request.accept_languages.best_match(['zh-TW', 'zh-HK', 'zh-CN', 'zh', 'en'], 'en')
+    if 'TW' in match or 'HK' in match:
+        return 'zh_Hant'
+    if 'zh' in match:
+        return 'zh_Hans'
+    return 'en'
 
 
 def init_db():
@@ -77,8 +75,9 @@ def init_bps():
 
 
 def init_v2_jobs():
-    from util import v2_jobs
+    from util import v2_jobs, v2_util
     v2_jobs.init()
+    v2_util.init_v2ray()
 
 
 def is_ajax():
@@ -100,10 +99,17 @@ def before():
 @app.errorhandler(500)
 def error_handle(e):
     from base.models import Msg
-    logging.warning(e.__str__())
-    response = jsonify(Msg(False, e.msg))
+    logging.warning(e)
+    response = jsonify(Msg(False, str(e)))
     response.status_code = 200
     return response
+
+
+def logging_init():
+    logging.basicConfig(stream=sys.stdout,
+                        datefmt='%Y-%m-%d %H:%M:%S',
+                        format='%(asctime)s-%(name)s-%(levelname)s-%(message)s',
+                        level=logging.INFO)
 
 
 init_db()
@@ -112,3 +118,4 @@ init_common_context()
 init_bps()
 init_v2_jobs()
 start_schedule()
+logging_init()
