@@ -92,7 +92,7 @@ before_show_menu() {
 }
 
 install() {
-    bash <(curl -Ls https://blog.sprov.xyz/v2-ui.sh)
+    bash <(curl -Ls https://raw.githubusercontent.com/AstralHope/v2-ui/master/install.sh)
     if [[ $? == 0 ]]; then
         if [[ $# == 0 ]]; then
             start
